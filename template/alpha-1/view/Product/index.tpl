@@ -13,6 +13,7 @@
 
                 <div class="input-field col s12 m4 l2">   
                 	{$this->Form->select('status',$list_status , ['name'=>'status','empty' => "Trạng thái",'default' => '' ,'class' => ''])}
+                    <label>Trạng thái</label>
                 </div>
 
                 
