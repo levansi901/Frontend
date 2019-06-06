@@ -1,1 +1,15 @@
-/* Write your custom CSS here */
+.m-0{
+	margin: 0 !important;
+}
+
+.p-0{
+	padding: 0 !important;
+}
+
+.br-2{
+	border-radius: 2px;
+}
+
+.custom-table{
+	
+}

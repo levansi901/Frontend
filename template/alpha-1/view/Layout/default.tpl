@@ -3,7 +3,7 @@
 <html>
 <head>
     
-    <title>Alpha | Responsive Admin Dashboard Template</title>
+    <title>{$title_for_layout}</title>
         
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta charset="UTF-8">
@@ -13,9 +13,7 @@
         
     <!-- Styles -->
     <link type="text/css" rel="stylesheet" href="template/alpha-1/assets/plugins/materialize/css/materialize.min.css"/>
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="template/alpha-1/assets/plugins/material-preloader/css/materialPreloader.min.css" rel="stylesheet">        
-
         	
     <!-- Theme Styles -->
     <link href="template/alpha-1/assets/css/alpha.css" rel="stylesheet" type="text/css"/>

@@ -21,89 +21,94 @@
             </ul>
         </div>
         <ul class="sidebar-menu collapsible collapsible-accordion" data-collapsible="accordion">
-            <li class="no-padding"><a class="waves-effect waves-grey" href="index.html"><i class="material-icons">settings_input_svideo</i>Dashboard</a></li>
             <li class="no-padding">
-                <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">apps</i>Apps<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                <a class="waves-effect waves-grey" href="/">
+                    <i class="material-icons">settings_input_svideo</i>
+                    Tổng quan
+                </a>
+                </li>
+            <li class="no-padding">
+                <a class="collapsible-header waves-effect waves-grey">
+                    <i class="material-icons">apps</i>
+                    Sản phẩm
+                    <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                </a>
                 <div class="collapsible-body">
                     <ul>
-                        <li><a href="mailbox.html">Mailbox</a></li>
-                        <li><a href="search.html">Search</a></li>
-                        <li><a href="todo.html">Todo</a></li>
+                        <li><a href="/product">Danh sách</a></li>
+                        <li><a href="/product/add">Tạo sản phẩm mới</a></li>
+                        <li><a href="/brand">Danh mục</a></li>
+                        <li><a href="/brand">Thương hiệu</a></li>
                     </ul>
                 </div>
             </li>
             <li class="no-padding">
-                <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">code</i>Components<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                <a class="collapsible-header waves-effect waves-grey">
+                    <i class="material-icons">code</i>
+                    Đơn hàng
+                    <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                </a>
                 <div class="collapsible-body">
                     <ul>
-                        <li><a href="ui-accordions.html">Accordion</a></li>
-                        <li><a href="ui-badges.html">Badges</a></li>
-                        <li><a href="ui-buttons.html">Buttons</a></li>
-                        <li><a href="ui-typography.html">Typography</a></li>
-                        <li><a href="ui-cards.html">Cards</a></li>
-                        <li><a href="ui-chips.html">Chips</a></li>
-                        <li><a href="ui-color.html">Color</a></li>
-                        <li><a href="ui-collections.html">Collections</a></li>
-                        <li><a href="ui-dropdown.html">Dropdown</a></li>
-                        <li><a href="ui-dialogs.html">Dialogs</a></li>
-                        <li><a href="ui-grid.html">Grid</a></li>
-                        <li><a href="ui-helpers.html">Helpers</a></li>
-                        <li><a href="ui-modals.html">Modals</a></li>
-                        <li><a href="ui-media.html">Media</a></li>
-                        <li><a href="ui-icons.html">Icons</a></li>
-                        <li><a href="ui-preloader.html">Preloader</a></li>
-                        <li><a href="ui-shadow.html">Shadow</a></li>
-                        <li><a href="ui-tabs.html">Tabs</a></li>
-                        <li><a href="ui-waves.html">Waves</a></li>
+                        <li><a href="/order">Danh sách</a></li>
+                        <li><a href="/order/add">Thêm đơn mới</a></li>                        
                     </ul>
                 </div>
             </li>
             <li class="no-padding active">
-                <a class="collapsible-header waves-effect waves-grey active"><i class="material-icons">desktop_windows</i>Layouts<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                <a class="collapsible-header waves-effect waves-grey active">
+                    <i class="material-icons">desktop_windows</i>
+                    Bán hàng
+                    <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                </a>
                 <div class="collapsible-body">
                     <ul>
-                        <li><a href="layout-blank.html" class="active-page">Blank Page</a></li>
-                        <li><a href="layout-boxed.html">Boxed Layout</a></li>
-                        <li><a href="layout-hidden-sidebar.html">Hidden Sidebar</a></li>
-                        <li><a href="layout-right-sidebar.html">Right Sidebar</a></li>
+                        <li><a href="/sale/retail" class="active-page">Bán lẻ</a></li>
+                        <li><a href="/sale">Hóa đơn bán hàng</a></li>                        
                     </ul>
                 </div>
             </li>
             <li class="no-padding">
-                <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">mode_edit</i>Forms<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                <a class="collapsible-header waves-effect waves-grey">
+                    <i class="material-icons">mode_edit</i>
+                    Kho hàng
+                    <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                </a>
                 <div class="collapsible-body">
                     <ul>
-                        <li><a href="form-elements.html">Form Elements</a></li>
-                        <li><a href="form-wizard.html">Form Wizard</a></li>
-                        <li><a href="form-upload.html">File Upload</a></li>
-                        <li><a href="form-image-crop.html">Image Crop</a></li>
-                        <li><a href="form-image-zoom.html">Image Zoom</a></li>
-                        <li><a href="form-select2.html">Select2</a></li>
+                        <li><a href="/store">Danh sách phiếu</a></li>
+                        <li><a href="/store/product">Sản phẩm XNK</a></li>
+                        <li><a href="/store/add-supplier">Nhập hàng mới</a></li>
+                        <li><a href="/store/return-supplier">Trả hàng</a></li>
+                        <li><a href="/store/transfer">Chuyển kho</a></li>
+                        <li><a href="/store/another">Xuất nhập khác</a></li>                 
                     </ul>
                 </div>
             </li>
             <li class="no-padding">
-                <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">grid_on</i>Tables<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                <a class="collapsible-header waves-effect waves-grey">
+                    <i class="material-icons">grid_on</i>
+                    Khách hàng
+                    <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                </a>
                 <div class="collapsible-body">
                     <ul>
-                        <li><a href="table-static.html">Static Tables</a></li>
-                        <li><a href="table-responsive.html">Responsive Tables</a></li>
-                        <li><a href="table-data.html">Data Tables</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="no-padding"><a class="waves-effect waves-grey" href="charts.html"><i class="material-icons">trending_up</i>Charts</a></li>
-            <li class="no-padding">
-                <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">my_location</i>Maps<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
-                <div class="collapsible-body">
-                    <ul>
-                        <li><a href="maps-google.html">Google Maps</a></li>
-                        <li><a href="maps-vector.html">Vector Maps</a></li>
+                        <li><a href="/customer">Danh sách</a></li>
                     </ul>
                 </div>
             </li>
             <li class="no-padding">
-                <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">tag_faces</i>Extra Pages<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                <a class="waves-effect waves-grey" href="charts.html">
+                    <i class="material-icons">trending_up</i>
+                    Báo cáo
+                </a>
+            </li>
+            <li class="no-padding">
+                <a class="collapsible-header waves-effect waves-grey">
+                    <i class="material-icons">tag_faces</i>
+                    Cài đặt
+                    <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                </a>
                 <div class="collapsible-body">
                     <ul>
                         <li><a href="404.html">404 Page</a></li>

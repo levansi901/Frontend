@@ -201,3 +201,15 @@ Type::build('timestamp')
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
+
+define('API_HTTP', 'http://');
+define('API_DOMAIN', 'salesupport.local');
+
+define('API_DOMAIN_URL', API_HTTP . API_DOMAIN . '/rest/');
+
+define('LANG_DEFAULT', 'vie');
+define('LANG', 'lang');
+define('COUNTRY_DEFAULT', 1);
+define('PAGE_DEFAULT', 20);
+define('DESC', 'DESC');
+define('ASC', 'ASC');
