@@ -33,21 +33,42 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
         'httpOnly' => true
     ]));
-
-    /**
-     * Apply a middleware to the current route scope.
-     * Requires middleware to be registered via `Application::routes()` with `registerMiddleware()`
-     */
     $routes->applyMiddleware('csrf');
 
-    /**
-     * Here, we are connecting '/' (base path) to a controller called 'Pages',
-     * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, src/Template/Pages/home.ctp)...
-     */
-    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index', 'index']);
 
-    $routes->connect('/product', ['controller' => 'Product', 'action' => 'index', 'index']);
+
+    //dashboard
+    $routes->connect(
+        '/', ['controller' => 'Dashboard', 'action' => 'index']
+    );
+
+    // product
+    $routes->connect(
+        '/product', ['controller' => 'Product', 'action' => 'index']
+    );
+    $routes->connect(
+        '/product/index', ['controller' => 'Product', 'action' => 'index']
+    );
+    $routes->connect(
+        '/product/add', ['controller' => 'Product', 'action' => 'saveProduct']
+    );
+    $routes->connect(
+        '/product/edit/:id', ['controller' => 'Product', 'action' => 'saveProduct', 'save'], ['pass' => array('id'), "id" => "[0-9]+"]
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Connect catchall routes for all controllers.

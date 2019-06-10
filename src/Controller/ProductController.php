@@ -9,8 +9,8 @@ class ProductController extends AppController
     public function initialize()
     {
         parent::initialize();
-
         $this->set('title_for_layout', 'Sản phẩm');
+
     }
 
     public function index(){    	
@@ -62,8 +62,28 @@ class ProductController extends AppController
         }
     }
 
-    public function saveProduct(){
+    public function saveProduct($id = null){
 
+        $title_view = 'Thêm sản phẩm mới';
+        if(!empty($id)){
+            $title_view = 'Sửa sản phẩm';
+        }
+
+        
+        // get data inital
+        $http = new Client();
+        $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form');  
+        $result = $response->json;
+        $data = !empty($result['data']) ? $result['data'] : [];
+        $list_status = [];
+        if(!empty($data)){
+            $list_status = !empty($data['list_status']) ? $data['list_status'] : [];
+        }
+
+        $this->set('list_status', $list_status);
+        $this->set('title_view', $title_view);
+        $this->set('title_for_layout', $title_view);
+        $this->render('save');
     }
 
     public function ajaxSaveProduct(){

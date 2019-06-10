@@ -10,6 +10,16 @@
 	border-radius: 2px;
 }
 
+.my-form .row{
+	margin-bottom: 0;
+}
+
+.nav-action{
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+
 .custom-table{
 	
 }

@@ -36,7 +36,7 @@
                 <div class="collapsible-body">
                     <ul>
                         <li><a href="/product">Danh sách</a></li>
-                        <li><a href="/product/add">Tạo sản phẩm mới</a></li>
+                        <li><a href="/product/add">Thêm sản phẩm mới</a></li>
                         <li><a href="/brand">Danh mục</a></li>
                         <li><a href="/brand">Thương hiệu</a></li>
                     </ul>

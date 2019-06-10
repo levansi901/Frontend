@@ -1,4 +1,3 @@
-
 {assign var=data_breadcrumb value=[0=>['title'=> 'Danh sách sản phẩm','url' => ""]]}
 {$this->element('/layout/breadcrumb',['data'=> $data_breadcrumb])}
 
@@ -38,8 +37,8 @@
     <div class="card">
         <div class="card-content">      
         	<div class="s12">
-        		<a class="waves-effect waves-light btn green m-b-xs">
-        			<i class="material-icons left">library_add</i>
+        		<a href="/product/add" class="waves-effect waves-light btn green m-b-xs">
+        			<i class="material-icons left">add</i>
             		Thêm sản phẩm mới
                 </a>				
         	</div>      
