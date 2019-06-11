@@ -194,7 +194,7 @@
                 
             </div>            
         </div>
-        <div class="row">
+        <div class="row group-level">
             <div class="group-wrap">
                 <div class="search-wrap">
                     <div class="input-field row no-m">
@@ -235,9 +235,8 @@
 
 
 <script type="text/javascript">
-    var params = {
+    lazada_category.init({
         csrf_token : "{if !empty($csrf_token)}{$csrf_token}{/if}"
-    }
-    product_form.init(params); 
+    }); 
 
 </script>
