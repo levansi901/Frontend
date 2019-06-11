@@ -26,6 +26,14 @@
     <script src="http://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+        <!-- Javascripts -->
+    <script src="/template/alpha-1/assets/plugins/jquery/jquery-2.2.0.min.js"></script>
+    <script src="/template/alpha-1/assets/plugins/materialize/js/materialize.min.js"></script>
+    <script src="/template/alpha-1/assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
+    <script src="/template/alpha-1/assets/plugins/jquery-blockui/jquery.blockui.js"></script>
+    <script src="/template/alpha-1/assets/js/alpha.min.js"></script>
+    <script src="/template/alpha-1/assets/js/product.js"></script>    
 </head>
     
 <body>
@@ -44,11 +52,6 @@
     </div>
     <div class="left-sidebar-hover"></div>
 
-    <!-- Javascripts -->
-    <script src="/template/alpha-1/assets/plugins/jquery/jquery-2.2.0.min.js"></script>
-    <script src="/template/alpha-1/assets/plugins/materialize/js/materialize.min.js"></script>
-    <script src="/template/alpha-1/assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
-    <script src="/template/alpha-1/assets/plugins/jquery-blockui/jquery.blockui.js"></script>
-    <script src="/template/alpha-1/assets/js/alpha.min.js"></script>
+
 </body>
 </html>

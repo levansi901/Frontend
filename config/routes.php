@@ -46,18 +46,24 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect(
         '/product', ['controller' => 'Product', 'action' => 'index']
     );
+
     $routes->connect(
         '/product/index', ['controller' => 'Product', 'action' => 'index']
     );
+
     $routes->connect(
         '/product/add', ['controller' => 'Product', 'action' => 'saveProduct']
     );
+
     $routes->connect(
         '/product/edit/:id', ['controller' => 'Product', 'action' => 'saveProduct', 'save'], ['pass' => array('id'), "id" => "[0-9]+"]
     );
 
 
-
+    // lazada
+    $routes->connect(
+        '/lazada/category/get-list-lazada-categories', ['controller' => 'LazadaCategory', 'action' => 'getListLazadaCategory']
+    );
 
 
 

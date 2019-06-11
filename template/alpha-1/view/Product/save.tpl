@@ -8,10 +8,9 @@
 <div class="col s12 m12 l12">
 	<div class="card">
         <div class="card-content my-form">
-            <span class="card-title">Thông tin chính</span>
             <div class="row">
                 <div class="input-field col s12 m12 l12">
-                    <input id="name" name="name" type="text" maxlength="255" autocomplete="off">
+                    <input id="name" name="name" type="text" maxlength="255" autocomplete="off" value="{if !empty($product.name)}{$product.name}{/if}">
                     <label for="name">Tên sản phẩm</label>
                 </div>
             </div>
@@ -120,7 +119,32 @@
         <div class="card-content my-form">
             <span class="card-title">Thông tin khác</span>
             <div class="row">
-  
+                <div class="input-field col s12 m4 l3">
+                    {$this->Form->select('status',$list_status , ['name'=>'status','empty' => "Trạng thái",'default' => {"{if !empty($product.status)}{$product.status}{/if}"} ,'class' => ''])}
+                    <label>Trạng thái</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m4 l3">
+                    <input id="width" name="width" type="number" maxlength="11" autocomplete="off" value="{if !empty($product.width)}{$product.width}{/if}">
+                    <label for="width">Chiều rộng <small>(cm)</small></label>
+                </div>
+
+                <div class="input-field col s12 m4 l3">
+                    <input id="length" name="length" type="number" maxlength="11" autocomplete="off" value="{if !empty($product.length)}{$product.length}{/if}">
+                    <label for="length">Chiều dài <small>(cm)</small></label>
+                </div>
+
+                <div class="input-field col s12 m4 l3">
+                    <input id="height" name="height" type="number" maxlength="11" autocomplete="off" value="{if !empty($product.height)}{$product.height}{/if}">
+                    <label for="height">Chiều cao <small>(cm)</small></label>
+                </div>
+
+                <div class="input-field col s12 m4 l3">
+                    <input id="weight" name="weight" type="number" maxlength="11" autocomplete="off" value="{if !empty($product.weight)}{$product.weight}{/if}">
+                    <label for="weight">Cân nặng <small>(gram)</small></label>
+                </div>
             </div>
         </div>
     </div>
@@ -133,39 +157,87 @@
             </div>
         </div>
     </div>
-
-    <div class="card">
-        <div class="card-content">
-            <div class="row">
-                <span class="waves-effect waves-light btn green m-b-xs">
-                    <i class="material-icons left">add</i>
-                    Thêm mới
-                </span>
-            </div>
-        </div>
-    </div>
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
 
 
     <div class="mn-header navbar-fixed">
-        <nav class="blue-grey darken-4 nav-action">
-            <div class="nav-wrapper">
-
-                <input id="redirect-list" type="checkbox" class="filled-in"/>
-                <label for="redirect-list">Về trang danh sách</label>
-
-                <input id="redirect-form" type="checkbox" class="filled-in"/>
-                <label for="redirect-form">Về trang thêm mới</label>
-
-                <span class="waves-effect waves-light btn green m-b-xs">
-                    <i class="material-icons left">add</i>
-                    Thêm mới
+        <nav class="white nav-action">
+            <div class="row center">
+                <span class="p-v-xs hide-on-small-only">
+                    <input id="redirect-list" name="after_save" type="radio" checked="true" />
+                    <label for="redirect-list">Về trang danh sách</label>
                 </span>
+                <span class="p-v-xs hide-on-small-only">
+                    <input id="redirect-form" name="after_save" type="radio"  />
+                    <label for="redirect-form">Về trang thêm mới</label>
+                </span>                    
 
-                <span class="waves-effect waves-light btn m-b-xs">
-                    <i class="material-icons left">add</i>
+                <span class="waves-effect waves-light btn black m-l-lg s6">
+                    <i class="material-icons left lh-36">close</i>
                     Hủy bỏ
                 </span>
-            </div>
+
+                <span class="waves-effect waves-light btn green s6">
+                    <i class="material-icons left lh-36">check</i>
+                    Thêm mới
+                </span>
+            </div>    
         </nav>
     </div>
 </div>
+
+<div id="modal-lazada-category" class="modal modal-lg modal-lazada-category">
+    <div class="modal-content">
+        <h4>Chọn ngành hàng</h4>
+        <div class="row">
+            <div class="category-select">
+                
+            </div>            
+        </div>
+        <div class="row">
+            <div class="group-wrap">
+                <div class="search-wrap">
+                    <div class="input-field row no-m">
+                        <input type="text" class="no-m" maxlength="100" autocomplete="off" placeholder="Tìm danh mục" value="">
+                    </div>
+                </div>
+                <ul class="list-wrap">
+                    <li>
+                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
+                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                    </li>
+                    <li>
+                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
+                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                    </li>
+                    <li>
+                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
+                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                    </li>
+                    <li>
+                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
+                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                    </li>
+                    <li>
+                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
+                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                    </li>
+                    <li>
+                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
+                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                    </li>
+
+                </ul>
+            </div>            
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var params = {
+        csrf_token : "{if !empty($csrf_token)}{$csrf_token}{/if}"
+    }
+    product_form.init(params); 
+
+</script>

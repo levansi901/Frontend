@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-use Cake\Network\Http\Client;
+use Cake\Http\Client;
 
 class ProductController extends AppController
 {
@@ -67,20 +67,23 @@ class ProductController extends AppController
         $title_view = 'Thêm sản phẩm mới';
         if(!empty($id)){
             $title_view = 'Sửa sản phẩm';
-        }
-
+        }        
         
         // get data inital
         $http = new Client();
-        $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form');  
-        $result = $response->json;
+        $extra_url = !empty($id) ? '/' . $id : '';
+        $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form' . $extra_url);
+        $result = $response->getJson();
         $data = !empty($result['data']) ? $result['data'] : [];
-        $list_status = [];
+        $list_status = $product = [];
         if(!empty($data)){
             $list_status = !empty($data['list_status']) ? $data['list_status'] : [];
+            $product = !empty($data['product']) ? $data['product'] : [];
         }
-
+     
         $this->set('list_status', $list_status);
+        $this->set('product', $product);
+        $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_view', $title_view);
         $this->set('title_for_layout', $title_view);
         $this->render('save');
