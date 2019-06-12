@@ -12,14 +12,25 @@ class LazadaCategoryController extends AppController
 
     public function getListLazadaCategory() {
         $data = $this->request->data;
-        $list_category_ids = !empty($data['list_category_ids']) ? $data['list_category_ids'] : [];        
+        $tree_category_id = !empty($data['tree_category_id']) ? $data['tree_category_id'] : [];
+        $parent_id = isset($data['parent_id']) ? intval($data['parent_id']) : null;
         $categories = [];
-        if ($this->request->is('post') && !empty($list_category_ids)) {
+        if ($this->request->is('post') && (!empty($tree_category_id) || !is_null($parent_id))) {
+            $http = new Client();    
 
-            $http = new Client();
-            $response = $http->get(API_DOMAIN_URL . 'lazada/category/get-by-tree-ids?tree_ids=' . implode(',', $list_category_ids));  
+            $get_by_parent = true;        
+            $url_api = API_DOMAIN_URL . 'lazada/category/get-by-parent?parent_id=' . $parent_id;        
+            if(!empty($tree_category_id)){
+                $get_by_parent = false;
+                $url_api = API_DOMAIN_URL . 'lazada/category/get-by-tree-ids?tree_ids=' . implode(',', $tree_category_id);                
+            }
+
+            $response = $http->get($url_api);  
             $result = $response->getJson();
             $categories = !empty($result['data']) ? $result['data'] : [];
+            if($get_by_parent && !empty($categories)){
+                $categories = [0 => $categories];
+            }
         }       
 
         $this->response->type('json');

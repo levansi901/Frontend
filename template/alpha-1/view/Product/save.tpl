@@ -157,8 +157,6 @@
             </div>
         </div>
     </div>
-    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
-
 
     <div class="mn-header navbar-fixed">
         <nav class="white nav-action">
@@ -186,14 +184,9 @@
     </div>
 </div>
 
-<div id="modal-lazada-category" class="modal modal-lg modal-lazada-category">
+<div id="modal-lazada-category" class="modal modal-lazada-category">
     <div class="modal-content">
-        <h4>Chọn ngành hàng</h4>
-        <div class="row">
-            <div class="category-select">
-                
-            </div>            
-        </div>
+        <h4>Chọn danh mục</h4>
         <div class="row group-level">
             <div class="group-wrap">
                 <div class="search-wrap">
@@ -233,10 +226,15 @@
     </div>
 </div>
 
-
+{assign var = tree_category_id_json value = ''}
+{if !empty($product.lazada_category_tree_ids)}
+    {assign var = tree_category_id_json value = $product.lazada_category_tree_ids|@json_encode}
+{/if}
 <script type="text/javascript">
+    var tree_category_id_json = "{if !empty($tree_category_id_json)}{$tree_category_id_json}{/if}";
     lazada_category.init({
-        csrf_token : "{if !empty($csrf_token)}{$csrf_token}{/if}"
+        csrf_token : "{if !empty($csrf_token)}{$csrf_token}{/if}",
+        tree_category_id: tree_category_id_json.length > 0 ? $.parseJSON(tree_category_id_json) : []
     }); 
 
 </script>

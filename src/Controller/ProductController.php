@@ -11,11 +11,9 @@ class ProductController extends AppController
     {
         parent::initialize();
         $this->set('title_for_layout', 'Sản phẩm');
-
     }
 
-    public function index(){    	
-
+    public function index(){
         // get data
         $http = new Client();
         $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form-list');  
@@ -68,12 +66,18 @@ class ProductController extends AppController
         $title_view = 'Thêm sản phẩm mới';
         if(!empty($id)){
             $title_view = 'Sửa sản phẩm';
-        }        
-        
+        }                
+
         // get data inital
+        $lazada_info = true;
+
         $http = new Client();
         $extra_url = !empty($id) ? '/' . $id : '';
-        $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form' . $extra_url);
+        $params_url = '';
+        if($lazada_info){
+            $params_url = '?lazada_info=1';
+        }
+        $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form' . $extra_url . $params_url);
         $result = $response->getJson();
         $data = !empty($result['data']) ? $result['data'] : [];
         $list_status = $product = [];
@@ -81,7 +85,7 @@ class ProductController extends AppController
             $list_status = !empty($data['list_status']) ? $data['list_status'] : [];
             $product = !empty($data['product']) ? $data['product'] : [];
         }
-     
+
         $this->set('list_status', $list_status);
         $this->set('product', $product);
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
