@@ -10,7 +10,7 @@
         <div class="card-content my-form">
             <div class="row">
                 <div class="input-field col s12 m12 l12">
-                    <input id="name" name="name" type="text" maxlength="255" autocomplete="off" value="{if !empty($product.name)}{$product.name}{/if}">
+                    <input id="name" name="name" type="text" length="255" maxlength="255" autocomplete="off" value="{if !empty($product.name)}{$product.name}{/if}">
                     <label for="name">Tên sản phẩm</label>
                 </div>
             </div>
@@ -24,7 +24,7 @@
 
             <div class="row">
                 <div class="input-field col s12 m12 l12">
-                    <input id="lazada_brand_id" name="lazada_brand_id" type="text" maxlength="255" autocomplete="off">
+                    <input id="lazada_brand_id" name="lazada_brand_id" class="autocomplete" type="text" autocomplete="off">
                     <label for="lazada_brand_id">Thương hiệu Lazada</label>
                 </div>
             </div>
@@ -38,66 +38,74 @@
                 <table class="display responsive-table dataTable custom-table">
                     <thead>
                         <tr>
-                            <th rowspan="2">
-                                <input id="check-all" type="checkbox" class="filled-in"/>
-                                <label for="check-all"></label>
+                            <th>
+                                Hiển thị
                             </th>
-                            <th rowspan="2">
+                            <th>
+                                Mã sản phẩm
                             </th>
-                            <th rowspan="2">Tên sản phẩm</th>
-                            <th colspan="4">Phiên bản sản phẩm</th>
-                            <th rowspan="2">Tồn kho</th>
-                            <th rowspan="2">TT</th>
-                            <th rowspan="2"></th>
-                        </tr>
-
-                        <tr>
-                            <th> 
-                                Thuộc tính
+                            <th>Giá sản phẩm</th>
+                            <th>Giá đặc biệt</th>
+                            <th>Số lượng</th>
+                            
+                            <th>
+                                <i class="material-icons">perm_media</i>
                             </th>
-
-                            <th> 
-                                Mã
+                            <th>
+                                <i class="material-icons">cloud_upload</i>
                             </th>
-
-                            <th> 
-                                Mã vạch
-                            </th>
-
-                            <th> 
-                                Giá
+                            <th>
+                                <i class="material-icons">delete</i>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                <input id="row-1" type="checkbox" class="filled-in"/>
-                                <label for="row-1"></label>
+                                <div class="switch">
+                                    <label>
+                                        <input type="checkbox">
+                                        <span class="lever"></span>
+                                    </label>
+                                </div>
                             </td>
+
                             <td>
+                                <div class="my-input">
+                                    <input name="item[code][]" type="text" autocomplete="off">
+                                </div>
                             </td>
+
                             <td>
-                                SHEIN Áo hai dây Nút Nhiệt đới Nhiều màu Boho
+                                <div class="my-input">
+                                    <input name="item[price][]" type="text" autocomplete="off">
+                                </div>
                             </td>
+
                             <td>
-                                
+                                <div class="my-input">
+                                    <input name="item[price_special][]" type="text" autocomplete="off">
+                                </div>
                             </td>
+
                             <td>
-                                NH_00331
+                                <div class="my-input">
+                                    <input name="item[price_special][]" type="text" autocomplete="off">
+                                </div>
                             </td>
+
+                            <td></td>
+
                             <td>
-                                0123456789
-                            </td>
+                                <a class="btn-floating btn-mini waves-effect waves-light green">
+                                    <i class="material-icons">cloud_upload</i>
+                                </a>
+                            </td>                            
+
                             <td>
-                                120,000
-                            </td>
-                            <td>
-                                10
-                            </td>
-                            <td>
-                            </td>
-                            <td>
+                                <a class="btn-floating btn-mini waves-effect waves-light red">
+                                    <i class="material-icons">delete</i>
+                                </a>                                
                             </td>
                         </tr>                    
                     </tbody>
@@ -170,7 +178,7 @@
                     <label for="redirect-form">Về trang thêm mới</label>
                 </span>                    
 
-                <span class="waves-effect waves-light btn black m-l-lg s6">
+                <span class="waves-effect waves-light btn black m-l-lg mr-xs s6">
                     <i class="material-icons left lh-36">close</i>
                     Hủy bỏ
                 </span>
@@ -222,8 +230,15 @@
 
                 </ul>
             </div>            
-        </div>
-    </div>
+        </div>  
+
+        <div class="row m-b-xs right">
+            <a href="#!" class="modal-close waves-effect waves-light btn black m-r-xs s6">Hủy bỏ</a>
+            <a href="#!" id="btn-selected" class="waves-effect waves-light btn green s6 disabled">
+                Đồng ý
+            </a>
+        </div>      
+    </div>    
 </div>
 
 {assign var = tree_category_id_json value = ''}

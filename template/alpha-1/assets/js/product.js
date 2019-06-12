@@ -36,6 +36,9 @@ var lazada_category = {
 			$(this).closest('.list-wrap').find('li').removeClass('selected');
 			$(this).addClass('selected');
 
+			if($(this).data('final')){
+				$(self.modal).find('#btn-selected').removeClass('disabled');
+			}
 			self.setValueTreeId({
 				level: level,
 				lazada_category_id: lazada_category_id
@@ -65,6 +68,10 @@ var lazada_category = {
 				  	}
 				});
 			}
+		});
+
+		$(self.modal).on('click', '#btn-selected', function() {
+			
 		});
 		
 	},
