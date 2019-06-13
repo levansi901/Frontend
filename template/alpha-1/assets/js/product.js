@@ -4,6 +4,12 @@ var lazada_category = {
 	lazada_category_id: null,
 	init: function(params) {
 		var self = this;
+
+		$('.auto-numeric').autoNumeric('init', {
+            mDec: 0,
+            vMin: 0,
+            vMax: 9999999999
+        });
 		
 		$('#select_lazada_category').on('click',function() {			
 			self.lazada_category_id = $('#lazada_category_id').val().length > 0 ? parseInt($('#lazada_category_id').val()) : null;
@@ -78,7 +84,7 @@ var lazada_category = {
 		$(self.modal).on('click', '#btn-selected', function() {
 			$('#lazada_category_id').val(self.data.lazada_category_id);
 			$('#lazada_category_tree_ids').val(JSON.parse(self.data.lazada_category_tree_ids));
-		});
+		});		
 		
 	},
 	removeGroupByLevel: function(level){

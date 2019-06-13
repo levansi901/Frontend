@@ -62,6 +62,8 @@ class ProductController extends AppController
     }
 
     public function saveProduct($id = null){
+        static::$js_files[] = 'assets/js/pages/autoNumeric-min.js';
+        static::$js_files[] = 'assets/js/product.js';
 
         $title_view = 'Thêm sản phẩm mới';
         if(!empty($id)){
@@ -85,8 +87,7 @@ class ProductController extends AppController
             $list_status = !empty($data['list_status']) ? $data['list_status'] : [];
             $product = !empty($data['product']) ? $data['product'] : [];
         }
-        // debug($product);
-        // exit;
+      
         $this->set('list_status', $list_status);
         $this->set('product', $product);
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));

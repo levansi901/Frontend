@@ -47,145 +47,106 @@
             <span class="card-title">Phiên bản sản phẩm</span>
             <div class="row">
                 <ul class="collapsible popout" data-collapsible="expandable">
-                    <li>
-                        <div class="collapsible-header">
-                            <i class="material-icons m-r-xs">filter_1</i> 
-                            Phiên bản 1                          
-                        </div>
-                        <div class="collapsible-body">
-                            <div class="row">
-                                <div class="input-field col s12 m4 l3">
-                                    <input name="item[code][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}">
-                                    <label>Mã</label>
+                    {if !empty($product.items)}
+                        {foreach from = $product.items key=k item = item}
+                            {assign var = number value = $k + 1}
+                            <li class="{if $k == 0}active{/if}">
+                                <div class="collapsible-header">
+                                    <i class="material-icons m-r-xs">
+                                        filter_{if $number < 10}{$number}{else}9_plus{/if}
+                                    </i>
+                                    <span class="title-item m-r-xxl"> 
+                                        {if !empty($item.code)}{$item.code}{/if} 
+                                    </span>
+                                    <div class="chip">HTML</div>
+                                    <div class="chip">HTML</div>
+                                    <div class="chip">HTML</div>
+                                    <i class="material-icons no-m right" title="Xóa">delete_forever</i>
                                 </div>
+                                <div class="collapsible-body" style="{if $k == 0}display: block;{/if}">
+                                    <div class="row">
+                                        <div class="input-field col s12 m4 l3">
+                                            <input id="item-code-{$k}" data-name="item-code" name="item[code][]" type="text" class="w-100" length="100" maxlength="100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}" >
+                                            <label for="item-code-{$k}"> 
+                                                Mã 
+                                            </label>
+                                        </div>
 
-                                <div class="input-field col s12 m4 l3">
-                                    <input name="item[barcode][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.barcode)}{$item.barcode}{/if}">
-                                    <label>Mã vạch</label>
+                                        <div class="input-field col s12 m4 l3">
+                                            <input id="item-barcode-{$k}" data-name="item-barcode" name="item[barcode][]" type="text" class="w-100" autocomplete="off" length="20" maxlength="20" value="{if !empty($item.barcode)}{$item.barcode}{/if}" >
+                                            <label for="item-barcode-{$k}"> 
+                                                Mã vạch 
+                                            </label>
+                                        </div>                                
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field col s12 m4 l3">
+                                            <input id="item-price-{$k}" data-name="item-price" name="item[price][]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price)}{$item.price}{/if}">
+                                            <label for="item-price-{$k}"> 
+                                                Giá bán 
+                                            </label>
+                                        </div>
+
+                                        <div class="input-field col s12 m4 l3">
+                                            <input id="item-price-discount-{$k}" data-name="item-price-discount" name="item[price_discount][]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_discount)}{$item.price_discount}{/if}">
+                                            <label for="item-price-discount-{$k}"> 
+                                                Giá khuyến mãi 
+                                            </label>                                    
+                                        </div>
+
+                                        <div class="input-field col s12 m4 l3">
+                                            <input id="item-time-start-{$k}" data-name="item-time-start" name="item[time_start_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.time_start_discount)}{$item.time_start_discount}{/if}">
+                                            <label for="item-time-start-{$k}"> 
+                                                Ngày bắt đầu giảm giá 
+                                            </label>                                    
+                                        </div>
+
+                                        <div class="input-field col s12 m4 l3">
+                                            <input id="item-time-end-{$k}" data-name="item-time-end" name="item[time_end_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.time_end_discount)}{$item.time_end_discount}{/if}">
+                                            <label for="item-time-end-{$k}">
+                                                Ngày kết thúc giảm giá
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field col s12 m4 l3">
+                                            <input id="item-price-import-{$k}" data-name="item-price-import" name="item[price_import][]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_import)}{$item.price_import}{/if}">
+                                            <label for="item-price-import-{$k}">
+                                                Giá nhập
+                                            </label>
+                                        </div>
+
+                                        <div class="input-field col s12 m4 l3">
+                                            <input id="item-price-whole-sale-{$k}" data-name="item-price-whole-sale" name="item[price_whole_sale][]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_whole_sale)}{$item.price_whole_sale}{/if}">
+                                            <label for="item-price-whole-sale-{$k}">
+                                                Giá buôn
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="file-field input-field col s12 m4 l6">
+                                            <div class="btn">
+                                                <i class="material-icons">perm_media</i>
+                                                <input type="file" multiple>
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Chọn 1 hoặc nhiều ảnh">
+                                            </div>
+                                        </div>
+
+                                        <div class="col s12 m6 l6">
+                                            <div class="col s2 m3 l2">
+                                                <img style="height: 40px;" class="" src="/template/alpha-1/assets/images/card-image.jpg" alt="">
+                                            </div>                                
+                                        </div>                                
+                                    </div>
                                 </div>
-                                
-                            </div>
-
-                            <div class="row">
-                                <div class="input-field col s12 m4 l3">
-                                    <input name="item[price][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price)}{$item.price}{/if}">
-                                    <label>Giá bán</label>
-                                </div>
-
-                                <div class="input-field col s12 m4 l3">
-                                    <input name="item[price_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price_discount)}{$item.price_discount}{/if}">
-                                    <label>Giá khuyến mãi</label>                                    
-                                </div>
-
-                                <div class="input-field col s12 m4 l3">
-                                    <input name="item[time_start_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.time_start_discount)}{$item.time_start_discount}{/if}">
-                                    <label>Ngày bắt đầu giảm giá</label>                                    
-                                </div>
-
-                                <div class="input-field col s12 m4 l3">
-                                    <input name="item[time_end_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.time_end_discount)}{$item.time_end_discount}{/if}">
-                                    <label>Ngày kết thúc giảm giá</label>                                    
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12 m4 l3">
-                                    <input name="item[price_import][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price_import)}{$item.price_import}{/if}">
-                                    <label>Giá nhập</label>
-                                </div>
-
-                                <div class="input-field col s12 m4 l3">
-                                    <input name="item[price_whole_sale][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price_whole_sale)}{$item.price_whole_sale}{/if}">
-                                    <label>Giá buôn</label>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="collapsible-header">                            
-                            <i class="material-icons m-r-xs">filter_2</i>
-                            Phiên bản 2
-                        </div>
-                        <div class="collapsible-body">
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="collapsible-header">                            
-                            <i class="material-icons">filter_3</i>
-                            Phiên bản 3
-                        </div>
-                        <div class="collapsible-body">
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="collapsible-header">                            
-                            <i class="material-icons">filter_5</i>
-                            Phiên bản 4
-                        </div>
-                        <div class="collapsible-body">
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="collapsible-header">                            
-                            <i class="material-icons">filter_11</i> 
-                        </div>
-                        <div class="collapsible-body">
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </li>
-
-
-                    <li>
-                        <div class="collapsible-header"> 
-                            <i class="material-icons">filter_9_plus</i>
-                            <i class="material-icons">filter_1</i>
-                        </div>
-                        <div class="collapsible-body">
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </li>
-                    
-
-                    <li>
-                        <div class="collapsible-header">                            
-                            <i class="material-icons">filter_9_plus</i>
-                            <i class="material-icons">filter_2</i>
-                        </div>
-                        <div class="collapsible-body">
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="collapsible-header">                            
-                            <i class="material-icons">filter_9_plus</i>
-                            <i class="material-icons">filter_3</i>
-                        </div>
-                        <div class="collapsible-body">
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </li>
-
+                            </li>
+                        {/foreach}
+                    {/if}
                 </ul>
             </div>
             <div class="row">
@@ -222,7 +183,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {if !empty($product.items)}
+                        {if !empty($product.items_bk)}
                             {foreach from = $product.items item = item}
                                 <tr>
                                     <td class="center">
@@ -350,12 +311,12 @@
                     <label for="redirect-form">Về trang thêm mới</label>
                 </span>                    
 
-                <span class="waves-effect waves-light btn black m-l-lg mr-xs s6">
+                <span class="waves-effect waves-light btn black m-l-lg m-r-xs s6">
                     <i class="material-icons left lh-36">close</i>
                     Hủy bỏ
                 </span>
 
-                <span class="waves-effect waves-light btn green s6">
+                <span class="waves-effect waves-light btn s6">
                     <i class="material-icons left lh-36">check</i>
                     Thêm mới
                 </span>
@@ -376,7 +337,7 @@
 
         <div class="row m-b-xs right">
             <a class="modal-close waves-effect waves-light btn black m-r-xs s6">Hủy bỏ</a>
-            <a id="btn-selected" class="waves-effect waves-light btn green s6 disabled">
+            <a id="btn-selected" class="waves-effect waves-light btn s6 disabled">
                 Đồng ý
             </a>
         </div>      

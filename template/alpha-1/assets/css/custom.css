@@ -263,3 +263,7 @@ textarea.materialize-textarea,
     font-weight: bolder;
     text-align: center;
 }
+
+.collapsible.popout > li{
+    margin: 0 15px;
+}

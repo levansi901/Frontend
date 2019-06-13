@@ -9,11 +9,24 @@ use View\SmartyView;
 
 class AppController extends Controller
 {
+    public static $css_layout = [
+        'assets/plugins/materialize/css/materialize.min.css',
+        'assets/plugins/material-preloader/css/materialPreloader.min.css',
+        'assets/css/alpha.css',
+        'assets/css/custom.css'
+    ];
 
+    public static $js_layout = [
+        'assets/plugins/jquery/jquery-2.2.0.min.js',
+        'assets/plugins/materialize/js/materialize.min.js',
+        'assets/plugins/material-preloader/js/materialPreloader.min.js',
+        'assets/plugins/jquery-blockui/jquery.blockui.js',
+        'assets/js/alpha.min.js',
+        'assets/js/page.js'
+    ];
 
-    public function beforeRender(Event $event){
-        $this->viewBuilder()->setClassName('Smarty'); // SET SMARTY VIEW
-    }
+    public static $css_files = [];
+    public static $js_files = [];    
 
     public function initialize()
     {
@@ -23,9 +36,29 @@ class AppController extends Controller
             'RequestHandler', ['enableBeforeRedirect' => false]
         );
         
-        // $this->loadComponent('Flash');
+        //$this->loadComponent('Flash');
         //$this->loadComponent('Security');
 
         $this->set('title_for_layout', 'Sale Support');
+    }
+
+    public function beforeRender(Event $event){
+
+        if (!$this->request->is('ajax')) {
+            $css_layout = array_merge(static::$css_layout, static::$css_files);
+            $js_layout = array_merge(static::$js_layout, static::$js_files);
+
+            $css_layout = array_unique($css_layout);
+            $css_layout = array_chunk($css_layout, 10);
+
+            $js_layout = array_unique($js_layout);
+            $js_layout = array_chunk($js_layout, 10);
+
+            $this->set('css_layout', $css_layout);
+            $this->set('js_layout', $js_layout);
+        }
+
+        // set view smarty
+        $this->viewBuilder()->setClassName('Smarty');
     }
 }
