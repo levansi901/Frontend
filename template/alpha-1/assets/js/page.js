@@ -1,7 +1,7 @@
-var ss_backend ={
-
+var workspace ={
+	csrf_token: null
 }
 
-var ss_list = {
-
-}
+$(document).ready(function() {
+    workspace.csrf_token = $('#csrf_token').val();
+});

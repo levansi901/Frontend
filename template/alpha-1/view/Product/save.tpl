@@ -17,15 +17,26 @@
 
             <div class="row">
                 <div class="input-field col s12 m12 l12">
-                    <input id="lazada_category_id" name="lazada_category_id" type="text" autocomplete="off">
-                    <label for="lazada_brand_id">Danh mục Lazada</label>
+                    <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off">
+                    <label for="select_lazada_category">
+                        Danh mục Lazada
+                        <div class="lazada-icon" tooltip="Thuộc tính Lazada"><div>LAZ</div></div>
+                    </label>
+
+                    <input type="hidden" id="lazada_category_id" name="lazada_category_id" value="{if !empty($product.lazada_category_id)}{$product.lazada_category_id}{/if}">
+
+                    <input type="hidden" id="lazada_category_tree_ids" name="lazada_category_tree_ids" value="{if !empty($product.lazada_category_tree_ids)}{$product.lazada_category_tree_ids|@json_encode}{/if}">
+                    
                 </div>
             </div>
 
             <div class="row">
                 <div class="input-field col s12 m12 l12">
                     <input id="lazada_brand_id" name="lazada_brand_id" class="autocomplete" type="text" autocomplete="off">
-                    <label for="lazada_brand_id">Thương hiệu Lazada</label>
+                    <label for="lazada_brand_id">
+                        Thương hiệu Lazada
+                        <div class="lazada-icon" tooltip="Thuộc tính Lazada"><div>LAZ</div></div>
+                    </label>
                 </div>
             </div>
         </div>
@@ -35,80 +46,241 @@
         <div class="card-content my-form">
             <span class="card-title">Phiên bản sản phẩm</span>
             <div class="row">
-                <table class="display responsive-table dataTable custom-table">
+                <ul class="collapsible popout" data-collapsible="expandable">
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons m-r-xs">filter_1</i> 
+                            Phiên bản 1                          
+                        </div>
+                        <div class="collapsible-body">
+                            <div class="row">
+                                <div class="input-field col s12 m4 l3">
+                                    <input name="item[code][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}">
+                                    <label>Mã</label>
+                                </div>
+
+                                <div class="input-field col s12 m4 l3">
+                                    <input name="item[barcode][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.barcode)}{$item.barcode}{/if}">
+                                    <label>Mã vạch</label>
+                                </div>
+                                
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12 m4 l3">
+                                    <input name="item[price][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price)}{$item.price}{/if}">
+                                    <label>Giá bán</label>
+                                </div>
+
+                                <div class="input-field col s12 m4 l3">
+                                    <input name="item[price_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price_discount)}{$item.price_discount}{/if}">
+                                    <label>Giá khuyến mãi</label>                                    
+                                </div>
+
+                                <div class="input-field col s12 m4 l3">
+                                    <input name="item[time_start_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.time_start_discount)}{$item.time_start_discount}{/if}">
+                                    <label>Ngày bắt đầu giảm giá</label>                                    
+                                </div>
+
+                                <div class="input-field col s12 m4 l3">
+                                    <input name="item[time_end_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.time_end_discount)}{$item.time_end_discount}{/if}">
+                                    <label>Ngày kết thúc giảm giá</label>                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12 m4 l3">
+                                    <input name="item[price_import][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price_import)}{$item.price_import}{/if}">
+                                    <label>Giá nhập</label>
+                                </div>
+
+                                <div class="input-field col s12 m4 l3">
+                                    <input name="item[price_whole_sale][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price_whole_sale)}{$item.price_whole_sale}{/if}">
+                                    <label>Giá buôn</label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="collapsible-header">                            
+                            <i class="material-icons m-r-xs">filter_2</i>
+                            Phiên bản 2
+                        </div>
+                        <div class="collapsible-body">
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="collapsible-header">                            
+                            <i class="material-icons">filter_3</i>
+                            Phiên bản 3
+                        </div>
+                        <div class="collapsible-body">
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="collapsible-header">                            
+                            <i class="material-icons">filter_5</i>
+                            Phiên bản 4
+                        </div>
+                        <div class="collapsible-body">
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="collapsible-header">                            
+                            <i class="material-icons">filter_11</i> 
+                        </div>
+                        <div class="collapsible-body">
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <div class="collapsible-header"> 
+                            <i class="material-icons">filter_9_plus</i>
+                            <i class="material-icons">filter_1</i>
+                        </div>
+                        <div class="collapsible-body">
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </li>
+                    
+
+                    <li>
+                        <div class="collapsible-header">                            
+                            <i class="material-icons">filter_9_plus</i>
+                            <i class="material-icons">filter_2</i>
+                        </div>
+                        <div class="collapsible-body">
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="collapsible-header">                            
+                            <i class="material-icons">filter_9_plus</i>
+                            <i class="material-icons">filter_3</i>
+                        </div>
+                        <div class="collapsible-body">
+                            <p>
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="row">
+                <table class="custom-table">
                     <thead>
                         <tr>
-                            <th>
+                            <th class="center w-2">
                                 Hiển thị
                             </th>
-                            <th>
+
+                            <th class="w-8">
                                 Mã sản phẩm
                             </th>
-                            <th>Giá sản phẩm</th>
-                            <th>Giá đặc biệt</th>
-                            <th>Số lượng</th>
+
+                            <th class="center w-8">
+                                Giá sản phẩm
+                            </th>
+                            <th class="center w-8">
+                                Giá đặc biệt
+                            </th>
+                            <th class="center w-5">
+                                Số lượng
+                            </th>
                             
-                            <th>
-                                <i class="material-icons">perm_media</i>
+                            <th class="center w-10">
+                                <i class="material-icons f-s-16">perm_media</i>
                             </th>
-                            <th>
-                                <i class="material-icons">cloud_upload</i>
+                            <th class="center w-2">
+                                <i class="material-icons f-s-16">cloud_upload</i>
                             </th>
-                            <th>
-                                <i class="material-icons">delete</i>
+                            <th class="center w-2">
+                                <i class="material-icons f-s-16">delete</i>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="switch">
-                                    <label>
-                                        <input type="checkbox">
-                                        <span class="lever"></span>
-                                    </label>
-                                </div>
-                            </td>
+                        {if !empty($product.items)}
+                            {foreach from = $product.items item = item}
+                                <tr>
+                                    <td class="center">
+                                        <div class="switch">
+                                            <label>
+                                                <input type="checkbox">
+                                                <span class="lever no-m"></span>
+                                            </label>
+                                        </div>
+                                    </td>
 
-                            <td>
-                                <div class="my-input">
-                                    <input name="item[code][]" type="text" autocomplete="off">
-                                </div>
-                            </td>
+                                    <td>
+                                        <input name="item[code][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}">
+                                    </td>
 
-                            <td>
-                                <div class="my-input">
-                                    <input name="item[price][]" type="text" autocomplete="off">
-                                </div>
-                            </td>
+                                    <td>
+                                        <div class="my-input">
+                                            <input name="item[price][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price)}{$item.price}{/if}">
+                                        </div>
+                                    </td>
 
-                            <td>
-                                <div class="my-input">
-                                    <input name="item[price_special][]" type="text" autocomplete="off">
-                                </div>
-                            </td>
+                                    <td class="center">
+                                        <div class="my-input">
+                                            <input name="item[price_special][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.price_discount)}{$item.price_discount}{/if}">
+                                        </div>
+                                    </td>
 
-                            <td>
-                                <div class="my-input">
-                                    <input name="item[price_special][]" type="text" autocomplete="off">
-                                </div>
-                            </td>
+                                    <td class="center">
+                                        <div class="my-input">
+                                            <input name="item[price_special][]" type="text" class="w-100" autocomplete="off">
+                                        </div>
+                                    </td>
 
-                            <td></td>
+                                    <td class="center">
+                                        
+                                    </td>
 
-                            <td>
-                                <a class="btn-floating btn-mini waves-effect waves-light green">
-                                    <i class="material-icons">cloud_upload</i>
-                                </a>
-                            </td>                            
+                                    <td class="center">
+                                        <a class="btn-floating btn-mini waves-effect waves-light green">
+                                            <i class="material-icons">cloud_upload</i>
+                                        </a>
+                                    </td>                            
 
-                            <td>
-                                <a class="btn-floating btn-mini waves-effect waves-light red">
-                                    <i class="material-icons">delete</i>
-                                </a>                                
-                            </td>
-                        </tr>                    
+                                    <td class="center">
+                                        <a class="btn-floating btn-mini waves-effect waves-light red">
+                                            <i class="material-icons">delete</i>
+                                        </a>                                
+                                    </td>
+                                </tr>
+                            {/foreach} 
+                        {/if}               
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="center cursor-pointer" colspan="20">
+                                <i class="icon-plus2"></i> Thêm phiển bản mới </td>
+                            </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -190,66 +362,23 @@
             </div>    
         </nav>
     </div>
+
+    <div class="hide">
+        <input type="hidden" id="csrf_token" value="{if !empty($csrf_token)}{$csrf_token}{/if}">
+    </div>
 </div>
 
 <div id="modal-lazada-category" class="modal modal-lazada-category">
     <div class="modal-content">
         <h4>Chọn danh mục</h4>
-        <div class="row group-level">
-            <div class="group-wrap">
-                <div class="search-wrap">
-                    <div class="input-field row no-m">
-                        <input type="text" class="no-m" maxlength="100" autocomplete="off" placeholder="Tìm danh mục" value="">
-                    </div>
-                </div>
-                <ul class="list-wrap">
-                    <li>
-                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
-                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
-                    </li>
-                    <li>
-                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
-                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
-                    </li>
-                    <li>
-                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
-                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
-                    </li>
-                    <li>
-                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
-                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
-                    </li>
-                    <li>
-                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
-                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
-                    </li>
-                    <li>
-                        <span class="text" title="Thể thao &amp; Hoạt động ngoài trời">Thể thao &amp; Hoạt động ngoài trời</span>
-                        <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
-                    </li>
-
-                </ul>
-            </div>            
+        <div class="row group-level">        
         </div>  
 
         <div class="row m-b-xs right">
-            <a href="#!" class="modal-close waves-effect waves-light btn black m-r-xs s6">Hủy bỏ</a>
-            <a href="#!" id="btn-selected" class="waves-effect waves-light btn green s6 disabled">
+            <a class="modal-close waves-effect waves-light btn black m-r-xs s6">Hủy bỏ</a>
+            <a id="btn-selected" class="waves-effect waves-light btn green s6 disabled">
                 Đồng ý
             </a>
         </div>      
     </div>    
 </div>
-
-{assign var = tree_category_id_json value = ''}
-{if !empty($product.lazada_category_tree_ids)}
-    {assign var = tree_category_id_json value = $product.lazada_category_tree_ids|@json_encode}
-{/if}
-<script type="text/javascript">
-    var tree_category_id_json = "{if !empty($tree_category_id_json)}{$tree_category_id_json}{/if}";
-    lazada_category.init({
-        csrf_token : "{if !empty($csrf_token)}{$csrf_token}{/if}",
-        tree_category_id: tree_category_id_json.length > 0 ? $.parseJSON(tree_category_id_json) : []
-    }); 
-
-</script>

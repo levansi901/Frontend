@@ -33,7 +33,8 @@
     <script src="/template/alpha-1/assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
     <script src="/template/alpha-1/assets/plugins/jquery-blockui/jquery.blockui.js"></script>
     <script src="/template/alpha-1/assets/js/alpha.min.js"></script>
-    <script src="/template/alpha-1/assets/js/product.js"></script>    
+    <script src="/template/alpha-1/assets/js/page.js"></script>
+    <script src="/template/alpha-1/assets/js/product.js"></script>
 </head>
     
 <body>
@@ -51,7 +52,5 @@
         </main>        
     </div>
     <div class="left-sidebar-hover"></div>
-
-
 </body>
 </html>

@@ -85,7 +85,8 @@ class ProductController extends AppController
             $list_status = !empty($data['list_status']) ? $data['list_status'] : [];
             $product = !empty($data['product']) ? $data['product'] : [];
         }
-
+        // debug($product);
+        // exit;
         $this->set('list_status', $list_status);
         $this->set('product', $product);
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));

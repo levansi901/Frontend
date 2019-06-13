@@ -1,14 +1,16 @@
 var lazada_category = {
-	csrf_token: null,
 	modal: '#modal-lazada-category',
 	tree_category_id:[],
+	lazada_category_id: null,
 	init: function(params) {
 		var self = this;
-		self.csrf_token = typeof(params.csrf_token) != 'undefined' ? params.csrf_token : null;
-		self.tree_category_id = typeof(params.tree_category_id) != 'undefined' ? params.tree_category_id : [];		
 		
-		$('#lazada_category_id').on('click',function() {
+		$('#select_lazada_category').on('click',function() {			
+			self.lazada_category_id = $('#lazada_category_id').val().length > 0 ? parseInt($('#lazada_category_id').val()) : null;
+			self.tree_category_id = $.trim($('#lazada_category_tree_ids').val()).length > 0 ? $.parseJSON($.trim($('#lazada_category_tree_ids').val())) : [];
+
 			self.removeGroupByLevel(0);
+			self.toggleDisableSelectedButton();
 			var params = { 
 				parent_id: 0 
 			};
@@ -17,7 +19,7 @@ var lazada_category = {
 				params = {
 					tree_category_id: self.tree_category_id 
 				}
-			}			
+			}
 			
 			self.getListCategoriesLazada(params,function(categories) {				
 				self.loadListCategoriesLazada({
@@ -30,29 +32,32 @@ var lazada_category = {
 	    });
 
 		$(self.modal).on('click', '.list-wrap > li', function() {
-		  	var level = typeof($(this).closest('.group-wrap').data('level')) != 'undefined' ? $(this).closest('.group-wrap').data('level') : 0;
-			var lazada_category_id = typeof($(this).data('id')) != 'undefined' ? parseInt($(this).data('id')) : null;
-
 			$(this).closest('.list-wrap').find('li').removeClass('selected');
 			$(this).addClass('selected');
 
-			if($(this).data('final')){
-				$(self.modal).find('#btn-selected').removeClass('disabled');
-			}
+			self.lazada_category_id = null;
+		  	var level = typeof($(this).closest('.group-wrap').data('level')) != 'undefined' ? $(this).closest('.group-wrap').data('level') : 0;
+			var lazada_category_id = typeof($(this).data('id')) != 'undefined' ? parseInt($(this).data('id')) : null;
 			self.setValueTreeId({
 				level: level,
 				lazada_category_id: lazada_category_id
 			});
-
 			self.removeGroupByLevel(level);		
-			self.getListCategoriesLazada({
-				'parent_id': lazada_category_id
-			},function(categories) {				
-				self.loadListCategoriesLazada({
-					categories: categories,
-					level: level
+
+			if($(this).data('final')){	
+				self.lazada_category_id = lazada_category_id;
+			}else{
+				self.getListCategoriesLazada({
+					'parent_id': lazada_category_id
+				},function(categories) {				
+					self.loadListCategoriesLazada({
+						categories: categories,
+						level: level
+					});
 				});
-			});
+			}
+
+			self.toggleDisableSelectedButton();
 		});
 
 		$(self.modal).on('keyup', '.search-wrap input', function() {
@@ -71,14 +76,44 @@ var lazada_category = {
 		});
 
 		$(self.modal).on('click', '#btn-selected', function() {
-			
+			$('#lazada_category_id').val(self.data.lazada_category_id);
+			$('#lazada_category_tree_ids').val(JSON.parse(self.data.lazada_category_tree_ids));
 		});
 		
 	},
 	removeGroupByLevel: function(level){
 		var self = this;
 		var level = typeof(level) != 'undefined' ? parseInt(level) : 0;
-		$(self.modal).find('.group-level .group-wrap').slice(level, 5).remove();
+		$(self.modal).find('.group-level .group-wrap').slice(level, 10).remove();
+	},
+	getListCategoriesLazada: function(params, callback) {
+		var self = this;
+
+		if (typeof(callback) != 'function') {
+	        callback = function () {};
+	    }
+
+		var tree_category_id = typeof(params['tree_category_id']) != 'undefined' ? params['tree_category_id'] : null;
+		var parent_id = typeof(params['parent_id']) != 'undefined' ? params['parent_id'] : null;
+		$.ajax({
+			async:true,
+			headers: {
+		        'X-CSRF-Token': workspace.csrf_token
+		    },
+	        type: 'POST',
+	        url: '/lazada/category/get-list-lazada-categories',
+	        data: {
+	        	tree_category_id: tree_category_id,
+	        	parent_id: parent_id
+	        },
+	        dataType: 'JSON',
+	        success: function (response) {
+	            callback(response);
+	        },
+	        error: function () {
+	            
+	        }
+	    });
 	},
 	loadListCategoriesLazada: function(params) {
 		var self = this;
@@ -112,43 +147,25 @@ var lazada_category = {
 							  	}
 				html += 	'</ul>' + 
 						'</div>';
+
+				level++;
 			});
 		}
 		$(self.modal).find('.group-level').append(html);	
-	},
-	getListCategoriesLazada: function(params, callback) {
-		var self = this;
-
-		if (typeof(callback) != 'function') {
-	        callback = function () {};
-	    }
-
-		var tree_category_id = typeof(params['tree_category_id']) != 'undefined' ? params['tree_category_id'] : null;
-		var parent_id = typeof(params['parent_id']) != 'undefined' ? params['parent_id'] : null;
-		$.ajax({
-			headers: {
-		        'X-CSRF-Token': self.csrf_token
-		    },
-	        type: 'POST',
-	        url: '/lazada/category/get-list-lazada-categories',
-	        data: {
-	        	tree_category_id: tree_category_id,
-	        	parent_id: parent_id
-	        },
-	        dataType: 'JSON',
-	        success: function (response) {
-	            callback(response);
-	        },
-	        error: function () {
-	            
-	        }
-	    });
 	},
 	setValueTreeId: function(params){
 		var self = this;
 		var level = typeof(params.level) != 'undefined' ? parseInt(params.level) : 1;
 		var lazada_category_id = typeof(params.lazada_category_id) != 'undefined' ? parseInt(params.lazada_category_id) : null;
-		self.tree_category_id.slice(level - 1, 5);
+		self.tree_category_id.slice(level - 1, 10);
 		self.tree_category_id.push(lazada_category_id);		
+	},
+	toggleDisableSelectedButton: function(){
+		var self = this;
+		$(self.modal).find('#btn-selected').toggleClass('disabled', self.lazada_category_id > 0 ? false : true);
 	}
 }
+
+$(document).ready(function() {
+    lazada_category.init(); 
+});
