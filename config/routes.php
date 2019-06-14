@@ -59,6 +59,9 @@ Router::scope('/', function (RouteBuilder $routes) {
         '/product/edit/:id', ['controller' => 'Product', 'action' => 'saveProduct', 'save'], ['pass' => array('id'), "id" => "[0-9]+"]
     );
 
+    $routes->connect(
+        '/product/add/item', ['controller' => 'Product', 'action' => 'ajaxAddItem']
+    );
 
     // lazada
     $routes->connect(

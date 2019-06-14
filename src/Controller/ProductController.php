@@ -71,14 +71,14 @@ class ProductController extends AppController
         }                
 
         // get data inital
-        $lazada_info = true;
-
-        $http = new Client();
+        $lazada_info = true;        
         $extra_url = !empty($id) ? '/' . $id : '';
         $params_url = '';
         if($lazada_info){
             $params_url = '?lazada_info=1';
         }
+
+        $http = new Client();
         $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form' . $extra_url . $params_url);
         $result = $response->getJson();
         $data = !empty($result[DATA]) ? $result[DATA] : [];
@@ -120,6 +120,33 @@ class ProductController extends AppController
 
     }
 
+    public function ajaxAddItem(){
+        $this->layout = false;
+
+        $lazada_sku_attributes = [];
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
+        $lazada_category_id = !empty($data_post['lazada_category_id']) ? intval($data_post['lazada_category_id']) : null;
+
+        $number = !empty($data_post['number']) ? intval($data_post['number']) : 1;
+        if($this->request->is('ajax') && !empty($lazada_category_id)){        
+            $http = new Client(); 
+            $response = $http->get(API_DOMAIN_URL . 'lazada/category/attributes/get?lazada_category_id=' . $lazada_category_id);
+            $result = $response->getJson();
+            $lazada_list_attributes = !empty($result[DATA]) ? $result[DATA] : [];            
+            if(!empty($lazada_list_attributes)){
+                foreach ($lazada_list_attributes as $k => $attribute) {
+                    if($attribute['attribute_type'] == 'sku' && $attribute['is_mandatory']){
+                        $lazada_sku_attributes[] = $attribute;
+                    }                    
+                }
+            }
+        }
+
+        $this->set('lazada_sku_attributes', $lazada_sku_attributes);
+        $this->set('number', $number);
+        $this->render('item');
+    }
+
     public function ajaxUpdateStatus(){
     	
     }
@@ -127,7 +154,6 @@ class ProductController extends AppController
     public function ajaxDeleteProduct(){
 
     }
-
 
 
     public function productExport(){

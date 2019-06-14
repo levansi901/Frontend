@@ -1,20 +1,19 @@
-var lazada_category = {
+var ss_lazada_category = {
 	modal: '#modal-lazada-category',
 	tree_category_id:[],
 	lazada_category_id: null,
 	init: function(params) {
 		var self = this;
-
+		
 		$('.auto-numeric').autoNumeric('init', {
             mDec: 0,
             vMin: 0,
             vMax: 9999999999
         });
 		
-		$('#select_lazada_category').on('click',function() {			
+		$('#select_lazada_category').on('click',function() {		
 			self.lazada_category_id = $('#lazada_category_id').val().length > 0 ? parseInt($('#lazada_category_id').val()) : null;
-			self.tree_category_id = $.trim($('#lazada_category_tree_ids').val()).length > 0 ? $.parseJSON($.trim($('#lazada_category_tree_ids').val())) : [];
-
+			self.tree_category_id = $.trim($('#lazada_category_tree_ids').val()).length > 0 ? $.parseJSON($.trim($('#lazada_category_tree_ids').val())) : [];				
 			self.removeGroupByLevel(0);
 			self.toggleDisableSelectedButton();
 			var params = { 
@@ -82,10 +81,11 @@ var lazada_category = {
 		});
 
 		$(self.modal).on('click', '#btn-selected', function() {
-			$('#lazada_category_id').val(self.data.lazada_category_id);
-			$('#lazada_category_tree_ids').val(JSON.parse(self.data.lazada_category_tree_ids));
-		});		
-		
+			$('#lazada_category_id').val(self.lazada_category_id);
+			$('#lazada_category_tree_ids').val(JSON.stringify(self.tree_category_id));
+
+			$(self.modal).closeModal();
+		});			
 	},
 	removeGroupByLevel: function(level){
 		var self = this;
@@ -172,6 +172,49 @@ var lazada_category = {
 	}
 }
 
+var ss_product = {
+	wrap_items: '#wrap-items',
+	wrap_list: '#list-items',
+	items_deleted: [],
+	init: function(){
+		var self = this;
+		
+		$(self.wrap_items).on('click', '#add-item', function() {
+			$.ajax({
+				async:true,
+				headers: {
+			        'X-CSRF-Token': workspace.csrf_token
+			    },
+		        type: 'POST',
+		        url: '/product/add/item',
+		        data: {
+		        	lazada_category_id: $('#lazada_category_id').val(),
+		        	number: $(self.wrap_list).find('.collapsible > li').length
+		        },
+		        dataType: 'html',
+		        success: function (response) {
+		            $(self.wrap_list).find('.collapsible').append(response);
+		        },
+		        error: function () {
+		            
+		        }
+		    });
+		});
+
+		$(self.wrap_items).on('click', '.delete-item', function() {
+			var li_item = $(this).closest('.li-item');
+			var item_id = li_item.find('#item_id');
+			if(item_id > 0){
+				self.items_deleted.push(item_id);
+			}
+
+			li_item.remove();
+
+		});
+	}
+}
+
 $(document).ready(function() {
-    lazada_category.init(); 
+    ss_lazada_category.init(); 
+    ss_product.init();
 });
