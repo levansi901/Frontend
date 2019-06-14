@@ -207,9 +207,17 @@ define('API_DOMAIN', 'salesupport.local');
 
 define('API_DOMAIN_URL', API_HTTP . API_DOMAIN . '/rest/');
 
+// system constant
 define('LANG_DEFAULT', 'vie');
 define('LANG', 'lang');
 define('COUNTRY_DEFAULT', 1);
 define('PAGE_DEFAULT', 20);
 define('DESC', 'DESC');
 define('ASC', 'ASC');
+
+define('CODE', 'code');
+define('DATA', 'data');
+define('STATUS', 'status');
+define('MESSAGE', 'message');
+define('SUCCESS', 'success');
+define('ERROR', 'error');

@@ -81,15 +81,35 @@ class ProductController extends AppController
         }
         $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form' . $extra_url . $params_url);
         $result = $response->getJson();
-        $data = !empty($result['data']) ? $result['data'] : [];
-        $list_status = $product = [];
+        $data = !empty($result[DATA]) ? $result[DATA] : [];
+        $list_status = $product = $lazada_list_attributes = $lazada_normal_attributes = $lazada_sku_attributes = [];
         if(!empty($data)){
             $list_status = !empty($data['list_status']) ? $data['list_status'] : [];
             $product = !empty($data['product']) ? $data['product'] : [];
+            $lazada_list_attributes = !empty($data['lazada_list_attributes']) ? $data['lazada_list_attributes'] : [];
         }
-      
+
+        if(!empty($lazada_list_attributes)){
+            foreach($lazada_list_attributes as $attribute){
+                switch($attribute['attribute_type']){
+                    case 'normal':
+                        $lazada_normal_attributes[] = $attribute;
+                        break;
+                    case 'sku':
+                        $lazada_sku_attributes[] = $attribute;
+                        break;                    
+                }
+                
+            }
+        }
+
+        // debug($product);
+        // exit;
+
         $this->set('list_status', $list_status);
         $this->set('product', $product);
+        $this->set('lazada_normal_attributes', $lazada_normal_attributes);
+        $this->set('lazada_sku_attributes', $lazada_sku_attributes);
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_view', $title_view);
         $this->set('title_for_layout', $title_view);

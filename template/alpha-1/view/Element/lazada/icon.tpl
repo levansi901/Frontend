@@ -1,0 +1,1 @@
+<div class="lazada-icon m-r-xxs" tooltip="Thuộc tính Lazada"><div>LAZ</div></div>

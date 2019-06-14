@@ -19,8 +19,8 @@
                 <div class="input-field col s12 m12 l12">
                     <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off">
                     <label for="select_lazada_category">
-                        Danh mục Lazada
-                        <div class="lazada-icon" tooltip="Thuộc tính Lazada"><div>LAZ</div></div>
+                        {$this->element('/lazada/icon')}
+                        Danh mục Lazada                        
                     </label>
 
                     <input type="hidden" id="lazada_category_id" name="lazada_category_id" value="{if !empty($product.lazada_category_id)}{$product.lazada_category_id}{/if}">
@@ -34,8 +34,8 @@
                 <div class="input-field col s12 m12 l12">
                     <input id="lazada_brand_id" name="lazada_brand_id" class="autocomplete" type="text" autocomplete="off">
                     <label for="lazada_brand_id">
-                        Thương hiệu Lazada
-                        <div class="lazada-icon" tooltip="Thuộc tính Lazada"><div>LAZ</div></div>
+                        {$this->element('/lazada/icon')}
+                        Thương hiệu Lazada                        
                     </label>
                 </div>
             </div>
@@ -46,7 +46,7 @@
         <div class="card-content my-form">
             <span class="card-title">Phiên bản sản phẩm</span>
             <div class="row">
-                <ul class="collapsible popout" data-collapsible="expandable">
+                <ul class="collapsible popout collapsible-custom" data-collapsible="expandable">
                     {if !empty($product.items)}
                         {foreach from = $product.items key=k item = item}
                             {assign var = number value = $k + 1}
@@ -58,12 +58,24 @@
                                     <span class="title-item m-r-xxl"> 
                                         {if !empty($item.code)}{$item.code}{/if} 
                                     </span>
-                                    <div class="chip">HTML</div>
-                                    <div class="chip">HTML</div>
-                                    <div class="chip">HTML</div>
                                     <i class="material-icons no-m right" title="Xóa">delete_forever</i>
                                 </div>
                                 <div class="collapsible-body" style="{if $k == 0}display: block;{/if}">
+                                    {if !empty($lazada_sku_attributes)}
+                                        <div class="row m-t-xs">
+                                            {foreach from = $lazada_sku_attributes item = attribute} 
+                                                {if !empty($attribute.is_mandatory)}                      
+                                                    <div class="input-field col s12 m4 l3">
+                                                        {assign var = attribute_value value = ''}
+                                                        {if !empty($item.lazada_item_attributes[$attribute.code])}
+                                                            {assign var = attribute_value value = $item.lazada_item_attributes[$attribute.code]}
+                                                        {/if}
+                                                        {$this->element('/lazada/input',['attribute' => $attribute, 'attribute_value' => $attribute_value , 'show_icon' => true])}
+                                                    </div>
+                                                {/if}
+                                            {/foreach}
+                                        </div>
+                                    {/if}
                                     <div class="row">
                                         <div class="input-field col s12 m4 l3">
                                             <input id="item-code-{$k}" data-name="item-code" name="item[code][]" type="text" class="w-100" length="100" maxlength="100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}" >
@@ -149,7 +161,15 @@
                     {/if}
                 </ul>
             </div>
-            <div class="row">
+
+            <div class="row center">
+                <span class="waves-effect waves-light btn">
+                    <i class="material-icons left">add</i>
+                    Thêm phiên bản mới
+                </span>
+            </div>
+
+            <div class="row hide">
                 <table class="custom-table">
                     <thead>
                         <tr>
@@ -245,24 +265,14 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div>    
 
     <div class="card">
         <div class="card-content my-form">
-            <span class="card-title">Thuộc tính Lazada</span>
-            <div class="row">
-  
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-content my-form">
-            <span class="card-title">Thông tin khác</span>
             <div class="row">
                 <div class="input-field col s12 m4 l3">
                     {$this->Form->select('status',$list_status , ['name'=>'status','empty' => "Trạng thái",'default' => {"{if !empty($product.status)}{$product.status}{/if}"} ,'class' => ''])}
-                    <label>Trạng thái</label>
+                    <label for="status">Trạng thái</label>
                 </div>
             </div>
 
@@ -289,6 +299,28 @@
             </div>
         </div>
     </div>
+
+    {if !empty($lazada_normal_attributes)}
+        <div class="card">
+            <div class="card-content my-form">
+                <span class="card-title">
+                    {$this->element('/lazada/icon')}
+                    Thuộc tính Lazada
+                </span>
+                <div class="row">
+                    {foreach from = $lazada_normal_attributes item = attribute}                        
+                        <div class="input-field col s12 m4 l3">
+                            {assign var = attribute_value value = ''}
+                            {if !empty($product.lazada_attributes[$attribute.code])}
+                                {assign var = attribute_value value = $product.lazada_attributes[$attribute.code]}
+                            {/if}
+                            {$this->element('/lazada/input',['attribute' => $attribute, 'attribute_value' => $attribute_value,'show_icon' => false])}
+                        </div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    {/if}
 
     <div class="card">
         <div class="card-content my-form">
