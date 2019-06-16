@@ -9,9 +9,9 @@
         </span>
         <i class="material-icons no-m right delete-item" title="Xóa">delete_forever</i>
     </div>
-    <div class="collapsible-body" style="{if $k == 0}display: block;{/if}">
-        {if !empty($lazada_sku_attributes)}
-            <div class="row m-t-xs">
+    <div class="collapsible-body" style="{if $k == 0}display: block;{/if}">        
+        <div class="row m-t-xs sku-attributes">
+            {if !empty($lazada_sku_attributes)}
                 {foreach from = $lazada_sku_attributes item = attribute} 
                     {if !empty($attribute.is_mandatory)}                      
                         <div class="input-field col s12 m4 l3">
@@ -23,9 +23,9 @@
                         </div>
                     {/if}
                 {/foreach}
-            </div>
-        {/if}
-
+            {/if}
+        </div>
+        
         <div class="row">
             <div class="input-field col s12 m4 l3">
                 <input id="item-code-{$k}" data-name="item-code" name="item[code][]" type="text" class="w-100" length="100" maxlength="100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}" >

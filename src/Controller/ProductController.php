@@ -122,17 +122,14 @@ class ProductController extends AppController
 
     public function ajaxAddItem(){
         $this->layout = false;
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
+
+        $lazada_category_id = !empty($data_post['lazada_category_id']) ? intval($data_post['lazada_category_id']) : null;
+        $number = !empty($data_post['number']) ? intval($data_post['number']) : 1;
 
         $lazada_sku_attributes = [];
-        $data_post = !empty($this->request->data) ? $this->request->data : [];
-        $lazada_category_id = !empty($data_post['lazada_category_id']) ? intval($data_post['lazada_category_id']) : null;
-
-        $number = !empty($data_post['number']) ? intval($data_post['number']) : 1;
-        if($this->request->is('ajax') && !empty($lazada_category_id)){        
-            $http = new Client(); 
-            $response = $http->get(API_DOMAIN_URL . 'lazada/category/attributes/get?lazada_category_id=' . $lazada_category_id);
-            $result = $response->getJson();
-            $lazada_list_attributes = !empty($result[DATA]) ? $result[DATA] : [];            
+        if($this->request->is('ajax') && !empty($lazada_category_id)){ 
+            $lazada_list_attributes = $this->getListLazadaAttributes($lazada_category_id);
             if(!empty($lazada_list_attributes)){
                 foreach ($lazada_list_attributes as $k => $attribute) {
                     if($attribute['attribute_type'] == 'sku' && $attribute['is_mandatory']){
@@ -145,6 +142,38 @@ class ProductController extends AppController
         $this->set('lazada_sku_attributes', $lazada_sku_attributes);
         $this->set('number', $number);
         $this->render('item');
+    }
+
+    public function ajaxLoadLazadaSkuAttributes(){
+        $this->layout = false;
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
+
+        $lazada_category_id = !empty($data_post['lazada_category_id']) ? intval($data_post['lazada_category_id']) : null;    
+        $lazada_sku_attributes = [];
+        if($this->request->is('ajax') && !empty($lazada_category_id)){ 
+            $lazada_list_attributes = $this->getListLazadaAttributes($lazada_category_id);
+            if(!empty($lazada_list_attributes)){
+                foreach ($lazada_list_attributes as $k => $attribute) {
+                    if($attribute['attribute_type'] == 'sku' && $attribute['is_mandatory']){
+                        $lazada_sku_attributes[] = $attribute;
+                    }                    
+                }
+            }
+        }
+
+        $this->set('lazada_sku_attributes', $lazada_sku_attributes);
+        $this->render('sku_attributes');
+    }
+
+    private function getListLazadaAttributes($lazada_category_id = null) {
+        $result = [];
+        if(!empty($lazada_category_id)){        
+            $http = new Client(); 
+            $response = $http->get(API_DOMAIN_URL . 'lazada/category/attributes/get?lazada_category_id=' . $lazada_category_id);
+            $result = $response->getJson();
+            $result = !empty($result[DATA]) ? $result[DATA] : [];                        
+        }
+        return $result;
     }
 
     public function ajaxUpdateStatus(){

@@ -167,7 +167,7 @@
 
         <div class="row m-b-xs right">
             <a class="modal-close waves-effect waves-light btn black m-r-xs s6">Hủy bỏ</a>
-            <a id="btn-selected" class="waves-effect waves-light btn s6 disabled">
+            <a id="select-lazada-category" class="waves-effect waves-light btn s6 disabled">
                 Đồng ý
             </a>
         </div>      
