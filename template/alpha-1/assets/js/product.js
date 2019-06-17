@@ -95,7 +95,7 @@ var ss_product = {
 				$.ajax({
 					async: true,
 					headers: {
-				        'X-CSRF-Token': workspace.csrf_token
+				        'X-CSRF-Token': ss_backend.csrf_token
 				    },
 			        type: 'POST',
 			        url: '/product/item/sku-attributes/load',
@@ -103,11 +103,17 @@ var ss_product = {
 			        	lazada_category_id: $('#lazada_category_id').val(),
 			        },
 			        dataType: 'html',
-			        success: function (response) {			        	
+			        success: function (response) {	        	
 			            $(ss_product.item_product.wrap_list).find('.li-item').each(function() {
 			            	$(this).find('.sku-attributes').html(response);
 			            });
-			            $('select').material_select();
+			            if(response.length > 0){
+			            	$('select').material_select();
+			            	ss_product.item_product.can_add = true;
+			            }else{
+			            	ss_product.item_product.can_add = false;
+			            }
+			            
 			        },
 			        error: function () {
 			            
@@ -132,7 +138,7 @@ var ss_product = {
 			$.ajax({
 				async:true,
 				headers: {
-			        'X-CSRF-Token': workspace.csrf_token
+			        'X-CSRF-Token': ss_backend.csrf_token
 			    },
 		        type: 'POST',
 		        url: '/lazada/category/get-list-lazada-categories',
@@ -207,17 +213,18 @@ var ss_product = {
 		can_delete: true,
 		event: function(){
 			var self = this;
+
 			$(self.wrap_items).on('click', '#add-item', function(e) {
-				e.preventDefault();
 				// if(!self.can_add){
 				// 	return false;
 				// }
 
 				var number = $(self.wrap_list).find('.collapsible > li.li-item').length > 0 ? parseInt($(self.wrap_list).find('.collapsible > li.li-item').length) + 1 : 1;
+
 				$.ajax({
 					async: true,
 					headers: {
-				        'X-CSRF-Token': workspace.csrf_token
+				        'X-CSRF-Token': ss_backend.csrf_token
 				    },
 			        type: 'POST',
 			        url: '/product/item/add',
@@ -227,46 +234,59 @@ var ss_product = {
 			        },
 			        dataType: 'html',
 			        success: function (response) {
-			            $(self.wrap_list).find('.collapsible').append(response);
-			            $('select').material_select();
+			            $(self.wrap_list).find('.collapsible').append(response);	            			            
+			            if(response.length > 0){
+			            	$('select').material_select();
+			            	self.eventNotSync();
+			            }			            	
 			        },
 			        error: function () {
-			            
 			        }
 			    });
-			});
-
-			$(self.wrap_items).on('click', '.delete-item', function() {
-				if(!self.can_delete){
-					return false;
-				}
-
-				var li_item = $(this).closest('.li-item');
-				var item_id = li_item.find('#item_id');
-				if(item_id > 0){
-					self.items_deleted.push(item_id);
-				}
-				li_item.remove();
-				self.resetNumberItem();
-			});
+			});			
 
 			$(self.wrap_items).on('keyup', 'input[data-name="item-code"]', function() {
 				$(this).closest('.li-item').find('.title-item').html($.trim($(this).val()));
 			});
+
+			self.eventNotSync();
+		},
+		eventNotSync: function(){
+			var self = this;
+			$('.collapsible .delete-item').on('click', function(e) { 
+				e.stopPropagation();
+				if(!self.can_delete){
+					return false;
+				}
+
+				var li_item = $(this).closest('.li-item');				
+				ss_backend.alertWarning({
+					title: 'Xóa phiên bản sản phẩm',
+					text: 'Bạn chắc chắn muốn xóa phiên bản này ?'
+				}, function(rs){		
+					var item_id = li_item.find('#item_id');						
+					if(item_id > 0){
+						self.items_deleted.push(item_id);
+					}
+					li_item.remove();
+					self.resetIndexItem();
+					self.checkConditions();
+				});
+			});
 		},
 		checkConditions: function(){
 			var self = this;
+
 			// check can delete
 			if($(self.wrap_list).find('.collapsible > .li-item').length == 1){
 				self.can_delete = false;
 			}
 			$(self.wrap_list).find('.collapsible .li-item .delete-item').toggleClass('hide', !self.can_delete);
-			
-			// check can add
 		},
-		resetNumberItem: function(){
-			$(self.wrap_list).find('.collapsible > .li-item .collapsible-header').each(function(i, li_item) {
-				$(this).find('i').html(filter_ + 1);
+		resetIndexItem: function(){
+			var self = this;
+			$(self.wrap_list + ' .collapsible .li-item').each(function(i, li_item) {
+				$(this).find('.collapsible-header i.index-item').html('filter_' + 1);
 			});
 		},		
 	}

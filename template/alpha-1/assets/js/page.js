@@ -1,32 +1,54 @@
-var workspace = {
+var ss_backend = {
 	csrf_token: null,
-	alert: function(params){
+	alertWarning: function(params, callback){
+		if (typeof(callback) != 'function') {
+	        callback = function () {};
+	    }
+
+		var type = typeof(params.type) != 'undefined' ? params.type : 'warning';
 		var title = typeof(params.title) != 'undefined' ? params.title : '';
-		var text = typeof(params.text) != 'undefined' ? params.text : '';
-		var type = typeof(params.type) != 'undefined' ? params.type : 'success';
+		var text = typeof(params.text) != 'undefined' ? params.text : '';		
+		var reason_validation = typeof(params.reason_validation) != 'undefined' ? params.reason_validation : 'Vui lòng nhập lý do xóa';
 
-		switch(type){
-			case 'success':
+		swal({   
+		    title: title,   
+		    text: text,   
+		    type: type,   
+		    confirmButtonText: 'Đồng ý', 
+		    cancelButtonText: 'Hủy bỏ',
+		    showCancelButton: true,   
+		    closeOnConfirm: true,
+		}, function(response){  
 
-			break;
+			if(type == 'input'){
+				if (response === false) return false;              
+			    if (response === '') {     
+			        swal.showInputError(reason_validation);     
+			        return false   
+			    }   
+			}
 
-			case 'warning':				
-				swal({   
-				    title: title,   
-				    text: text,   
-				    type: 'warning',   
-				    showCancelButton: true,   
-				    confirmButtonColor: "#DD6B55",   
-				    confirmButtonText: "Yes, delete it!", 
-				    closeOnConfirm: false 
-				}, function(){  
-				    swal("Deleted!", "Your imaginary file has been deleted.", "success"); 
-				});
-			break;
-		}
+			if (response && type == 'warning') {
+		        callback();
+		    }
+
+		});
 	}
 }
 
 $(document).ready(function() {
-    workspace.csrf_token = $('#csrf_token').val();
+    ss_backend.csrf_token = $('#csrf_token').val();
+});
+
+
+$(document).ajaxStart(function () {
+    preloader.on();
+});
+
+$(document).ajaxComplete(function () {
+    preloader.off();
+});
+
+$(document).ajaxError(function () {
+    preloader.off();
 });
