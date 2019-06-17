@@ -3,7 +3,6 @@ html,
     color: #555555;
 }
 
-
 .input-field > label.active ,
 .input-field > .select-wrapper+label{
     color: #9e9e9e;
@@ -384,4 +383,9 @@ textarea.materialize-textarea,
 .sweet-alert button.confirm,
 .sweet-alert button.confirm:hover{
     background-color: #F44336 !important;
+}
+
+.toast {
+    min-width: 200px;
+    font-weight: 500;
 }

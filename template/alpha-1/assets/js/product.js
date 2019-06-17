@@ -9,7 +9,8 @@ var ss_product = {
         });
 
         self.lazada_category.event();
-        self.item_product.event();			
+        self.item_product.event();
+        self.product_form.event();	
 	},
 	lazada_category: {
 		modal: '#modal-lazada-category',
@@ -289,6 +290,34 @@ var ss_product = {
 				$(this).find('.collapsible-header i.index-item').html('filter_' + 1);
 			});
 		},		
+	},
+	product_form: {
+		btn_submit: '#btn-submit',
+		event: function(){
+			var self = this;			
+
+			$(document).on('click', self.btn_submit, function () {
+				var check = true;
+
+				if($(ss_product.item_product.wrap_list + ' .collapsible .li-item').length < 1) {
+					ss_backend.notification({
+						type: 'error',
+						title: 'Sản phẩm hiện tại chưa có phiên bản nào'
+					});
+					check = false;
+				}
+
+				if(!check){
+					return false;
+				}
+			});
+
+
+
+			$('#product-form').validate({
+
+			});
+		}
 	}
 }
 

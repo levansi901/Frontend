@@ -33,11 +33,37 @@ var ss_backend = {
 		    }
 
 		});
+	},
+	notification: function(params, callback){
+		if (typeof(callback) != 'function') {
+	        callback = function () {};
+	    }
+	    var type = typeof(params.type) != 'undefined' ? params.type : 'sucess';
+		var title = typeof(params.title) != 'undefined' ? params.title : '';
+		var time = typeof(params.time) != 'undefined' ? params.time : 3000;
+		var icon, wrap_class = '';
+
+		switch(type){
+			case 'sucess':
+				wrap_class = 'green';
+				icon = '<i class="material-icons m-r-lg">check</i>';
+			break;
+
+			case 'error':
+				wrap_class = 'red';
+				icon = '<i class="material-icons m-r-lg">close</i>';
+			break;
+		}
+	    Materialize.toast(icon + title, time, wrap_class, callback);
 	}
 }
 
 $(document).ready(function() {
     ss_backend.csrf_token = $('#csrf_token').val();
+    $('.datepicker').pickadate({
+        // selectMonths: true,
+        // selectYears: 15
+    });
 });
 
 

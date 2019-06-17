@@ -58,14 +58,14 @@
             </div>
 
             <div class="input-field col s12 m4 l3">
-                <input id="item-time-start-{$k}" data-name="item-time-start" name="item[time_start_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.time_start_discount)}{$item.time_start_discount}{/if}">
+                <input id="item-time-start-{$k}" data-name="item-time-start" name="item[time_start_discount][]" type="text" class="w-100 datepicker" autocomplete="off" value="{if !empty($item.time_start_discount)}{$item.time_start_discount}{/if}">
                 <label for="item-time-start-{$k}"> 
                     Ngày bắt đầu giảm giá 
                 </label>                                    
             </div>
 
             <div class="input-field col s12 m4 l3">
-                <input id="item-time-end-{$k}" data-name="item-time-end" name="item[time_end_discount][]" type="text" class="w-100" autocomplete="off" value="{if !empty($item.time_end_discount)}{$item.time_end_discount}{/if}">
+                <input id="item-time-end-{$k}" data-name="item-time-end" name="item[time_end_discount][]" type="text" class="w-100 datepicker" autocomplete="off" value="{if !empty($item.time_end_discount)}{$item.time_end_discount}{/if}">
                 <label for="item-time-end-{$k}">
                     Ngày kết thúc giảm giá
                 </label>

@@ -61,7 +61,8 @@ class ProductController extends AppController
         }
     }
 
-    public function saveProduct($id = null){
+    public function saveProduct($id = null){        
+        static::$js_files[] = 'assets/plugins/jquery-validation/jquery.validate.min.js';
         static::$js_files[] = 'assets/js/pages/autoNumeric-min.js';
         static::$js_files[] = 'assets/js/product.js';
 
