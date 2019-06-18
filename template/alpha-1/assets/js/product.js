@@ -304,57 +304,52 @@ var ss_product = {
 		}	
 	},
 	product_form: {
-		btn_submit: '#btn-submit',
+		btn_submit: '.btn-submit-form',
+		form: '#product-form',
 		event: function(){
 			var self = this;			
 
 			$(document).on('click', self.btn_submit, function (e) {
 				e.stopPropagation();
-				var validate = ss_product.item_product.validateItem();
+				var check = ss_product.item_product.validateItem();
 
-				if (validate) {
-		            $('#validation-form').submit();
+				if (check) {
+		            $(self.form).submit();
 		        }
 			});
-
-
-
-			$('#product-form').validate({
+			self.validationForm();
+		},
+		validationForm: function(){
+			var self = this;
+			
+			$(self.form).validate({
 				focusInvalid: true,
 				messages: {
 		            'name': {
 		                required: 'Vui lòng nhập tên sản phẩm'
 		            },	            
 	        	},
-	        	highlight: function (e) {
-		          
+	        	highlight: function (e) {	
 		        },
-		        success: function (e) {
-		            
+		        success: function (e) {		           
 		        },
 		        errorPlacement: function (error, element) {
+		        	element.after(error);
 		        },
-		        submitHandler: function (form) {
-
+		        submitHandler: function (this_form) {
 		            var redirect_page = $('.id-after-save:input[name=after_save]:checked').val();
 
-		            switch (redirect_page) {
-		                case 'list':
-		                    editAjax(form, "{$url_ajax}", "{$url_redirect}");
-		                    break;
-		                case 'store':
-		                    editAjax(form, "{$url_ajax}", null, function (e) {
-		                        window.location.href = '/admin/store/bill/add-supplier?product_id=' + e.id;
-		                    });
-		                    break;
-		                default:
-		                    editAjax(form, "{$url_ajax}", 1);
-		            }
+		            ss_backend.ajaxSubmitForm({
+		            	url: $(self.form).attr('action'),
+		            	type: $(self.form).attr('method'),
+		            	data: $(this_form).serialize()
+		            });
+		            
 		        },
 		        invalidHandler: function (form) {
 		        }
 			});
-		}
+		},
 	}
 }
 

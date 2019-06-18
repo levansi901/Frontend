@@ -56,7 +56,15 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/product/edit/:id', ['controller' => 'Product', 'action' => 'saveProduct', 'save'], ['pass' => array('id'), "id" => "[0-9]+"]
+        '/product/edit/:id', ['controller' => 'Product', 'action' => 'saveProduct'], ['pass' => array('id'), "id" => "[0-9]+"]
+    );
+
+    $routes->connect(
+        '/product/save', ['controller' => 'Product', 'action' => 'ajaxSaveProduct']
+    );
+
+    $routes->connect(
+        '/product/save/:id', ['controller' => 'Product', 'action' => 'ajaxSaveProduct'], ['pass' => array('id'), "id" => "[0-9]+"]
     );
 
     $routes->connect(

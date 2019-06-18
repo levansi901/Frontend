@@ -28,7 +28,7 @@
         
         <div class="row">
             <div class="input-field col s12 m4 l3">
-                <input id="item-code-{$k}" data-name="item-code" name="item[code][]" type="text" class="w-100" length="100" maxlength="100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}" >
+                <input id="item-code-{$k}" data-name="item-code" name="item[code][]" type="text" class="w-100 required" length="100" maxlength="100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}" >
                 <label for="item-code-{$k}"> 
                     Mã 
                 </label>
@@ -92,16 +92,16 @@
             <div class="file-field input-field col s12 m4 l6">
                 <div class="btn">
                     <i class="material-icons">perm_media</i>
-                    <input type="file" multiple>
+                    <input name="item[upload_images][]" type="file" multiple>
                 </div>
                 <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Chọn 1 hoặc nhiều ảnh">
+                    <input class="file-path" type="text" placeholder="Chọn 1 hoặc nhiều ảnh">
                 </div>
             </div>
 
             <div class="col s12 m6 l6">
                 <div class="col s2 m3 l2">
-                    <img style="height: 40px;" class="" src="/template/alpha-1/assets/images/card-image.jpg" alt="">
+                    <!-- <img style="height: 40px;" class="" src="/template/alpha-1/assets/images/card-image.jpg" alt=""> -->
                 </div>                                
             </div>                                
         </div>

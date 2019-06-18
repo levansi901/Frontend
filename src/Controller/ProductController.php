@@ -117,8 +117,18 @@ class ProductController extends AppController
         $this->render('save');
     }
 
-    public function ajaxSaveProduct(){
+    public function ajaxSaveProduct($id = null){
+        $this->layout = false;
+        $this->autoRender = false;
 
+        $result = [];
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
+        debug($data_post);
+        exit;
+        if ($this->request->is('post') && !empty($data_post)) {
+
+        }
+        return json_encode($result);
     }
 
     public function ajaxAddItem(){

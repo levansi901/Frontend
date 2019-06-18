@@ -6,12 +6,12 @@
 {$this->element('/layout/breadcrumb',['data'=> $data_breadcrumb])}
 
 <div class="col s12 m12 l12">
-    <form id="product-form" role="form" action="" method="POST" enctype="multipart/form-data">    
+    <form id="product-form" role="form" action="/product/save{if !empty($product.id)}/{$product.id}{/if}" method="POST" enctype="multipart/form-data">    
     	<div class="card">
             <div class="card-content my-form">
                 <div class="row">
                     <div class="input-field col s12 m12 l12">
-                        <input id="name" name="name" type="text" length="255" maxlength="255" autocomplete="off" value="{if !empty($product.name)}{$product.name}{/if}">
+                        <input id="name" name="name" type="text" length="255" maxlength="255" autocomplete="off" value="{if !empty($product.name)}{$product.name}{/if}" class="required">
                         <label for="name">Tên sản phẩm</label>
                     </div>
                 </div>
@@ -53,6 +53,8 @@
                                 {assign var = number value = $k + 1}
                                 {$this->element('../Product/item',[item => $item, number => $number])}
                             {/foreach}
+                        {else}
+                            {$this->element('../Product/item',[item => [], number => 1])}
                         {/if}
                     </ul>
                 </div>
@@ -147,7 +149,7 @@
                         Hủy bỏ
                     </span>
 
-                    <span class="waves-effect waves-light btn s6">
+                    <span class="waves-effect waves-light btn s6 btn-submit-form">
                         <i class="material-icons left lh-36">check</i>
                         Thêm mới
                     </span>
