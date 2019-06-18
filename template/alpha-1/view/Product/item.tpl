@@ -1,7 +1,7 @@
 {assign var = k value = $number - 1}
 <li class="li-item {if $k == 0}active{/if}">
     <div class="collapsible-header {if $k == 0}active{/if}">
-        <i class="material-icons m-r-xs">
+        <i class="material-icons m-r-xs index-item">
             filter_{if $number < 10}{$number}{else}9_plus{/if}
         </i>
         <span class="title-item m-r-xxl"> 
