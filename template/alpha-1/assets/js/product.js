@@ -289,33 +289,70 @@ var ss_product = {
 			$(self.wrap_list + ' .collapsible .li-item').each(function(i, li_item) {
 				$(this).find('.collapsible-header i.index-item').html('filter_' + 1);
 			});
-		},		
+		},
+		validateItem: function(){
+			var self = this;
+			var check = true;
+			if($(self.wrap_list + ' .collapsible .li-item').length < 1) {
+				ss_backend.notification({
+					type: 'error',
+					title: 'Sản phẩm hiện tại chưa có phiên bản nào'
+				});
+				check = false;
+			}
+			return check;
+		}	
 	},
 	product_form: {
 		btn_submit: '#btn-submit',
 		event: function(){
 			var self = this;			
 
-			$(document).on('click', self.btn_submit, function () {
-				var check = true;
+			$(document).on('click', self.btn_submit, function (e) {
+				e.stopPropagation();
+				var validate = ss_product.item_product.validateItem();
 
-				if($(ss_product.item_product.wrap_list + ' .collapsible .li-item').length < 1) {
-					ss_backend.notification({
-						type: 'error',
-						title: 'Sản phẩm hiện tại chưa có phiên bản nào'
-					});
-					check = false;
-				}
-
-				if(!check){
-					return false;
-				}
+				if (validate) {
+		            $('#validation-form').submit();
+		        }
 			});
 
 
 
 			$('#product-form').validate({
+				focusInvalid: true,
+				messages: {
+		            'name': {
+		                required: 'Vui lòng nhập tên sản phẩm'
+		            },	            
+	        	},
+	        	highlight: function (e) {
+		          
+		        },
+		        success: function (e) {
+		            
+		        },
+		        errorPlacement: function (error, element) {
+		        },
+		        submitHandler: function (form) {
 
+		            var redirect_page = $('.id-after-save:input[name=after_save]:checked').val();
+
+		            switch (redirect_page) {
+		                case 'list':
+		                    editAjax(form, "{$url_ajax}", "{$url_redirect}");
+		                    break;
+		                case 'store':
+		                    editAjax(form, "{$url_ajax}", null, function (e) {
+		                        window.location.href = '/admin/store/bill/add-supplier?product_id=' + e.id;
+		                    });
+		                    break;
+		                default:
+		                    editAjax(form, "{$url_ajax}", 1);
+		            }
+		        },
+		        invalidHandler: function (form) {
+		        }
 			});
 		}
 	}

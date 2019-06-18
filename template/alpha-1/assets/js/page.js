@@ -55,6 +55,43 @@ var ss_backend = {
 			break;
 		}
 	    Materialize.toast(icon + title, time, wrap_class, callback);
+	},
+	ajaxSubmitForm: function(params, callback){
+		var self = this;		
+	    var url = typeof(params.url) != 'undefined' ? params.url : '';
+	    var type = typeof(params.type) != 'undefined' ? params.type : 'POST';
+	    var type_data = typeof(params.type_data) != 'undefined' ? params.type_data : 'json';
+	    var data = typeof(params.data) != 'undefined' ? params.data : {};
+	    var async = typeof(params.async) != 'undefined' ? params.async : true;
+
+		$.ajax({
+			headers: {
+		        'X-CSRF-Token': self.csrf_token
+		    },
+	        async: async,
+	        url: url,
+	        type: type,
+	        dataType: type_data,
+	        data: data,	        
+	        cache: false,
+	        processData: false,
+	        success: function (response) {
+	        	var status = typeof(response.status) != 'undefined' ? response.status : true;
+	        	var message = typeof(response.message) != 'undefined' ? response.message : '';
+	            if (status) {
+	                if (typeof(callback) != 'function') {
+	                    successHandler(response, url_redirect);
+	                } else {
+	                    callback(response);
+	                }
+	            } else {
+	                errorHandler(response);
+	            }
+	        },
+	        error: function (response, json, errorThrown) {
+	            errorHandler(response, true);
+	        }
+	    });
 	}
 }
 
@@ -65,7 +102,6 @@ $(document).ready(function() {
         // selectYears: 15
     });
 });
-
 
 $(document).ajaxStart(function () {
     preloader.on();
