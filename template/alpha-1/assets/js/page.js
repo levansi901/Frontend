@@ -1,3 +1,8 @@
+String.prototype.replaceAll = function (search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
 var ss_backend = {
 	csrf_token: null,
 	alertWarning: function(params, callback){
@@ -63,6 +68,21 @@ var ss_backend = {
 
 	    Materialize.toast(icon + title, time, wrap_class, callback);
 	},
+	showValidateError: function(params, callback){
+		var input = typeof(params.input_object) != 'undefined' ? params.input_object : null;
+		var error_message = typeof(params.error_message) != 'undefined' ? params.error_message : null;	
+
+		if(input.length > 0 && error_message.length > 0){
+			input.next('label.error').remove();
+			if (typeof(callback) != 'function') {
+		        callback = function () {};
+		    }
+			var id = typeof(input.attr('id')) != 'undefined' ? input.attr('id') + '-error' : '';
+			var error = '<label id="' + id + '" class="error" for="' + id + '">' + error_message + '</label>';
+			input.after(error).focus();
+			callback();
+		}		
+	},
 	ajaxSubmitForm: function(params){
 		var self = this;
 
@@ -91,6 +111,7 @@ var ss_backend = {
 	        data: data,	        
 	        cache: false,
 	        processData: false,
+	        contentType: false,
 	    }).done(function(response) {
 		   	var status = typeof(response.status) != 'undefined' ? response.status : true;
         	var message = typeof(response.message) != 'undefined' ? response.message : '';

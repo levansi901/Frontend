@@ -123,12 +123,19 @@ class ProductController extends AppController
 
         $result = [];
         $data_post = !empty($this->request->data) ? $this->request->data : [];
-        debug($data_post);
-        exit;
         if ($this->request->is('post') && !empty($data_post)) {
+            $data_post['id'] = $id;
 
+            $http = new Client();
+            $response = $http->post(API_DOMAIN_URL . 'product/save', json_encode($data_post), ['type' => 'json']);            
+            $result = $response->getJson();
+            $data = !empty($result[DATA]) ? $result[DATA] : [];
         }
-        return json_encode($result);
+        // debug($result);
+        // exit;
+        $this->response->type('json');
+        $this->response->body(json_encode($result));
+        return $this->response;
     }
 
     public function ajaxAddItem(){

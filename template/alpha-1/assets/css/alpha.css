@@ -2774,7 +2774,7 @@ input[type=text]:focus:not([readonly])+label, input[type=password]:focus:not([re
 }
 
 .input-field label.error {
-    color: #F44336;
+    color: #F44336 !important;
     position: static;
     top: 0.8rem;
     left: 0.75rem;

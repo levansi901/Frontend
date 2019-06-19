@@ -18,8 +18,8 @@
 
                 <div class="row">
                     <div class="input-field col s12 m12 l12">
-                        <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off">
-                        <label for="select_lazada_category">
+                        <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off" readonly="true" >
+                        <label for="select_lazada_category" class="disabled" >
                             {$this->element('/lazada/icon')}
                             Danh mục Lazada                        
                         </label>

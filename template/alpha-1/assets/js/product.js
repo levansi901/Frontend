@@ -215,6 +215,8 @@ var ss_product = {
 		event: function(){
 			var self = this;
 
+			self.activeItem(0);
+
 			$(self.wrap_items).on('click', '#add-item', function(e) {
 				// if(!self.can_add){
 				// 	return false;
@@ -235,8 +237,9 @@ var ss_product = {
 			        },
 			        dataType: 'html',
 			        success: function (response) {
-			            $(self.wrap_list).find('.collapsible').append(response);	            			            
+			            $(self.wrap_list).find('.collapsible').append(response);            			            
 			            if(response.length > 0){
+			            	self.activeItem($(self.wrap_list).find('.li-item').length - 1);
 			            	$('select').material_select();
 			            	self.eventNotSync();
 			            }			            	
@@ -287,21 +290,60 @@ var ss_product = {
 		resetIndexItem: function(){
 			var self = this;
 			$(self.wrap_list + ' .collapsible .li-item').each(function(i, li_item) {
-				$(this).find('.collapsible-header i.index-item').html('filter_' + 1);
+				$(this).attr('data-index', i);
+				$(this).find('.collapsible-header i.index-item').html('filter_' + (i + 1));
 			});
+		},
+		activeItem: function(index){
+			var self = this;
+			var li_item = $(self.wrap_list + ' .collapsible .li-item[data-index="'+ index +'"]');
+			if(typeof(li_item) != 'undefined'){
+				li_item.addClass('active');
+				li_item.find('.collapsible-header').addClass('active');
+				li_item.find('.collapsible-body').show();
+			}		
 		},
 		validateItem: function(){
 			var self = this;
-			var check = true;
 			if($(self.wrap_list + ' .collapsible .li-item').length < 1) {
 				ss_backend.notification({
 					type: 'error',
 					title: 'Sản phẩm hiện tại chưa có phiên bản nào'
 				});
-				check = false;
+				return false;
 			}
-			return check;
-		}	
+
+			$(self.wrap_list + ' .collapsible .li-item').each(function(index, li_item) {
+				var li_index = $(this).data('index');
+				var input_code = $(this).find('input[data-name="item-code"]');
+				var input_price = $(this).find('input[data-name="item-price"]');
+				var input_price_discount = $(this).find('input[data-name="item-price-discount"]');
+
+				var code = typeof(input_code.val()) != 'undefined' ? $.trim(input_code.val()) : '';
+				var price = typeof(input_price.val()) != 'undefined' ? parseFloat($.trim(input_price.val().replaceAll(',', ''))) : 0;
+				var price_discount = typeof(input_price_discount.val()) != 'undefined' ? parseFloat($.trim(input_price_discount.val().replaceAll(',', ''))) : 0;
+
+				if(code.length == 0){
+					ss_backend.showValidateError({
+						input_object: input_code,
+						error_message: 'Mã sản phẩm không được để trống'
+					});
+					self.activeItem(li_index);
+					return false;
+				}
+
+				if(price_discount > price){
+					ss_backend.showValidateError({
+						input_object: input_price_discount,
+						error_message: 'Giá khuyến mãi không thể lớn hơn giá bán'
+					});
+					return false;
+				}
+				
+			});
+
+			return true;
+		}
 	},
 	product_form: {
 		btn_submit: '.btn-submit-form',
@@ -309,15 +351,17 @@ var ss_product = {
 		event: function(){
 			var self = this;			
 
+			self.validationForm();
+
+
 			$(document).on('click', self.btn_submit, function (e) {
 				e.stopPropagation();
 				var check = ss_product.item_product.validateItem();
-
 				if (check) {
 		            $(self.form).submit();
 		        }
 			});
-			self.validationForm();
+
 		},
 		validationForm: function(){
 			var self = this;
@@ -337,12 +381,14 @@ var ss_product = {
 		        	element.after(error);
 		        },
 		        submitHandler: function (this_form) {
+		        	// console.log(new FormData(this_form));
+		        	// return false;
 		            var redirect_page = $('.id-after-save:input[name=after_save]:checked').val();
-
+		            // console.log($(this_form).serialize());
 		            ss_backend.ajaxSubmitForm({
 		            	url: $(self.form).attr('action'),
 		            	type: $(self.form).attr('method'),
-		            	data: $(this_form).serialize()
+		            	data: new FormData(this_form)
 		            });
 		            
 		        },
