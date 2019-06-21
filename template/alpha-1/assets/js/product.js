@@ -13,7 +13,9 @@ var ss_product = {
 	    	closeOnSelect: true,
 			closeOnClear: true,
 	        onClose: function() {
-
+	        	if(typeof(this.$node) != 'undefined'){
+	        		$(this.$node).focus();
+	        	}	        	
 			},
 	    });
 
@@ -251,7 +253,16 @@ var ss_product = {
 			            	self.activeItem($(self.wrap_list).find('.li-item').length - 1);
 			            	$('select').material_select();
 			            	self.eventNotSync();
-			            	$('.datepicker').pickadate();
+			            	$('.datepicker').pickadate({
+						    	format: 'dd/mm/yyyy',
+						    	closeOnSelect: true,
+								closeOnClear: true,
+						        onClose: function() {
+						        	if(typeof(this.$node) != 'undefined'){
+						        		$(this.$node).focus();
+						        	}	        	
+								},
+						    });
 			            }			            	
 			        },
 			        error: function () {
