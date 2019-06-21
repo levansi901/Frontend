@@ -140,8 +140,11 @@ var ss_backend = {
 $(document).ready(function() {
     ss_backend.csrf_token = $('#csrf_token').val();
     $('.datepicker').pickadate({
-        // selectMonths: true,
-        // selectYears: 15
+    	format: 'dd/mm/yyyy',
+    	closeOnSelect: true,
+        onClose: function() {
+		    console.log('Closed now')
+		},
     });
 });
 
