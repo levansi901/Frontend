@@ -139,13 +139,6 @@ var ss_backend = {
 
 $(document).ready(function() {
     ss_backend.csrf_token = $('#csrf_token').val();
-    $('.datepicker').pickadate({
-    	format: 'dd/mm/yyyy',
-    	closeOnSelect: true,
-        onClose: function() {
-		    console.log('Closed now')
-		},
-    });
 });
 
 $(document).ajaxStart(function () {

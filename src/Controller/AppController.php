@@ -10,8 +10,8 @@ use View\SmartyView;
 class AppController extends Controller
 {
     public static $css_layout = [
-        'assets/plugins/materialize/css/materialize.min.css',
-        'assets/plugins/material-preloader/css/materialPreloader.min.css',
+        'assets/plugins/materialize/css/materialize.css',
+        'assets/plugins/material-preloader/css/materialPreloader.css',
         'assets/plugins/sweetalert/sweetalert.css',
         'assets/css/alpha.css',
         'assets/css/custom.css'
@@ -19,8 +19,8 @@ class AppController extends Controller
 
     public static $js_layout = [
         'assets/plugins/jquery/jquery-2.2.0.min.js',
-        'assets/plugins/materialize/js/materialize.min.js',
-        'assets/plugins/material-preloader/js/materialPreloader.min.js',
+        'assets/plugins/materialize/js/materialize.js',
+        'assets/plugins/material-preloader/js/materialPreloader.js',
         'assets/plugins/jquery-blockui/jquery.blockui.js',
         'assets/plugins/sweetalert/sweetalert.min.js',
         'assets/js/alpha.min.js',

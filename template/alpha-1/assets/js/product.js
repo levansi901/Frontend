@@ -8,6 +8,15 @@ var ss_product = {
             vMax: 9999999999
         });
 
+        $('.datepicker').pickadate({
+	    	format: 'dd/mm/yyyy',
+	    	closeOnSelect: true,
+			closeOnClear: true,
+	        onClose: function() {
+
+			},
+	    });
+
         self.lazada_category.event();
         self.item_product.event();
         self.product_form.event();	
@@ -242,6 +251,7 @@ var ss_product = {
 			            	self.activeItem($(self.wrap_list).find('.li-item').length - 1);
 			            	$('select').material_select();
 			            	self.eventNotSync();
+			            	$('.datepicker').pickadate();
 			            }			            	
 			        },
 			        error: function () {
