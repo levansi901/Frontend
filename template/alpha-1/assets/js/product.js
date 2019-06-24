@@ -18,7 +18,7 @@ var ss_product = {
 
         self.lazada_category.event();
         self.item_product.event();
-        self.product_form.event();	
+        self.product_form.event();
 	},
 	lazada_category: {
 		modal: '#modal-lazada-category',
@@ -222,18 +222,30 @@ var ss_product = {
 		wrap_items: '#wrap-items',
 		wrap_list: '#list-items',
 		items_deleted: [],
+		item_html: '',
 		can_add: false,
 		can_delete: true,
 		event: function(){
 			var self = this;
 
+			self.item_html = $(self.wrap_list + ' > ul.collapsible > .li-item:first-child')[0].outerHTML;
+			console.log(self.item_html);
 			self.activeItem(0);
 
 			$(self.wrap_items).on('click', '#add-item', function(e) {
 				// if(!self.can_add){
 				// 	return false;
 				// }
-
+				var wrap = $(self.wrap_list + ' > ul.collapsible');
+				var item_html = wrap.find('.li-item:first-child')[0].outerHTML;
+				console.log(item_html);
+				wrap.append(item_html);
+				var index = $(self.wrap_list + ' > ul.collapsible > .li-item:last-child').index();
+				self.clearInputItem(index);
+				self.activeItem(index);
+				self.resetIndexItem();
+				// console.log(item_html);
+				return false;
 				var number = $(self.wrap_list).find('.collapsible > li.li-item').length > 0 ? parseInt($(self.wrap_list).find('.collapsible > li.li-item').length) + 1 : 1;
 
 				$.ajax({
@@ -307,6 +319,11 @@ var ss_product = {
 			$(self.wrap_list + ' .collapsible .li-item').each(function(i, li_item) {
 				$(this).attr('data-index', i);
 				$(this).find('.collapsible-header i.index-item').html('filter_' + (i + 1));
+				$(this).find('input[data-name]').each(function(idx, input) {
+					var id = $(this).data('name')+ '-' + i;
+					$(this).attr('id', id);
+					$(this).next('label').attr('for', id).toggleClass('active',$(this).val().length > 0 ? true : false);
+				});
 			});
 		},
 		activeItem: function(index){
@@ -358,6 +375,17 @@ var ss_product = {
 			});
 
 			return true;
+		},
+		clearInputItem: function(index){
+			var self = this;
+			var li_item = $(self.wrap_list + ' .li-item:eq('+ index +')');
+			if(li_item == 'undefined'){
+				return false;
+			}
+
+			li_item.find('input').val('');
+			// li_item.find('select option:first').val(null).trigger('change');
+			li_item.find('select option:first').prop('selected', 'selected').trigger('change');
 		}
 	},
 	product_form: {

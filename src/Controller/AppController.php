@@ -23,7 +23,7 @@ class AppController extends Controller
         'assets/plugins/material-preloader/js/materialPreloader.js',
         'assets/plugins/jquery-blockui/jquery.blockui.js',
         'assets/plugins/sweetalert/sweetalert.min.js',
-        'assets/js/alpha.min.js',
+        'assets/js/alpha.js',
         'assets/js/page.js'
     ];
 

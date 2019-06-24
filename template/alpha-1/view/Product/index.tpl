@@ -5,7 +5,7 @@
 	<div class="card">
         <div class="card-content">
         	<div class="row">
-                <div class="input-field col s12 m4 l2">
+                <div class="input-field col s12 m4 l3">
                     <input id="keyword" name="keyword" type="text" maxlength="100" autocomplete="off">
                     <label for="keyword">Tên / Mã / Mã vạch sản phẩm</label>
                 </div>
