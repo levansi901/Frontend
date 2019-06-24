@@ -127,7 +127,9 @@
             <div class="card-content my-form">
                 <span class="card-title">Mô tả sản phẩm</span>
                 <div class="row">
-      
+                    <div class="input-field col s12 m12 l12">
+                        <textarea class="mce-editor"></textarea>
+                    </div>
                 </div>
             </div>
         </div>

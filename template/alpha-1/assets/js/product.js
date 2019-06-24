@@ -8,15 +8,12 @@ var ss_product = {
             vMax: 9999999999
         });
 
-        $('.datepicker').pickadate({
-	    	format: 'dd/mm/yyyy',
-	    	closeOnSelect: true,
-			closeOnClear: true,
-	        onClose: function() {
-	        	if(typeof(this.$node) != 'undefined'){
-	        		$(this.$node).focus();
-	        	}	        	
-			},
+        tinymce.init({
+		    selector: '.mce-editor'
+		});
+
+        $('.input-date-picker').datepicker({
+        	timepicker: true
 	    });
 
         self.lazada_category.event();
@@ -100,6 +97,10 @@ var ss_product = {
 			});
 
 			$(self.modal).on('click', self.btn_select, function() {
+				if($(this).hasClass('disabled')){
+					return false;
+				}
+
 				$('#lazada_category_id').val(self.lazada_category_id);
 				$('#lazada_category_tree_ids').val(JSON.stringify(self.tree_category_id));
 				$(self.modal).closeModal();			
@@ -253,16 +254,9 @@ var ss_product = {
 			            	self.activeItem($(self.wrap_list).find('.li-item').length - 1);
 			            	$('select').material_select();
 			            	self.eventNotSync();
-			            	$('.datepicker').pickadate({
-						    	format: 'dd/mm/yyyy',
-						    	closeOnSelect: true,
-								closeOnClear: true,
-						        onClose: function() {
-						        	if(typeof(this.$node) != 'undefined'){
-						        		$(this.$node).focus();
-						        	}	        	
-								},
-						    });
+			            	$('.input-date-picker').datepicker({
+					        	timepicker: true
+						    });			            	
 			            }			            	
 			        },
 			        error: function () {

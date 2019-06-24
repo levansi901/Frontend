@@ -61,8 +61,13 @@ class ProductController extends AppController
         }
     }
 
-    public function saveProduct($id = null){        
+    public function saveProduct($id = null){
+
+        static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
+
+        static::$js_files[] = 'assets/plugins/tinymce/tinymce.min.js';
         static::$js_files[] = 'assets/plugins/jquery-validation/jquery.validate.min.js';
+        static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
         static::$js_files[] = 'assets/js/autoNumeric-min.js';
         static::$js_files[] = 'assets/js/product.js';
 
@@ -131,8 +136,8 @@ class ProductController extends AppController
             $result = $response->getJson();
             $data = !empty($result[DATA]) ? $result[DATA] : [];
         }
-        // debug($result);
-        // exit;
+        debug($result);
+        exit;
         $this->response->type('json');
         $this->response->body(json_encode($result));
         return $this->response;
