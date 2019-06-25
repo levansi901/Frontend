@@ -11,7 +11,7 @@
     </div>
     
     <div class="collapsible-body">        
-        <div class="row m-t-xs sku-attributes">
+        <div class="row m-t-xs lazada-sku-attributes">
             {if !empty($lazada_sku_attributes)}
                 {foreach from = $lazada_sku_attributes item = attribute} 
                     {if !empty($attribute.is_mandatory)}                      

@@ -2,29 +2,31 @@ var ss_product = {
 	init: function(){
 		var self = this;
 
+		self.lazada_category.event();
+        self.item_product.event();
+        self.product_form.event();
+
+		tinymce.init({
+		    selector: '.mce-editor'
+		});
+
+		$('select').material_select();
+
 		$('.auto-numeric').autoNumeric('init', {
             mDec: 0,
             vMin: 0,
             vMax: 9999999999
-        });
-
-        tinymce.init({
-		    selector: '.mce-editor'
-		});
+        });        
 
         $('.input-date-picker').datepicker({
         	timepicker: true
-	    });
-
-        self.lazada_category.event();
-        self.item_product.event();
-        self.product_form.event();
+	    });        
 	},
 	lazada_category: {
 		modal: '#modal-lazada-category',
 		btn_select: '#select-lazada-category',
 		tree_category_id:[],
-		lazada_category_id: null,	
+		lazada_category_id: null,
 		event: function(){
 			var self = this;
 	        $('#select_lazada_category').on('click',function() {		
@@ -105,33 +107,24 @@ var ss_product = {
 				$('#lazada_category_tree_ids').val(JSON.stringify(self.tree_category_id));
 				$(self.modal).closeModal();			
 
-				$.ajax({
-					async: true,
-					headers: {
-				        'X-CSRF-Token': ss_backend.csrf_token
-				    },
-			        type: 'POST',
-			        url: '/product/item/sku-attributes/load',
-			        data: {
-			        	lazada_category_id: $('#lazada_category_id').val(),
-			        },
-			        dataType: 'html',
-			        success: function (response) {	        	
-			            $(ss_product.item_product.wrap_list).find('.li-item').each(function() {
-			            	$(this).find('.sku-attributes').html(response);
-			            });
-			            if(response.length > 0){
-			            	$('select').material_select();
-			            	ss_product.item_product.can_add = true;
-			            }else{
-			            	ss_product.item_product.can_add = false;
-			            }
-			            
-			        },
-			        error: function () {
-			            
-			        }
-			    });
+				ss_backend.callAjax({
+					url: '/product/item/sku-attributes/load',
+					data_type: 'html',
+					data:{
+						lazada_category_id: $('#lazada_category_id').val()
+					}
+				}).done(function(response) {
+				    $(ss_product.item_product.wrap_list).find('.li-item').each(function() {
+		            	$(this).find('.lazada-sku-attributes').html(response);
+		            });
+		            
+		            if(response.length > 0){
+		            	$('select').material_select();
+		            	ss_product.item_product.can_add = true;
+		            }else{
+		            	ss_product.item_product.can_add = false;
+		            }
+				});				
 			});
 		},
 		removeGroupByLevel: function(level){
@@ -148,25 +141,16 @@ var ss_product = {
 
 			var tree_category_id = typeof(params['tree_category_id']) != 'undefined' ? params['tree_category_id'] : null;
 			var parent_id = typeof(params['parent_id']) != 'undefined' ? params['parent_id'] : null;
-			$.ajax({
-				async:true,
-				headers: {
-			        'X-CSRF-Token': ss_backend.csrf_token
-			    },
-		        type: 'POST',
-		        url: '/lazada/category/get-list-lazada-categories',
-		        data: {
-		        	tree_category_id: tree_category_id,
+
+			ss_backend.callAjax({
+				url: '/lazada/category/get-list-lazada-categories',
+				data:{
+					tree_category_id: tree_category_id,
 		        	parent_id: parent_id
-		        },
-		        dataType: 'JSON',
-		        success: function (response) {
-		            callback(response);
-		        },
-		        error: function () {
-		            
-		        }
-		    });
+				}
+			}).done(function(response) {
+			    callback(response);
+			});
 		},
 		loadListCategoriesLazada: function(params) {
 			var self = this;
@@ -228,116 +212,45 @@ var ss_product = {
 		event: function(){
 			var self = this;
 
-			self.item_html = $(self.wrap_list + ' > ul.collapsible > .li-item:first-child')[0].outerHTML;
-			console.log(self.item_html);
+			self.item_html = $(self.wrap_list + ' > .li-item:first-child')[0].outerHTML;
 			self.activeItem(0);
+			self.checkConditions();
 
 			$(self.wrap_items).on('click', '#add-item', function(e) {
 				// if(!self.can_add){
 				// 	return false;
-				// }
-				var wrap = $(self.wrap_list + ' > ul.collapsible');
-				var item_html = wrap.find('.li-item:first-child')[0].outerHTML;
-				console.log(item_html);
-				wrap.append(item_html);
-				var index = $(self.wrap_list + ' > ul.collapsible > .li-item:last-child').index();
-				self.clearInputItem(index);
-				self.activeItem(index);
-				self.resetIndexItem();
-				// console.log(item_html);
-				return false;
-				var number = $(self.wrap_list).find('.collapsible > li.li-item').length > 0 ? parseInt($(self.wrap_list).find('.collapsible > li.li-item').length) + 1 : 1;
-
-				$.ajax({
-					async: true,
-					headers: {
-				        'X-CSRF-Token': ss_backend.csrf_token
-				    },
-			        type: 'POST',
-			        url: '/product/item/add',
-			        data: {
-			        	lazada_category_id: $('#lazada_category_id').val(),
-			        	number: number
-			        },
-			        dataType: 'html',
-			        success: function (response) {
-			            $(self.wrap_list).find('.collapsible').append(response);            			            
-			            if(response.length > 0){
-			            	self.activeItem($(self.wrap_list).find('.li-item').length - 1);
-			            	$('select').material_select();
-			            	self.eventNotSync();
-			            	$('.input-date-picker').datepicker({
-					        	timepicker: true
-						    });			            	
-			            }			            	
-			        },
-			        error: function () {
-			        }
-			    });
+				// }				
+				self.addNewItem();
 			});			
 
-			$(self.wrap_items).on('keyup', 'input[data-name="item-code"]', function() {
+			$(self.wrap_list).on('keyup', 'input[data-name="item-code"]', function() {
 				$(this).closest('.li-item').find('.title-item').html($.trim($(this).val()));
 			});
 
-			self.eventNotSync();
-		},
-		eventNotSync: function(){
-			var self = this;
-			$('.collapsible .delete-item').on('click', function(e) { 
+			$(self.wrap_list).on('click', '.delete-item', function(e) {
 				e.stopPropagation();
 				if(!self.can_delete){
 					return false;
 				}
-
-				var li_item = $(this).closest('.li-item');				
-				ss_backend.alertWarning({
-					title: 'Xóa phiên bản sản phẩm',
-					text: 'Bạn chắc chắn muốn xóa phiên bản này ?'
-				}, function(rs){		
-					var item_id = li_item.find('#item_id');						
-					if(item_id > 0){
-						self.items_deleted.push(item_id);
-					}
-					li_item.remove();
-					self.resetIndexItem();
-					self.checkConditions();
-				});
+				var index = $(this).closest('.li-item').index();
+				self.removeItem(index);			
 			});
+
 		},
 		checkConditions: function(){
 			var self = this;
 
 			// check can delete
-			if($(self.wrap_list).find('.collapsible > .li-item').length == 1){
+			self.can_delete = true; 
+			if($(self.wrap_list + ' .li-item').length <= 1){
 				self.can_delete = false;
 			}
-			$(self.wrap_list).find('.collapsible .li-item .delete-item').toggleClass('hide', !self.can_delete);
-		},
-		resetIndexItem: function(){
-			var self = this;
-			$(self.wrap_list + ' .collapsible .li-item').each(function(i, li_item) {
-				$(this).attr('data-index', i);
-				$(this).find('.collapsible-header i.index-item').html('filter_' + (i + 1));
-				$(this).find('input[data-name]').each(function(idx, input) {
-					var id = $(this).data('name')+ '-' + i;
-					$(this).attr('id', id);
-					$(this).next('label').attr('for', id).toggleClass('active',$(this).val().length > 0 ? true : false);
-				});
-			});
-		},
-		activeItem: function(index){
-			var self = this;
-			var li_item = $(self.wrap_list + ' .collapsible .li-item[data-index="'+ index +'"]');
-			if(typeof(li_item) != 'undefined'){
-				li_item.addClass('active');
-				li_item.find('.collapsible-header').addClass('active');
-				li_item.find('.collapsible-body').show();
-			}		
+
+			$(self.wrap_list).find('.li-item .delete-item').toggleClass('hide', !self.can_delete);
 		},
 		validateItem: function(){
 			var self = this;
-			if($(self.wrap_list + ' .collapsible .li-item').length < 1) {
+			if($(self.wrap_list + ' .li-item').length < 1) {
 				ss_backend.notification({
 					type: 'error',
 					title: 'Sản phẩm hiện tại chưa có phiên bản nào'
@@ -345,7 +258,7 @@ var ss_product = {
 				return false;
 			}
 
-			$(self.wrap_list + ' .collapsible .li-item').each(function(index, li_item) {
+			$(self.wrap_list + ' .li-item').each(function(index, li_item) {
 				var li_index = $(this).data('index');
 				var input_code = $(this).find('input[data-name="item-code"]');
 				var input_price = $(this).find('input[data-name="item-price"]');
@@ -376,6 +289,21 @@ var ss_product = {
 
 			return true;
 		},
+		resetIndexItem: function(){
+			var self = this;
+			$(self.wrap_list + ' .li-item').each(function(i, li_item) {
+				self.setIndexItem(i);
+			});
+		},
+		activeItem: function(index){
+			var self = this;
+			var li_item = $(self.wrap_list + ' .li-item[data-index="'+ index +'"]');
+			if(typeof(li_item) != 'undefined'){
+				li_item.addClass('active');
+				li_item.find('.collapsible-header').addClass('active');
+				li_item.find('.collapsible-body').show();
+			}		
+		},
 		clearInputItem: function(index){
 			var self = this;
 			var li_item = $(self.wrap_list + ' .li-item:eq('+ index +')');
@@ -384,8 +312,44 @@ var ss_product = {
 			}
 
 			li_item.find('input').val('');
-			// li_item.find('select option:first').val(null).trigger('change');
 			li_item.find('select option:first').prop('selected', 'selected').trigger('change');
+		},
+		setIndexItem: function(index){
+			var self = this;
+			var li_item = $(self.wrap_list + ' .li-item:eq('+ index +')');
+			li_item.attr('data-index', index);
+			li_item.find('.collapsible-header i.index-item').html('filter_' + (index + 1));
+			li_item.find('input[data-name]').each(function(idx, input) {
+				var id = $(this).data('name')+ '-' + index;
+				$(this).attr('id', id);
+				$(this).next('label').attr('for', id).toggleClass('active',$(this).val().length > 0 ? true : false);
+			});
+		},
+		addNewItem: function(){
+			var self = this;
+			$(self.wrap_list).append(self.item_html);
+
+			var index = $(self.wrap_list + ' .li-item:last-child').index();
+			self.setIndexItem(index);		
+			self.activeItem(index);
+			self.clearInputItem();
+			self.checkConditions();
+		},
+		removeItem: function(index){
+			var self = this;
+			var li_item = $(self.wrap_list + ' .li-item[data-index="'+ index +'"]');
+			ss_backend.alertWarning({
+				title: 'Xóa phiên bản sản phẩm',
+				text: 'Bạn chắc chắn muốn xóa phiên bản này ?'
+			}, function(rs){		
+				var item_id = li_item.find('#item_id');						
+				if(item_id > 0){
+					self.items_deleted.push(item_id);
+				}
+				li_item.remove();
+				self.resetIndexItem();
+				self.checkConditions();
+			});
 		}
 	},
 	product_form: {
@@ -424,10 +388,7 @@ var ss_product = {
 		        	element.after(error);
 		        },
 		        submitHandler: function (this_form) {
-		        	// console.log(new FormData(this_form));
-		        	// return false;
 		            var redirect_page = $('.id-after-save:input[name=after_save]:checked').val();
-		            // console.log($(this_form).serialize());
 		            ss_backend.ajaxSubmitForm({
 		            	url: $(self.form).attr('action'),
 		            	type: $(self.form).attr('method'),

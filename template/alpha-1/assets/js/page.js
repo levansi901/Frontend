@@ -134,7 +134,24 @@ var ss_backend = {
             	title: textStatus + ': ' + errorThrown
             });
 		});
+	},
+	callAjax: function(params){
+		var self = this;
+		
+		var ajax = $.ajax({
+			headers: {
+		        'X-CSRF-Token': self.csrf_token
+		    },
+	        async: typeof(params.async) != 'undefined' ? params.async : true,
+	        url: typeof(params.url) != 'undefined' ? params.url : '',
+	        type: typeof(params.type) != 'undefined' ? params.type : 'POST',
+	        dataType: typeof(params.data_type) != 'undefined' ? params.data_type : 'JSON',
+	        data: typeof(params.data) != 'undefined' ? params.data : {},    
+	        cache: typeof(params.cache) != 'undefined' ? params.cache : false,
+	    });
+	    return ajax;
 	}
+
 }
 
 $(document).ready(function() {

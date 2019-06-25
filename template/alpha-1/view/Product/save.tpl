@@ -46,8 +46,8 @@
         <div class="card">
             <div id="wrap-items" class="card-content my-form">
                 <span class="card-title">Phiên bản sản phẩm</span>
-                <div id="list-items" class="row">
-                    <ul class="collapsible popout collapsible-custom" data-collapsible="expandable">
+                <div class="row">
+                    <ul id="list-items" class="collapsible popout collapsible-custom" data-collapsible="expandable">
                         {if !empty($product.items)}
                             {foreach from = $product.items key=k item = item}
                                 {assign var = number value = $k + 1}
@@ -108,7 +108,7 @@
                         {$this->element('/lazada/icon')}
                         Thuộc tính Lazada
                     </span>
-                    <div class="row">
+                    <div class="row lazada-spu-attributes">
                         {foreach from = $lazada_normal_attributes item = attribute}                        
                             <div class="input-field col s12 m4 l3">
                                 {assign var = attribute_value value = ''}
