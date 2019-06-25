@@ -150,6 +150,26 @@ var ss_backend = {
 	        cache: typeof(params.cache) != 'undefined' ? params.cache : false,
 	    });
 	    return ajax;
+	},
+	autoSuggest: function(params, callback){
+		var self = this;
+
+		if (typeof(callback) != 'function') {
+	        callback = function () {
+	        };
+	    }
+
+	    if(params.input_object == 'undefined' || params.data == 'undefined' || params.url == 'undefined'){
+	    	return false;
+	    }
+
+	    params.input_object.autocomplete({
+	        data: {
+	            "Apple": null,
+	            "Microsoft": null,
+	            "Google": 'assets/images/google.png'
+	        }
+	    });
 	}
 
 }

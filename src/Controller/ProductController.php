@@ -102,14 +102,16 @@ class ProductController extends AppController
                         $lazada_normal_attributes[] = $attribute;
                         break;
                     case 'sku':
-                        $lazada_sku_attributes[] = $attribute;
+                        if(!empty($attribute['is_mandatory'])){
+                            $lazada_sku_attributes[] = $attribute;    
+                        }                        
                         break;                    
                 }
                 
             }
         }
 
-        // debug($product);
+        // debug($lazada_normal_attributes);
         // exit;
 
         $this->set('list_status', $list_status);
@@ -167,25 +169,29 @@ class ProductController extends AppController
         $this->render('item');
     }
 
-    public function ajaxLoadLazadaSkuAttributes(){
+    public function ajaxLoadLazadaAttributes(){
         $this->layout = false;
         $data_post = !empty($this->request->data) ? $this->request->data : [];
 
         $lazada_category_id = !empty($data_post['lazada_category_id']) ? intval($data_post['lazada_category_id']) : null;    
-        $lazada_sku_attributes = [];
-        if($this->request->is('ajax') && !empty($lazada_category_id)){ 
+        $type = !empty($data_post['type']) ? $data_post['type'] : null;   
+        $lazada_attributes = [];
+        if($this->request->is('ajax') && !empty($lazada_category_id) && !empty($type)){ 
             $lazada_list_attributes = $this->getListLazadaAttributes($lazada_category_id);
             if(!empty($lazada_list_attributes)){
                 foreach ($lazada_list_attributes as $k => $attribute) {
-                    if($attribute['attribute_type'] == 'sku' && $attribute['is_mandatory']){
-                        $lazada_sku_attributes[] = $attribute;
+                    if($type == 'sku' && $attribute['attribute_type'] == 'sku' && !empty($attribute['is_mandatory'])){
+                        $lazada_attributes[] = $attribute;
+                    }
+
+                    if($type == 'spu' && $attribute['attribute_type'] == 'normal'){
+                        $lazada_attributes[] = $attribute;
                     }                    
                 }
             }
         }
-
-        $this->set('lazada_sku_attributes', $lazada_sku_attributes);
-        $this->render('sku_attributes');
+        $this->set('lazada_attributes', $lazada_attributes);
+        $this->render('lazada_attributes');
     }
 
     private function getListLazadaAttributes($lazada_category_id = null) {

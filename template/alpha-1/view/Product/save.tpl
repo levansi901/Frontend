@@ -109,15 +109,7 @@
                         Thuộc tính Lazada
                     </span>
                     <div class="row lazada-spu-attributes">
-                        {foreach from = $lazada_normal_attributes item = attribute}                        
-                            <div class="input-field col s12 m4 l3">
-                                {assign var = attribute_value value = ''}
-                                {if !empty($product.lazada_attributes[$attribute.code])}
-                                    {assign var = attribute_value value = $product.lazada_attributes[$attribute.code]}
-                                {/if}
-                                {$this->element('/lazada/input',['attribute' => $attribute, 'attribute_value' => $attribute_value,'show_icon' => false])}
-                            </div>
-                        {/foreach}
+                        {$this->element('../Product/lazada_attributes',['lazada_attributes' => $lazada_normal_attributes, show_icon => false])}                        
                     </div>
                 </div>
             </div>

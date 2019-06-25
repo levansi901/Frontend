@@ -72,7 +72,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/product/item/sku-attributes/load', ['controller' => 'Product', 'action' => 'ajaxLoadLazadaSkuAttributes']
+        '/product/lazada/load-attributes', ['controller' => 'Product', 'action' => 'ajaxLoadLazadaAttributes']
     );
 
     // lazada
