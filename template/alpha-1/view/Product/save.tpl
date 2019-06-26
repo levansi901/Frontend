@@ -6,7 +6,7 @@
 {$this->element('/layout/breadcrumb',['data'=> $data_breadcrumb])}
 
 <div class="col s12 m12 l12">
-    <form id="product-form" role="form" action="/product/save{if !empty($product.id)}/{$product.id}{/if}" method="POST" enctype="multipart/form-data">    
+    <form id="product-form" role="form" action="/product/save{if !empty($product.id)}/{$product.id}{/if}" method="POST" enctype="multipart/form-data">
     	<div class="card">
             <div class="card-content my-form">
                 <div class="row">
@@ -26,18 +26,8 @@
 
                         <input type="hidden" id="lazada_category_id" name="lazada_category_id" value="{if !empty($product.lazada_category_id)}{$product.lazada_category_id}{/if}">
 
-                        <input type="hidden" id="lazada_category_tree_ids" name="lazada_category_tree_ids" value="{if !empty($product.lazada_category_tree_ids)}{$product.lazada_category_tree_ids|@json_encode}{/if}">
+                        <input type="hidden" id="lazada_category_tree_ids" name="lazada_category_tree_ids" value="{if !empty($product.lazada_category_tree_ids)}{$product.lazada_category_tree_ids}{/if}">
                         
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s12 m12 l12">
-                        <input id="lazada_brand_id" name="lazada_brand_id" class="autocomplete" type="text" autocomplete="off">
-                        <label for="lazada_brand_id">
-                            {$this->element('/lazada/icon')}
-                            Thương hiệu Lazada                        
-                        </label>
                     </div>
                 </div>
             </div>
@@ -138,15 +128,16 @@
                         <label for="redirect-form">Về trang thêm mới</label>
                     </span>                    
 
-                    <span class="waves-effect waves-light btn black m-l-lg m-r-xs s6">
-                        <i class="material-icons left lh-36">close</i>
-                        Hủy bỏ
-                    </span>
-
-                    <span class="waves-effect waves-light btn s6 btn-submit-form">
+                    <span class="waves-effect waves-light btn s6 m-l-lg m-r-xs btn-submit-form">
                         <i class="material-icons left lh-36">check</i>
                         Thêm mới
                     </span>
+
+                    <span class="waves-effect waves-light btn s6 black">
+                        <i class="material-icons left lh-36">close</i>
+                        Hủy bỏ
+                    </span>
+                    
                 </div>    
             </nav>
         </div>

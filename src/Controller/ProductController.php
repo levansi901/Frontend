@@ -64,11 +64,13 @@ class ProductController extends AppController
     public function saveProduct($id = null){
 
         static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
+        static::$css_layout[] = 'assets/plugins/auto-complete/jquery.auto-complete.css';
 
         static::$js_files[] = 'assets/plugins/tinymce/tinymce.min.js';
         static::$js_files[] = 'assets/plugins/jquery-validation/jquery.validate.min.js';
         static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
-        static::$js_files[] = 'assets/js/autoNumeric-min.js';
+        static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
+        static::$js_files[] = 'assets/plugins/auto-complete/jquery.auto-complete.min.js';
         static::$js_files[] = 'assets/js/product.js';
 
         $title_view = 'Thêm sản phẩm mới';
@@ -111,9 +113,6 @@ class ProductController extends AppController
             }
         }
 
-        // debug($lazada_normal_attributes);
-        // exit;
-
         $this->set('list_status', $list_status);
         $this->set('product', $product);
         $this->set('lazada_normal_attributes', $lazada_normal_attributes);
@@ -143,30 +142,6 @@ class ProductController extends AppController
         $this->response->type('json');
         $this->response->body(json_encode($result));
         return $this->response;
-    }
-
-    public function ajaxAddItem(){
-        $this->layout = false;
-        $data_post = !empty($this->request->data) ? $this->request->data : [];
-
-        $lazada_category_id = !empty($data_post['lazada_category_id']) ? intval($data_post['lazada_category_id']) : null;
-        $number = !empty($data_post['number']) ? intval($data_post['number']) : 1;
-
-        $lazada_sku_attributes = [];
-        if($this->request->is('ajax') && !empty($lazada_category_id)){ 
-            $lazada_list_attributes = $this->getListLazadaAttributes($lazada_category_id);
-            if(!empty($lazada_list_attributes)){
-                foreach ($lazada_list_attributes as $k => $attribute) {
-                    if($attribute['attribute_type'] == 'sku' && $attribute['is_mandatory']){
-                        $lazada_sku_attributes[] = $attribute;
-                    }                    
-                }
-            }
-        }
-
-        $this->set('lazada_sku_attributes', $lazada_sku_attributes);
-        $this->set('number', $number);
-        $this->render('item');
     }
 
     public function ajaxLoadLazadaAttributes(){

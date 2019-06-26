@@ -20,10 +20,17 @@ var ss_product = {
         });        
 
         $('.input-date-picker').datepicker({
-        	timepicker: true
-	    });        
+        	timepicker: true,
+        	onSelect(formattedDate, date, inst) {
+	        	var input = $(inst.el);	        	
+	        	if(input.data('name') == 'item-time-start'){
+	        		var input_time_end = input.closest('.li-item').find('input[data-name="item-time-end"]');
+	        		var datepicker = input_time_end.datepicker().data('datepicker');
+	        		datepicker.update('minDate', date);
+	        	}
+	    	}
+	    });
 	},
-	
 	item_product: {
 		wrap_items: '#wrap-items',
 		wrap_list: '#list-items',
@@ -41,7 +48,7 @@ var ss_product = {
 			$(self.wrap_items).on('click', '#add-item', function(e) {
 				// if(!self.can_add){
 				// 	return false;
-				// }				
+				// }
 				self.addNewItem();
 			});			
 
@@ -79,6 +86,9 @@ var ss_product = {
 				return false;
 			}
 
+			var check = true;
+			var all_code = [];
+			var all_item = [];
 			$(self.wrap_list + ' .li-item').each(function(index, li_item) {
 				var li_index = $(this).data('index');
 				var input_code = $(this).find('input[data-name="item-code"]');
@@ -88,14 +98,20 @@ var ss_product = {
 				var code = typeof(input_code.val()) != 'undefined' ? $.trim(input_code.val()) : '';
 				var price = typeof(input_price.val()) != 'undefined' ? parseFloat($.trim(input_price.val().replaceAll(',', ''))) : 0;
 				var price_discount = typeof(input_price_discount.val()) != 'undefined' ? parseFloat($.trim(input_price_discount.val().replaceAll(',', ''))) : 0;
+				var property = '';
 
+				$(this).find('.lazada-sku-attributes select').each(function(idx, input) {	
+					console.log(input);				
+				});
+				
 				if(code.length == 0){
 					ss_backend.showValidateError({
 						input_object: input_code,
 						error_message: 'Mã sản phẩm không được để trống'
-					});
-					self.activeItem(li_index);
-					return false;
+					});					
+					check = false;
+					self.activeItem(li_index);	
+					return check;
 				}
 
 				if(price_discount > price){
@@ -103,12 +119,16 @@ var ss_product = {
 						input_object: input_price_discount,
 						error_message: 'Giá khuyến mãi không thể lớn hơn giá bán'
 					});
-					return false;
+					check = false;
+					self.activeItem(li_index);	
+					return check;
 				}
 				
+				all_code.push(code);
+
 			});
 
-			return true;
+			return check;
 		},
 		resetIndexItem: function(){
 			var self = this;
@@ -156,6 +176,24 @@ var ss_product = {
 			self.clearInputItem();
 			self.checkConditions();
 			$(self.wrap_list + ' .li-item:last-child select').material_select();
+
+			$(self.wrap_list + ' .li-item:last-child .auto-numeric').autoNumeric('init', {
+	            mDec: 0,
+	            vMin: 0,
+	            vMax: 9999999999
+	        });
+
+	        $(self.wrap_list + ' .li-item:last-child .input-date-picker').datepicker({
+	        	timepicker: true,
+	        	onSelect(formattedDate, date, inst) {
+	        	var input = $(inst.el);	        	
+		        	if(input.data('name') == 'item-time-start'){
+		        		var input_time_end = input.closest('.li-item').find('input[data-name="item-time-end"]');
+		        		var datepicker = input_time_end.datepicker().data('datepicker');
+		        		datepicker.update('minDate', date);
+		        	}
+		    	}
+		    });
 		},
 		removeItem: function(index){
 			var self = this;
@@ -231,7 +269,7 @@ var ss_product = {
 			var self = this;
 	        $('#select_lazada_category').on('click',function() {		
 				self.lazada_category_id = $('#lazada_category_id').val().length > 0 ? parseInt($('#lazada_category_id').val()) : null;
-				self.tree_category_id = $.trim($('#lazada_category_tree_ids').val()).length > 0 ? $.parseJSON($.trim($('#lazada_category_tree_ids').val())) : [];				
+				self.tree_category_id = $('#lazada_category_tree_ids').val().length > 0 ? $.parseJSON($('#lazada_category_tree_ids').val()) : [];				
 				self.removeGroupByLevel(0);
 				self.toggleDisableSelectedButton();
 				var params = { 
@@ -243,7 +281,7 @@ var ss_product = {
 						tree_category_id: self.tree_category_id 
 					}
 				}
-				
+
 				self.getListCategoriesLazada(params,function(categories) {				
 					self.loadListCategoriesLazada({
 						categories: categories,
@@ -356,7 +394,7 @@ var ss_product = {
 			var parent_id = typeof(params['parent_id']) != 'undefined' ? params['parent_id'] : null;
 
 			ss_backend.callAjax({
-				url: '/lazada/category/get-list-lazada-categories',
+				url: '/lazada/category/get',
 				data:{
 					tree_category_id: tree_category_id,
 		        	parent_id: parent_id
@@ -420,17 +458,26 @@ var ss_product = {
 		event: function(){
 			var self = this;
 
-			$(document).on('keyup keypress blur change paste', self.input, function () {
-		        var data = {
-		            keyword: $.trim($(this).val())
-		        }
-		        ss_backend.autoSuggest({
-		        	input_object: $(this),
-		        	url: '',
-		        	data: data
-		        },function(response){
-		        	console.log(response);
-		        });
+			$(self.input).autoComplete({
+			    source: function(keyword, suggest){
+			    	ss_backend.callAjax({
+						url: '/lazada/brand/get',
+						data:{
+							keyword: keyword
+						}
+					}).done(function(response) {
+					    suggest(response);
+					});
+			    },
+			    renderItem: function (item, search){
+			        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+			        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+			        var name = typeof(item.name) != 'undefined' ? item.name : '';
+			        return '<div class="autocomplete-suggestion" data-name="' +  name + '">' + name.replace(re, "<b>$1</b>") + '</div>';
+			    },
+			    onSelect: function(e, term, item){
+			    	$(self.input).val(item.data('name'));		        
+			    }
 			});
 		},
 

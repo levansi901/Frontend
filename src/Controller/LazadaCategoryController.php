@@ -13,7 +13,7 @@ class LazadaCategoryController extends AppController
     public function getListLazadaCategory() {
         $data = $this->request->data;
         $tree_category_id = !empty($data['tree_category_id']) ? $data['tree_category_id'] : [];
-        $parent_id = isset($data['parent_id']) ? intval($data['parent_id']) : null;
+        $parent_id = isset($data['parent_id']) ? intval($data['parent_id']) : null;        
         $categories = [];
         if ($this->request->is('post') && (!empty($tree_category_id) || !is_null($parent_id))) {
             $http = new Client();    
@@ -27,7 +27,7 @@ class LazadaCategoryController extends AppController
 
             $response = $http->get($url_api);  
             $result = $response->getJson();
-            $categories = !empty($result['data']) ? $result['data'] : [];
+            $categories = !empty($result[DATA]) ? $result[DATA] : [];
             if($get_by_parent && !empty($categories)){
                 $categories = [0 => $categories];
             }
