@@ -348,6 +348,7 @@ var ss_product = {
 				ss_backend.callAjax({
 					url: '/product/lazada/load-attributes',
 					data_type: 'html',
+					cache: true,
 					data:{
 						lazada_category_id: self.lazada_category_id,
 						type: 'sku'
@@ -368,6 +369,7 @@ var ss_product = {
 				ss_backend.callAjax({
 					url: '/product/lazada/load-attributes',
 					data_type: 'html',
+					cache: true,
 					data:{
 						lazada_category_id: self.lazada_category_id,
 						type: 'spu'

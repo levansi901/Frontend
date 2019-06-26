@@ -43,13 +43,13 @@ var ss_backend = {
 		if (typeof(callback) != 'function') {
 	        callback = function () {};
 	    }
-	    var type = typeof(params.type) != 'undefined' ? params.type : 'sucess';
+	    var type = typeof(params.type) != 'undefined' ? params.type : 'success';
 		var title = typeof(params.title) != 'undefined' ? params.title : '';
 		var time = typeof(params.time) != 'undefined' ? params.time : 0;
 		var time_default = 0;
 		var icon, wrap_class = '';		
 		switch(type){
-			case 'sucess':
+			case 'success':
 				wrap_class = 'green';
 				icon = '<i class="material-icons m-r-lg">check</i>';
 				time_default = 2000;
@@ -85,7 +85,6 @@ var ss_backend = {
 	},
 	ajaxSubmitForm: function(params){
 		var self = this;
-
 	    var url = typeof(params.url) != 'undefined' ? params.url : '';
 	    var url_redirect = typeof(params.url_redirect) != 'undefined' ? params.url_redirect : '';
 	    var type = typeof(params.type) != 'undefined' ? params.type : 'POST';
@@ -113,10 +112,9 @@ var ss_backend = {
 	        processData: false,
 	        contentType: false,
 	    }).done(function(response) {
-		   	var status = typeof(response.status) != 'undefined' ? response.status : true;
+		   	var success = typeof(response.success) != 'undefined' ? response.success : false;
         	var message = typeof(response.message) != 'undefined' ? response.message : '';
-
-            if (status) {
+            if (success) {
             	self.notification({title: message}, function(){
             		if(url_redirect.length > 0){
             			window.location.href = url_redirect;
@@ -150,28 +148,7 @@ var ss_backend = {
 	        cache: typeof(params.cache) != 'undefined' ? params.cache : false,
 	    });
 	    return ajax;
-	},
-	autoSuggest: function(params, callback){
-		var self = this;
-
-		if (typeof(callback) != 'function') {
-	        callback = function () {
-	        };
-	    }
-
-	    if(params.input_object == 'undefined' || params.data == 'undefined' || params.url == 'undefined'){
-	    	return false;
-	    }
-
-	    params.input_object.autocomplete({
-	        data: {
-	            "Apple": null,
-	            "Microsoft": null,
-	            "Google": 'assets/images/google.png'
-	        }
-	    });
 	}
-
 }
 
 $(document).ready(function() {

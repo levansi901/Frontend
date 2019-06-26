@@ -19,14 +19,14 @@
         
         <div class="row">
             <div class="input-field col s12 m4 l3">
-                <input id="item-code-{$k}" data-name="item-code" name="items[code][]" type="text" class="w-100" length="100" maxlength="100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}" >
+                <input id="item-code-{$k}" data-name="item-code" name="items[{$k}][code]" type="text" class="w-100" length="100" maxlength="100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}" >
                 <label for="item-code-{$k}"> 
                     Mã 
                 </label>
             </div>
 
             <div class="input-field col s12 m4 l3">
-                <input id="item-barcode-{$k}" data-name="item-barcode" name="items[barcode][]" type="text" class="w-100" autocomplete="off" length="20" maxlength="20" value="{if !empty($item.barcode)}{$item.barcode}{/if}" >
+                <input id="item-barcode-{$k}" data-name="item-barcode" name="items[{$k}][barcode]" type="text" class="w-100" autocomplete="off" length="20" maxlength="20" value="{if !empty($item.barcode)}{$item.barcode}{/if}" >
                 <label for="item-barcode-{$k}"> 
                     Mã vạch 
                 </label>
@@ -35,28 +35,28 @@
 
         <div class="row">
             <div class="input-field col s12 m4 l3">
-                <input id="item-price-{$k}" data-name="item-price" name="items[price][]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price)}{$item.price}{/if}">
+                <input id="item-price-{$k}" data-name="item-price" name="items[{$k}][price]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price)}{$item.price}{/if}">
                 <label for="item-price-{$k}"> 
                     Giá bán 
                 </label>
             </div>
 
             <div class="input-field col s12 m4 l3">
-                <input id="item-price-discount-{$k}" data-name="item-price-discount" name="items[price_discount][]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_discount)}{$item.price_discount}{/if}">
+                <input id="item-price-discount-{$k}" data-name="item-price-discount" name="items[{$k}][price_discount]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_discount)}{$item.price_discount}{/if}">
                 <label for="item-price-discount-{$k}"> 
                     Giá khuyến mãi 
                 </label>                                    
             </div>
 
             <div class="input-field col s12 m4 l3">
-                <input id="item-time-start-{$k}" data-name="item-time-start" name="items[time_start_discount][]" type="text" class="w-100 input-date-picker" autocomplete="off" value="{if !empty($item.time_start_discount)}{$item.time_start_discount}{/if}">
+                <input id="item-time-start-{$k}" data-name="item-time-start" name="items[{$k}][time_start_discount]" type="text" class="w-100 input-date-picker" autocomplete="off" value="{if !empty($item.time_start_discount)}{$item.time_start_discount}{/if}">
                 <label for="item-time-start-{$k}"> 
                     Ngày bắt đầu giảm giá 
-                </label>                                    
+                </label>
             </div>
 
             <div class="input-field col s12 m4 l3">
-                <input id="item-time-end-{$k}" data-name="item-time-end" name="items[time_end_discount][]" type="text" class="w-100 input-date-picker" autocomplete="off" value="{if !empty($item.time_end_discount)}{$item.time_end_discount}{/if}">
+                <input id="item-time-end-{$k}" data-name="item-time-end" name="items[{$k}][time_end_discount]" type="text" class="w-100 input-date-picker" autocomplete="off" value="{if !empty($item.time_end_discount)}{$item.time_end_discount}{/if}">
                 <label for="item-time-end-{$k}">
                     Ngày kết thúc giảm giá
                 </label>
@@ -65,14 +65,14 @@
 
         <div class="row">
             <div class="input-field col s12 m4 l3">
-                <input id="item-price-import-{$k}" data-name="item-price-import" name="items[price_import][]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_import)}{$item.price_import}{/if}">
+                <input id="item-price-import-{$k}" data-name="item-price-import" name="items[{$k}][price_import]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_import)}{$item.price_import}{/if}">
                 <label for="item-price-import-{$k}">
                     Giá nhập
                 </label>
             </div>
 
             <div class="input-field col s12 m4 l3">
-                <input id="item-price-whole-sale-{$k}" data-name="item-price-whole-sale" name="items[price_whole_sale][]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_whole_sale)}{$item.price_whole_sale}{/if}">
+                <input id="item-price-whole-sale-{$k}" data-name="item-price-whole-sale" name="items[{$k}][price_whole_sale]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_whole_sale)}{$item.price_whole_sale}{/if}">
                 <label for="item-price-whole-sale-{$k}">
                     Giá buôn
                 </label>
@@ -83,7 +83,7 @@
             <div class="file-field input-field col s12 m4 l6">
                 <div class="btn">
                     <i class="material-icons">perm_media</i>
-                    <input name="items[upload_images][]" type="file" multiple>
+                    <input name="items[{$k}][upload_images]" type="file" multiple>
                 </div>
                 <div class="file-path-wrapper">
                     <input class="file-path" type="text" placeholder="Chọn 1 hoặc nhiều ảnh">
@@ -98,7 +98,7 @@
         </div>
 
         <div class="hide">
-        	<input id="item_id" name="items[id][]" type="hidden" value="{if !empty($item.id)}{$item.id}{/if}">
+        	<input id="item_id" name="items[{$k}][id]" type="hidden" value="{if !empty($item.id)}{$item.id}{/if}">
         </div>
     </div>
 </li>
