@@ -85,13 +85,13 @@ var ss_backend = {
 	},
 	ajaxSubmitForm: function(params){
 		var self = this;
-	    var url = typeof(params.url) != 'undefined' ? params.url : '';
-	    var url_redirect = typeof(params.url_redirect) != 'undefined' ? params.url_redirect : '';
+	    var url = typeof(params.url) != 'undefined' ? params.url : '';	    
 	    var type = typeof(params.type) != 'undefined' ? params.type : 'POST';
 	    var type_data = typeof(params.type_data) != 'undefined' ? params.type_data : 'json';
 	    var data = typeof(params.data) != 'undefined' ? params.data : {};
 	    var async = typeof(params.async) != 'undefined' ? params.async : true;
-
+	    var url_redirect = typeof(params.url_redirect) != 'undefined' ? params.url_redirect : '';
+	    var after_save = typeof(params.after_save) != 'undefined' ? params.after_save : 'edit';
 	    if(url.length == 0){
 	    	self.notification({
             	type: 'error',
@@ -114,10 +114,21 @@ var ss_backend = {
 	    }).done(function(response) {
 		   	var success = typeof(response.success) != 'undefined' ? response.success : false;
         	var message = typeof(response.message) != 'undefined' ? response.message : '';
-            if (success) {
+        	var data = typeof(response.data) != 'undefined' ? response.data : {};
+
+            if (success) {     
+            	if(typeof(data.id) != 'undefined' && after_save == 'edit' && url_redirect.length > 0){
+            		url_redirect = url_redirect + data.id
+            	}
+
+            	if(typeof(data.id) == 'undefined' && after_save == 'edit' && url_redirect.length > 0){
+            		url_redirect = '';
+            	}
             	self.notification({title: message}, function(){
             		if(url_redirect.length > 0){
             			window.location.href = url_redirect;
+            		}else{
+            			location.reload();
             		}
             	});                
             } else {

@@ -327,13 +327,13 @@ textarea.materialize-textarea,
 }
 
 .sweet-alert .sa-icon.sa-warning{
-    border-color: #F44336;
+    border-color: #E53935 !important;
 }
 .sweet-alert .sa-icon.sa-warning .sa-dot,
 .sweet-alert .sa-icon.sa-warning .sa-body,
 .sweet-alert .sa-icon.sa-warning .sa-dot{
     
-    background-color: #F44336;
+    background-color: #E53935 !important
 }
 
 @-webkit-keyframes pulseWarning {
@@ -401,12 +401,12 @@ textarea.materialize-textarea,
 
 .sweet-alert button.cancel,
 .sweet-alert button.cancel:hover{        
-    background-color: #000;
+    background-color: #263238 !important;
 }
 
 .sweet-alert button.confirm,
 .sweet-alert button.confirm:hover{
-    background-color: #F44336 !important;
+    background-color: #E53935 !important;
 }
 
 .toast {

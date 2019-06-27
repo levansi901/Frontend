@@ -139,7 +139,7 @@ class ProductController extends AppController
                 }
             }
             $http = new Client();
-            $response = $http->post(API_DOMAIN_URL . 'product/save', json_encode($data_post), ['type' => 'json']);            
+            $response = $http->post(API_DOMAIN_URL . 'product/save', json_encode($data_post), ['type' => 'json']);      
             $result = $response->getJson();
             $data = !empty($result[DATA]) ? $result[DATA] : [];
         }

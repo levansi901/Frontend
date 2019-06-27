@@ -18,7 +18,7 @@
 
                 <div class="row">
                     <div class="input-field col s12 m12 l12">
-                        <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off" readonly="true" >
+                        <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off" readonly="true" value="{if !empty($product.lazada_category_tree_name)}{$product.lazada_category_tree_name}{/if}" >
                         <label for="select_lazada_category" class="disabled" >
                             {$this->element('/lazada/icon')}
                             Danh mục Lazada                        
@@ -119,21 +119,27 @@
         <div class="mn-header navbar-fixed">
             <nav class="white nav-action">
                 <div class="row center">
-                    <span class="p-v-xs hide-on-small-only">
-                        <input id="redirect-list" name="after_save" type="radio" checked="true" />
+                    <span class="p-v-xs hide-on-small-only m-r-sm">
+                        <input id="redirect-list" name="after_save" type="radio" checked="true" value="list" />
                         <label for="redirect-list">Về trang danh sách</label>
                     </span>
+
+                    <span class="p-v-xs hide-on-small-only m-r-sm">
+                        <input id="redirect-edit" name="after_save" type="radio" value="edit" />
+                        <label for="redirect-edit">Về trang cập nhât</label>
+                    </span>   
+
                     <span class="p-v-xs hide-on-small-only">
-                        <input id="redirect-form" name="after_save" type="radio"  />
-                        <label for="redirect-form">Về trang thêm mới</label>
-                    </span>                    
+                        <input id="redirect-add" name="after_save" type="radio" value="add" />
+                        <label for="redirect-add">Tiếp tục thêm mới</label>
+                    </span>                 
 
                     <span class="waves-effect waves-light btn s6 m-l-lg m-r-xs btn-submit-form">
                         <i class="material-icons left lh-36">check</i>
                         Thêm mới
                     </span>
 
-                    <span class="waves-effect waves-light btn s6 black">
+                    <span class="waves-effect waves-light btn s6 blue-grey darken-4">
                         <i class="material-icons left lh-36">close</i>
                         Hủy bỏ
                     </span>

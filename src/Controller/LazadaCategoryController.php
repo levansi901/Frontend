@@ -22,7 +22,7 @@ class LazadaCategoryController extends AppController
             $url_api = API_DOMAIN_URL . 'lazada/category/get-by-parent?parent_id=' . $parent_id;        
             if(!empty($tree_category_id)){
                 $get_by_parent = false;
-                $url_api = API_DOMAIN_URL . 'lazada/category/get-by-tree-ids?tree_ids=' . implode(',', $tree_category_id);                
+                $url_api = API_DOMAIN_URL . 'lazada/category/get-by-tree-ids?lazada_category_tree_ids=' . implode(',', $tree_category_id);                
             }
 
             $response = $http->get($url_api);  

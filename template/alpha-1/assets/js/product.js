@@ -247,13 +247,26 @@ var ss_product = {
 		        	element.after(error);
 		        },
 		        submitHandler: function (this_form) {
-		            var redirect_page = $('.id-after-save:input[name=after_save]:checked').val();
+		            var redirect_page = '';
+		            var after_save = $('input[name="after_save"]:checked').val();
+		            switch(after_save){
+		            	case 'list':
+			            	redirect_page = '/product'
+			            	break;
+		            	case 'edit':
+		            		redirect_page = '/product/edit/'
+		            		break;
+		            	case 'add':
+		            		redirect_page = '/product/add'
+		            		break;
+		            }
+	
 		            ss_backend.ajaxSubmitForm({
 		            	url: $(self.form).attr('action'),
-		            	type: $(self.form).attr('method'),
-		            	data: new FormData(this_form)
-		            });
-		            
+		            	data: new FormData(this_form),
+		            	url_redirect: redirect_page,
+		            	after_save: after_save
+		            });		            
 		        },
 		        invalidHandler: function (form) {
 		        }
@@ -482,7 +495,6 @@ var ss_product = {
 			    }
 			});
 		},
-
 	}
 }
 
