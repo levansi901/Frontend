@@ -83,6 +83,9 @@ aside::-webkit-scrollbar-thumb{
     vertical-align: middle;
 }
 
+.custom-table > thead > tr > th{
+    text-align: center;
+}
 .custom-table > thead > tr > th:first-child{
 	border-left-color: #ddd;
 }
@@ -95,8 +98,18 @@ aside::-webkit-scrollbar-thumb{
     box-sizing: border-box;
 }
 
+.custom-table td.center,
+.custom-table th.center{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.lh-30{
+    line-height: 30px !important;    
+}
+
 .lh-36{
-	line-height: 36px !important;
+	line-height: 36px !important;    
 }
 
 [type="radio"]:not(:checked) + label, [type="radio"]:checked + label{
@@ -412,4 +425,8 @@ textarea.materialize-textarea,
 .toast {
     min-width: 200px;
     font-weight: 500;
+}
+
+.no-text[type="checkbox"] + label{
+    padding-left: 20px;
 }

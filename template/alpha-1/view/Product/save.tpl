@@ -120,17 +120,17 @@
             <nav class="white nav-action">
                 <div class="row center">
                     <span class="p-v-xs hide-on-small-only m-r-sm">
-                        <input id="redirect-list" name="after_save" type="radio" checked="true" value="list" />
+                        <input id="redirect-list" name="after_save" type="radio" checked="true" value="list" class="with-gap" />
                         <label for="redirect-list">Về trang danh sách</label>
                     </span>
 
                     <span class="p-v-xs hide-on-small-only m-r-sm">
-                        <input id="redirect-edit" name="after_save" type="radio" value="edit" />
+                        <input id="redirect-edit" name="after_save" type="radio" value="edit" class="with-gap" />
                         <label for="redirect-edit">Về trang cập nhât</label>
                     </span>   
 
                     <span class="p-v-xs hide-on-small-only">
-                        <input id="redirect-add" name="after_save" type="radio" value="add" />
+                        <input id="redirect-add" name="after_save" type="radio" value="add" class="with-gap" />
                         <label for="redirect-add">Tiếp tục thêm mới</label>
                     </span>                 
 

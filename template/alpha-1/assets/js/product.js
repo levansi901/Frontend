@@ -154,6 +154,7 @@ var ss_product = {
 
 			li_item.find('input').val('');
 			li_item.find('select option:first').prop('selected', 'selected').trigger('change');
+			li_item.find('.title-item').html('');		
 		},
 		setIndexItem: function(index){
 			var self = this;
@@ -173,7 +174,7 @@ var ss_product = {
 			var index = $(self.wrap_list + ' .li-item:last-child').index();
 			self.setIndexItem(index);		
 			self.activeItem(index);
-			self.clearInputItem();
+			self.clearInputItem(index);
 			self.checkConditions();
 			$(self.wrap_list + ' .li-item:last-child select').material_select();
 

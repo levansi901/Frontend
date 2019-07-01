@@ -14,17 +14,20 @@ class ProductController extends AppController
     }
 
     public function index(){
+        static::$js_files[] = 'assets/js/product_list.js';
+
         // get data
         $http = new Client();
         $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form-list');  
         $result = $response->json;
-        $data = !empty($result['data']) ? $result['data'] : [];
+        $data = !empty($result[DATA]) ? $result[DATA] : [];
         $list_status = $products = [];
         if(!empty($data)){
-        	$list_status = !empty($data['list_status']) ? $data['list_status'] : [];
+        	$list_status = !empty($data['list_status']) ? $data['list_status'] : [];            
         	$products = !empty($data['products']) ? $data['products'] : [];
-        }
-        
+        }   
+        // debug($products);
+        // exit;
         $this->set('list_status', $list_status);
         $this->set('products', $products);
 
