@@ -81,10 +81,20 @@ aside::-webkit-scrollbar-thumb{
     padding: 6px 5px;
     border-top: 1px solid #ddd;
     vertical-align: middle;
+    padding: 7px 10px;
 }
 
 .custom-table > thead > tr > th{
     text-align: center;
+}
+
+.custom-table tr th label,
+.custom-table tr th i,
+.custom-table tr th span,
+.custom-table tr td label,
+.custom-table tr td i,
+.custom-table tr td span{
+    vertical-align: middle;
 }
 .custom-table > thead > tr > th:first-child{
 	border-left-color: #ddd;
@@ -429,4 +439,16 @@ textarea.materialize-textarea,
 
 .no-text[type="checkbox"] + label{
     padding-left: 20px;
+}
+
+.btn-small{
+    padding: 2px;
+    height: 26px;
+    line-height: 22px;
+    border-radius: 0;
+}
+
+.btn-small > i{
+    font-size: 19px;
+    width: 22px;
 }

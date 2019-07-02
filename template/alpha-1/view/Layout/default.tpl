@@ -40,7 +40,7 @@
 
     <div class="mn-content fixed-sidebar">
         {$this->element('layout/header')}
-
+        
         {$this->element('layout/left_sidebar',['menus'=> []])}
 
         <main class="mn-inner">

@@ -6198,7 +6198,7 @@ form p:last-child {
   padding-left: 35px;
   cursor: pointer;
   display: inline-block;
-  height: 25px;
+  height: 20px;
   line-height: 25px;
   font-size: 1rem;
   -webkit-user-select: none;
@@ -6318,12 +6318,15 @@ form p:last-child {
 }
 
 [type="checkbox"].filled-in:not(:checked) + label:after {
-  height: 20px;
-  width: 20px;
+  height: 19px;
+  width: 19px;
   background-color: transparent;
-  border: 2px solid #5a5a5a;
+  border: 1px solid #c8c8c8;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
   top: 0px;
   z-index: 0;
+  background: #fff;
+  border-radius: 0;
 }
 
 [type="checkbox"].filled-in:checked + label:before {
@@ -6343,11 +6346,12 @@ form p:last-child {
 
 [type="checkbox"].filled-in:checked + label:after {
   top: 0;
-  width: 20px;
-  height: 20px;
+  width: 19px;
+  height: 19px;
   border: 2px solid #26a69a;
   background-color: #26a69a;
   z-index: 0;
+  border-radius: 0;
 }
 
 [type="checkbox"].filled-in.tabbed:focus + label:after {

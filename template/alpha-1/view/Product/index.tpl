@@ -18,7 +18,7 @@
                 
 
                 <div class="input-field col s12 m12 l3">
-                	<a class="waves-effect waves-light btn blue m-b-xs">
+                	<a class="waves-effect waves-light btn m-b-xs">
                 		Tìm kiếm
 	                </a>
 
@@ -27,7 +27,7 @@
 	                </a>
 
 	                <a class="btn-floating br-2 btn waves-effect waves-light blue-grey darken-4 m-b-xs">
-                		<i class="material-icons">keyboard_arrow_right</i>
+                		<i class="material-icons">keyboard_arrow_down</i>
 	                </a>
                 </div>                
             </div>
@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-content">      
         	<div class="s12">
-        		<a href="/product/add" class="waves-effect waves-light btn green m-b-xs">
+        		<a href="/product/add" class="waves-effect waves-light btn m-b-xs">
         			<i class="material-icons left">add</i>
             		Thêm sản phẩm mới
                 </a>				
@@ -50,13 +50,15 @@
                     		<label for="check-all"></label>
                     	</th>
                     	<th rowspan="2">
-                            <i class="material-icons">image</i>
+                            <i class="material-icons f-s-22">photo_library</i>
                     	</th>
                         <th rowspan="2">Tên sản phẩm</th>
                         <th colspan="4">Phiên bản sản phẩm</th>
                         <th rowspan="2">Tồn kho</th>
                         <th rowspan="2">TT</th>
-                        <th rowspan="2"></th>
+                        <th rowspan="2">
+                            <i class="material-icons f-s-22">settings_applications</i>
+                        </th>
                     </tr>
 
                     <tr>
@@ -69,11 +71,11 @@
                     	</th>
 
                     	<th> 
-                    		Mã vạch
+                    		Giá
                     	</th>
 
                     	<th> 
-                    		Giá
+                    		Giá khuyến mãi
                     	</th>
 					</tr>
                 </thead>
@@ -93,8 +95,10 @@
                                     <label for="row-{$k_product}"></label>                         		
                             	</td>
 
-                            	<td rowspan="{$rowspan}">
-                                    <i class="material-icons lh-30">image</i>
+                            	<td rowspan="{$rowspan}" class="center">
+                                    <a class="btn btn-xxs blue-grey darken-4 btn-small">
+                                        <i class="material-icons f-s-22">photo_camera</i>
+                                    </a>                                    
                             	</td>
 
                                 <td rowspan="{$rowspan}">
@@ -107,56 +111,84 @@
         	                        
         	                    </td>
 
-                                <td>
+                                <td class="center">
         	                        {if !empty($product.items.0.code)}
                                         {$product.items.0.code}
                                     {/if}
         	                    </td>
 
-                                <td>
-                                	{if !empty($product.items.0.barcode)}
-                                        {$product.items.0.barcode}
+                                <td class="center">
+                                	{if !empty($product.items.0.price)}
+                                        {$product.items.0.price}
                                     {/if}
                                 </td>
-                                <td>
+                                <td class="center">
         	                        {if !empty($product.items.0.price)}
                                         {$product.items.0.price}
                                     {/if}
         	                    </td>
 
-                                <td>
+                                <td class="center">
                                 	10
                                 </td>
 
-                                <td>
+                                <td class="center">
                                 </td>
 
-                                <td>
+                                <td rowspan="{$rowspan}" class="center">
+                                    <a class="dropdown-button btn btn-xxs blue-grey darken-4 btn-small " href="#" data-activates="setting-{$k_product}">
+                                        <i class="material-icons">settings</i>
+                                    </a>
+                                    <ul id="setting-{$k_product}" class="dropdown-content">
+                                        <li>
+                                            <a>
+                                                 Xem thông tin
+                                            </a>   
+                                        </li>
+                                        <li>
+                                            <a href="#!">two</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a>
+                                                <i class="material-icons">delete_forever</i>
+                                                Xóa
+                                            </a>                                            
+                                        </li>
+                                    </ul>
                                 </td>                                
                             </tr>    
                             {if !empty($product.items) && sizeof($product.items > 1)}
                                 {foreach from = $product.items key = k_item item = item}
-                                    <tr class="{$tr_class}">
-                                        <td>
-                                        </td>
-                                        
-                                        <td>
-                                            {if !empty($item.code)}
-                                                {$item.code}
-                                            {/if}
-                                        </td>
+                                    {if $k_item > 0}
+                                        <tr class="{$tr_class}">
+                                            <td>
+                                            </td>
+                                            
+                                            <td class="center">
+                                                {if !empty($item.code)}
+                                                    {$item.code}
+                                                {/if}
+                                            </td>
 
-                                        <td>
-                                            {if !empty($item.barcode)}
-                                                {$item.barcode}
-                                            {/if}
-                                        </td>
-                                        <td>
-                                            {if !empty($item.price)}
-                                                {$item.price}
-                                            {/if}
-                                        </td>
-                                    </tr>
+                                            <td class="center">
+                                                {if !empty($item.barcode)}
+                                                    {$item.barcode}
+                                                {/if}
+                                            </td>
+                                            <td class="center">
+                                                {if !empty($item.price)}
+                                                    {$item.price}
+                                                {/if}
+                                            </td>
+
+                                            <td class="center">
+                                            </td>
+
+                                            <td class="center">
+                                            </td>
+                                        </tr>
+                                    {/if}
                                 {/foreach}
                             {/if} 
                         {/foreach}
