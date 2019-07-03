@@ -389,8 +389,11 @@ var ss_product = {
 						type: 'spu'
 					}
 				}).done(function(response) {
-				    $('.lazada-spu-attributes').html(response);
+				    $('.lazada-spu-attributes').html(response);		            
+		            ss_product.item_product.item_html = $(ss_product.item_product.wrap_list + ' > .li-item:first-child')[0].outerHTML;
+
 		            $('.lazada-spu-attributes select').material_select();
+
 				});			
 			});
 		},

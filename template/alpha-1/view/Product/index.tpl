@@ -11,18 +11,21 @@
                 </div>
 
                 <div class="input-field col s12 m4 l2">   
-                	{$this->Form->select('status',$list_status , ['name'=>'status','empty' => "Trạng thái",'default' => '' ,'class' => ''])}
-                    <label>Trạng thái</label>
+                	{$this->Form->select('status',$list_status , ['name'=>'status','empty' => "-- Chọn --",'default' => '' ,'class' => ''])}
+                    <label for="status">Trạng thái</label>
                 </div>
 
-                
+                <div class="input-field col s12 m4 l2">   
+                    {$this->Form->select('shop_id',$list_shops , ['name'=>'shop_id','empty' => "-- Chọn --",'default' => '' ,'class' => ''])}
+                    <label for="shop_id">Cửa hàng</label>
+                </div>
 
                 <div class="input-field col s12 m12 l3">
                 	<a class="waves-effect waves-light btn m-b-xs">
                 		Tìm kiếm
 	                </a>
 
-	                <a class="btn-floating br-2 btn waves-effect waves-light green m-b-xs">
+	                <a class="btn-floating br-2 btn waves-effect waves-light m-b-xs">
                 		<i class="material-icons">loop</i>
 	                </a>
 
@@ -37,7 +40,7 @@
     <div class="card">
         <div class="card-content">      
         	<div class="s12">
-        		<a href="/product/add" class="waves-effect waves-light btn m-b-xs">
+        		<a href="/product/add" class="waves-effect waves-light btn m-b-xs" title="Thêm sản phẩm mới">
         			<i class="material-icons left">add</i>
             		Thêm sản phẩm mới
                 </a>				
@@ -45,7 +48,7 @@
             <table class="display responsive-table custom-table">
                 <thead>
                     <tr>
-                    	<th rowspan="2">
+                    	<th rowspan="2" class="w-3">
                     		<input id="check-all" type="checkbox" class="filled-in no-text"/>
                     		<label for="check-all"></label>
                     	</th>
@@ -133,6 +136,9 @@
                                 </td>
 
                                 <td class="center">
+                                    <a class="btn btn-xxs green btn-small">
+                                        <i class="material-icons">check</i>
+                                    </a>
                                 </td>
 
                                 <td rowspan="{$rowspan}" class="center">
@@ -141,17 +147,15 @@
                                     </a>
                                     <ul id="setting-{$k_product}" class="dropdown-content">
                                         <li>
-                                            <a>
-                                                 Xem thông tin
+                                            <a href="/product/edit/{$product.id}" title="Xem thông tin sản phẩm">
+                                                <i class="material-icons left">edit</i>
+                                                Xem thông tin
                                             </a>   
-                                        </li>
-                                        <li>
-                                            <a href="#!">two</a>
-                                        </li>
+                                        </li>                                           
                                         <li class="divider"></li>
                                         <li>
-                                            <a>
-                                                <i class="material-icons">delete_forever</i>
+                                            <a class="delete-product" title="Xóa sản phẩm">
+                                                <i class="material-icons left">delete_forever</i>
                                                 Xóa
                                             </a>                                            
                                         </li>
@@ -183,15 +187,27 @@
                                             </td>
 
                                             <td class="center">
+
                                             </td>
 
                                             <td class="center">
+                                                <a class="btn btn-xxs blue-grey darken-4 btn-small">
+                                                    <i class="material-icons">no_encryption</i>
+                                                </a>
                                             </td>
                                         </tr>
                                     {/if}
                                 {/foreach}
                             {/if} 
                         {/foreach}
+                    {else}
+                        <tr >
+                            <td colspan="12" class="center">
+                                <i class="">
+                                    Không tìm thấy sản phẩm nào
+                                </i>
+                            </td>                            
+                        </tr>
                     {/if}
                 </tbody>
             </table>

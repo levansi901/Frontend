@@ -624,7 +624,7 @@ nav .nav-wrapper ul li span.badge {
 
 .dropdown-content li > a,
 .dropdown-content li > span {
-    padding: 8px 20px;
+    padding: 8px;
     font-size: 13px;
     color: #4C4C4C;
 }
@@ -637,6 +637,7 @@ nav .nav-wrapper ul li span.badge {
     vertical-align: top;
     width: 28px;
     text-align: left;
+    margin-right: 0px;
 }
 
 .divider {
