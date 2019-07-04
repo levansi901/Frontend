@@ -130,7 +130,7 @@ var ss_backend = {
             		}else{
             			location.reload();
             		}
-            	});                
+            	});
             } else {
                 self.notification({
                 	type: 'error',

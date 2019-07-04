@@ -12,7 +12,7 @@
             </div>
         {else}
             <div class="input-field col s12 m4 l3">                
-                {$this->element('/lazada/input',['attribute' => $attribute, 'attribute_value' => $attribute_value , 'show_icon' => "{if !empty($show_icon)}1{/if}"])}
+                {$this->element('/lazada/input',['attribute' => $attribute, 'attribute_value' => $attribute_value , 'show_icon' => "{if !empty($show_icon)}1{/if}" , 'index' => "{if isset($index)}{$index}{/if}"])}
             </div>
         {/if}        
     {/foreach}

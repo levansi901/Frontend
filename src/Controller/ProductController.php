@@ -147,6 +147,8 @@ class ProductController extends AppController
                     
                 }
             }
+            debug(json_encode($data_post));
+            exit;
             $http = new Client();
             $response = $http->post(API_DOMAIN_URL . 'product/save', json_encode($data_post), ['type' => 'json']);      
             $result = $response->getJson();

@@ -90,20 +90,20 @@
                 </div>
             </div>
         </div>
-
-        {if !empty($lazada_normal_attributes)}
-            <div class="card">
-                <div class="card-content my-form">
-                    <span class="card-title">
-                        {$this->element('/lazada/icon')}
-                        Thuộc tính Lazada
-                    </span>
-                    <div class="row lazada-spu-attributes">
-                        {$this->element('../Product/lazada_attributes',['lazada_attributes' => $lazada_normal_attributes, show_icon => false])}                        
-                    </div>
+        
+        <div id="wrap-lazada-spu-attributes" class="card {if empty($lazada_normal_attributes)}hide{/if}">
+            <div class="card-content my-form">
+                <span class="card-title">
+                    {$this->element('/lazada/icon')}
+                    Thuộc tính Lazada
+                </span>
+                <div class="row lazada-spu-attributes">
+                    {if !empty($lazada_normal_attributes)}
+                        {$this->element('../Product/lazada_attributes',['lazada_attributes' => $lazada_normal_attributes, show_icon => false])}             
+                    {/if}           
                 </div>
             </div>
-        {/if}
+        </div>
 
         <div class="card">
             <div class="card-content my-form">

@@ -163,7 +163,9 @@ var ss_product = {
 			li_item.find('.collapsible-header i.index-item').html('filter_' + (index + 1));
 			li_item.find('input[data-name]').each(function(idx, input) {
 				var id = $(this).data('name')+ '-' + index;
+				var name = typeof($(this).data('name').split('-')[1]) != 'undefined' ? $(this).data('name').split('-')[1] : '';
 				$(this).attr('id', id);
+				$(this).attr('name', 'items[' + index + '][' + name +']');
 				$(this).next('label').attr('for', id).toggleClass('active',$(this).val().length > 0 ? true : false);
 			});
 		},
@@ -172,9 +174,9 @@ var ss_product = {
 			$(self.wrap_list).append(self.item_html);
 
 			var index = $(self.wrap_list + ' .li-item:last-child').index();
-			self.setIndexItem(index);		
-			self.activeItem(index);
 			self.clearInputItem(index);
+			self.setIndexItem(index);		
+			self.activeItem(index);			
 			self.checkConditions();
 			$(self.wrap_list + ' .li-item:last-child select').material_select();
 
@@ -362,7 +364,6 @@ var ss_product = {
 				ss_backend.callAjax({
 					url: '/product/lazada/load-attributes',
 					data_type: 'html',
-					cache: true,
 					data:{
 						lazada_category_id: self.lazada_category_id,
 						type: 'sku'
@@ -373,28 +374,36 @@ var ss_product = {
 		            });
 		            
 		            if(response.length > 0){
+		            	ss_product.item_product.item_html = $(ss_product.item_product.wrap_list + ' > .li-item:first-child')[0].outerHTML;
 		            	$('.lazada-sku-attributes select').material_select();
 		            	ss_product.item_product.can_add = true;
 		            }else{
 		            	ss_product.item_product.can_add = false;
 		            }
+				}).fail(function(jqXHR, textStatus, errorThrown) {
+				    self.notification({
+				    	type: 'error',
+				    	title: errorThrown
+				    });
 				});
 
 				ss_backend.callAjax({
 					url: '/product/lazada/load-attributes',
 					data_type: 'html',
-					cache: true,
 					data:{
 						lazada_category_id: self.lazada_category_id,
 						type: 'spu'
 					}
 				}).done(function(response) {
-				    $('.lazada-spu-attributes').html(response);		            
-		            ss_product.item_product.item_html = $(ss_product.item_product.wrap_list + ' > .li-item:first-child')[0].outerHTML;
-
+				    $('.lazada-spu-attributes').html(response);
 		            $('.lazada-spu-attributes select').material_select();
-
-				});			
+		            $('#wrap-lazada-spu-attributes').toggleClass('hidden', response.length > 0 ? false : true);
+				}).fail(function(jqXHR, textStatus, errorThrown) {
+				    self.notification({
+				    	type: 'error',
+				    	title: errorThrown
+				    });
+				});		
 			});
 		},
 		removeGroupByLevel: function(level){
