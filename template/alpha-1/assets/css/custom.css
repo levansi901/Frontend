@@ -336,7 +336,7 @@ textarea.materialize-textarea,
 }
 
 .collapsible.popout > li{
-    margin: 0 15px;
+    margin: 0;
 }
 
 .collapsible-custom li.active .collapsible-header{
@@ -451,4 +451,8 @@ textarea.materialize-textarea,
 .btn-small > i{
     font-size: 19px;
     width: 22px;
+}
+
+.text-red{
+    color: #e53935;
 }

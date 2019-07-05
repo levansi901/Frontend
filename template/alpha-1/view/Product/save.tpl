@@ -12,7 +12,10 @@
                 <div class="row">
                     <div class="input-field col s12 m12 l12">
                         <input id="name" name="name" type="text" length="255" maxlength="255" autocomplete="off" value="{if !empty($product.name)}{$product.name}{/if}" class="required">
-                        <label for="name">Tên sản phẩm</label>
+                        <label for="name">
+                            Tên sản phẩm
+                            <small class="label-required">*</small>
+                        </label>
                     </div>
                 </div>
 

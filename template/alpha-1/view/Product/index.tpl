@@ -11,12 +11,12 @@
                 </div>
 
                 <div class="input-field col s12 m4 l2">   
-                	{$this->Form->select('status',$list_status , ['name'=>'status','empty' => "-- Chọn --",'default' => '' ,'class' => ''])}
+                	{$this->Form->select('status', $list_status , ['name'=>'status', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
                     <label for="status">Trạng thái</label>
                 </div>
 
                 <div class="input-field col s12 m4 l2">   
-                    {$this->Form->select('shop_id',$list_shops , ['name'=>'shop_id','empty' => "-- Chọn --",'default' => '' ,'class' => ''])}
+                    {$this->Form->select('shop_id', $list_shops , ['name'=>'shop_id', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
                     <label for="shop_id">Cửa hàng</label>
                 </div>
 
@@ -52,14 +52,14 @@
                     		<input id="check-all" type="checkbox" class="filled-in no-text"/>
                     		<label for="check-all"></label>
                     	</th>
-                    	<th rowspan="2">
+                    	<th rowspan="2" class="w-3">
                             <i class="material-icons f-s-22">photo_library</i>
                     	</th>
                         <th rowspan="2">Tên sản phẩm</th>
                         <th colspan="4">Phiên bản sản phẩm</th>
                         <th rowspan="2">Tồn kho</th>
-                        <th rowspan="2">TT</th>
-                        <th rowspan="2">
+                        <th rowspan="2" class="w-3">TT</th>
+                        <th rowspan="2" class="w-3">
                             <i class="material-icons f-s-22">settings_applications</i>
                         </th>
                     </tr>

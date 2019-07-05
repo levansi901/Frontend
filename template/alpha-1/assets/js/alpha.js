@@ -23,6 +23,7 @@ $( document ).ready(function() {
     
     $(".fixed-sidebar .navigation-toggle a").removeClass('button-collapse');
     $(".fixed-sidebar .navigation-toggle a").addClass('reverse-icon');        
+    
     $(".fixed-sidebar .navigation-toggle a").click(function() {
         $('#slide-out').toggle();
         $('.mn-inner').toggleClass('hidden-fixed-sidebar');
@@ -66,12 +67,6 @@ $( document ).ready(function() {
         }
     });
 
-    $(document).keyup(function(e) {
-        if (e.keyCode == 27) { 
-            $(".search-results").fadeOut(300);
-            $(".search input#search").blur();
-        }   // esc
-    });
     
     $('.search input#search').focus(function() { 
         if($.trim($('.search input#search').val()).length != 0){

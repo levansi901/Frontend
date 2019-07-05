@@ -35,7 +35,7 @@
     {/if}    
 </head>
     
-<body>
+<body url-reference="{if isset($url_reference)}{$url_reference}{/if}">
     {$this->element('layout/pre-loader')}
 
     <div class="mn-content fixed-sidebar">

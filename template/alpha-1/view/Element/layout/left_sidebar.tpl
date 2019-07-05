@@ -20,7 +20,7 @@
                 </li>
             </ul>
         </div>
-        <ul class="sidebar-menu collapsible collapsible-accordion" data-collapsible="accordion">
+        <ul id="left-sidebar" class="sidebar-menu collapsible collapsible-accordion" data-collapsible="accordion">
             <li class="no-padding">
                 <a class="waves-effect waves-grey" href="/">
                     <i class="material-icons">settings_input_svideo</i>
@@ -55,15 +55,15 @@
                     </ul>
                 </div>
             </li>
-            <li class="no-padding active">
-                <a class="collapsible-header waves-effect waves-grey active">
+            <li class="no-padding">
+                <a class="collapsible-header waves-effect waves-grey">
                     <i class="material-icons">desktop_windows</i>
                     Bán hàng
                     <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
                 </a>
                 <div class="collapsible-body">
                     <ul>
-                        <li><a href="/sale/retail" class="active-page">Bán lẻ</a></li>
+                        <li><a href="/sale/retail">Bán lẻ</a></li>
                         <li><a href="/sale">Hóa đơn bán hàng</a></li>                        
                     </ul>
                 </div>

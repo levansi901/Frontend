@@ -23,8 +23,8 @@ var ss_product = {
         	timepicker: true,
         	onSelect(formattedDate, date, inst) {
 	        	var input = $(inst.el);	        	
-	        	if(input.data('name') == 'item-time-start'){
-	        		var input_time_end = input.closest('.li-item').find('input[data-name="item-time-end"]');
+	        	if(input.data('name') == 'item-time_start_discount'){
+	        		var input_time_end = input.closest('.li-item').find('input[data-name="item-time_end_discount"]');
 	        		var datepicker = input_time_end.datepicker().data('datepicker');
 	        		datepicker.update('minDate', date);
 	        	}
@@ -65,6 +65,29 @@ var ss_product = {
 				self.removeItem(index);			
 			});
 		},
+		eventNewItem: function(){
+			var self = this;
+
+			$(self.wrap_list + ' .li-item:last-child select').material_select();
+
+			$(self.wrap_list + ' .li-item:last-child .auto-numeric').autoNumeric('init', {
+	            mDec: 0,
+	            vMin: 0,
+	            vMax: 9999999999
+	        });
+
+	        $(self.wrap_list + ' .li-item:last-child .input-date-picker').datepicker({
+	        	timepicker: true,
+	        	onSelect(formattedDate, date, inst) {
+	        	var input = $(inst.el);	        	
+		        	if(input.data('name') == 'item-time_start_discount'){
+		        		var input_time_end = input.closest('.li-item').find('input[data-name="item-time_end_discount"]');
+		        		var datepicker = input_time_end.datepicker().data('datepicker');
+		        		datepicker.update('minDate', date);
+		        	}
+		    	}
+		    });
+		},
 		checkConditions: function(){
 			var self = this;
 
@@ -101,7 +124,7 @@ var ss_product = {
 				var property = '';
 
 				$(this).find('.lazada-sku-attributes select').each(function(idx, input) {	
-					console.log(input);				
+					console.log(input);			
 				});
 				
 				if(code.length == 0){
@@ -161,11 +184,17 @@ var ss_product = {
 			var li_item = $(self.wrap_list + ' .li-item:eq('+ index +')');
 			li_item.attr('data-index', index);
 			li_item.find('.collapsible-header i.index-item').html('filter_' + (index + 1));
-			li_item.find('input[data-name]').each(function(idx, input) {
+			li_item.find('input[data-name], select[data-name]').each(function(idx, input) {
+
 				var id = $(this).data('name')+ '-' + index;
 				var name = typeof($(this).data('name').split('-')[1]) != 'undefined' ? $(this).data('name').split('-')[1] : '';
+
 				$(this).attr('id', id);
 				$(this).attr('name', 'items[' + index + '][' + name +']');
+				if(typeof($(this).data('lazada-type')) != 'undefined' && $(this).data('lazada-type') == 'sku'){
+					$(this).attr('name', 'items[' + index + '][lazada_item_attributes][' + name +']');
+				}
+				
 				$(this).next('label').attr('for', id).toggleClass('active',$(this).val().length > 0 ? true : false);
 			});
 		},
@@ -177,26 +206,7 @@ var ss_product = {
 			self.clearInputItem(index);
 			self.setIndexItem(index);		
 			self.activeItem(index);			
-			self.checkConditions();
-			$(self.wrap_list + ' .li-item:last-child select').material_select();
-
-			$(self.wrap_list + ' .li-item:last-child .auto-numeric').autoNumeric('init', {
-	            mDec: 0,
-	            vMin: 0,
-	            vMax: 9999999999
-	        });
-
-	        $(self.wrap_list + ' .li-item:last-child .input-date-picker').datepicker({
-	        	timepicker: true,
-	        	onSelect(formattedDate, date, inst) {
-	        	var input = $(inst.el);	        	
-		        	if(input.data('name') == 'item-time-start'){
-		        		var input_time_end = input.closest('.li-item').find('input[data-name="item-time-end"]');
-		        		var datepicker = input_time_end.datepicker().data('datepicker');
-		        		datepicker.update('minDate', date);
-		        	}
-		    	}
-		    });
+			self.eventNewItem();			
 		},
 		removeItem: function(index){
 			var self = this;
@@ -357,9 +367,14 @@ var ss_product = {
 					return false;
 				}
 
+				if(self.tree_category_id.length > 0  && parseInt(self.tree_category_id.pop()) == parseInt(self.lazada_category_id)){
+					$(self.modal).closeModal();
+					return false;
+				}
+
 				$('#lazada_category_id').val(self.lazada_category_id);
 				$('#lazada_category_tree_ids').val(JSON.stringify(self.tree_category_id));
-				$(self.modal).closeModal();			
+				$(self.modal).closeModal();
 
 				ss_backend.callAjax({
 					url: '/product/lazada/load-attributes',
@@ -369,8 +384,10 @@ var ss_product = {
 						type: 'sku'
 					}
 				}).done(function(response) {
-				    $(ss_product.item_product.wrap_list).find('.li-item').each(function() {
-		            	$(this).find('.lazada-sku-attributes').html(response);
+				    $(ss_product.item_product.wrap_list).find('.li-item').each(function(index, li) {
+				    	$(this).find('.lazada-sku-attributes').html(response);				    	
+				    	var index = $(this).index();
+						ss_product.item_product.setIndexItem(index);		            			            	
 		            });
 		            
 		            if(response.length > 0){
@@ -397,7 +414,7 @@ var ss_product = {
 				}).done(function(response) {
 				    $('.lazada-spu-attributes').html(response);
 		            $('.lazada-spu-attributes select').material_select();
-		            $('#wrap-lazada-spu-attributes').toggleClass('hidden', response.length > 0 ? false : true);
+		            $('#wrap-lazada-spu-attributes').toggleClass('hide', response.length > 0 ? false : true);
 				}).fail(function(jqXHR, textStatus, errorThrown) {
 				    self.notification({
 				    	type: 'error',

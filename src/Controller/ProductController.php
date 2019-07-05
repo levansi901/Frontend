@@ -129,6 +129,7 @@ class ProductController extends AppController
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_view', $title_view);
         $this->set('title_for_layout', $title_view);
+        $this->set('url_reference', '/product/add');
         $this->render('save');
     }
 

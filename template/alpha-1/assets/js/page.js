@@ -159,11 +159,35 @@ var ss_backend = {
 	        cache: typeof(params.cache) != 'undefined' ? params.cache : false,
 	    });
 	    return ajax;
+	},
+	activeMenu: function(){
+		var href = window.location.href.split(document.domain);
+        var url = href[1];
+        var url_reference = $('body').attr('url-reference');
+        if ($('#left-sidebar a[href="' + url + '"]').length > 0) {
+	        a_active = $('#left-sidebar a[href="' + url + '"]');
+	    } else if (typeof(url_reference) != 'undefined' && $('#left-sidebar a[href="' + url_reference + '"]').length > 0) {
+	        a_active = $('#left-sidebar a[href="' + url_reference + '"]');
+	    }
+	    
+	    if(typeof(a_active) != 'undefined'){
+	    	a_active.addClass('active-page');	
+	    	// active menu
+		    var ul_collasible_body = a_active.closest('.collapsible-body');
+		    ul_collasible_body.show();
+		    ul_collasible_body.closest('li').addClass('active');
+		    ul_collasible_body.closest('li').find('> a').addClass('active');
+	    }	   
+	    
+	},
+	activeLabelInput: function(){
+		// $('.input-field ')
 	}
 }
 
 $(document).ready(function() {
     ss_backend.csrf_token = $('#csrf_token').val();
+    ss_backend.activeMenu();
 });
 
 $(document).ajaxStart(function () {

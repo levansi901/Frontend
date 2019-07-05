@@ -1473,6 +1473,7 @@ li.active .nav-drop-icon {
 .side-nav.fixed ul li a.active-page {
     font-weight: 500;
     color: rgba(0,0,0,0.9);
+    background-color: #E3E3E3!important;
 }
 
 .side-nav ul ul li a,
