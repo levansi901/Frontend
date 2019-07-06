@@ -22,13 +22,14 @@ class ProductController extends AppController
         $result = $response->json;
         $data = !empty($result[DATA]) ? $result[DATA] : [];
 
-        $list_status = $list_shops = $list_brands = $list_categories = $list_has_inventory = $list_has_image = $products = [];
+        $list_status = $list_shops = $list_brands = $list_categories = $list_has_inventory = $list_has_image = $products = $pagination = [];
         if(!empty($data)){
         	$list_status = !empty($data['list_status']) ? $data['list_status'] : [];
             $list_shops = !empty($data['list_shops']) ? $data['list_shops'] : [];
             $list_has_inventory = !empty($data['list_has_inventory']) ? $data['list_has_inventory'] : [];
             $list_has_image = !empty($data['list_has_image']) ? $data['list_has_image'] : [];       
-        	$products = !empty($data['products']) ? $data['products'] : [];
+        	$products = !empty($data['products'][DATA]) ? $data['products'][DATA] : [];
+            $pagination = !empty($data['products'][PAGINATION]) ? $data['products'][PAGINATION] : [];
         }   
 
         $this->set('list_status', $list_status);
@@ -36,7 +37,7 @@ class ProductController extends AppController
         $this->set('list_has_inventory', $list_has_inventory);
         $this->set('list_has_image', $list_has_image);
         $this->set('products', $products);
-
+        $this->set('pagination', $pagination);
     }
 
     public function ajaxListProduct(){
@@ -84,7 +85,7 @@ class ProductController extends AppController
 
         $title_view = 'Thêm sản phẩm mới';
         if(!empty($id)){
-            $title_view = 'Sửa sản phẩm';
+            $title_view = 'Xem thông tin sản phẩm';
         }                
 
         // get data inital

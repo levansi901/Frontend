@@ -291,11 +291,15 @@ var ss_product = {
 		btn_select: '#select-lazada-category',
 		tree_category_id:[],
 		lazada_category_id: null,
+		lazada_category_id_selected: null,
 		event: function(){
 			var self = this;
-	        $('#select_lazada_category').on('click',function() {		
+			
+	        $('#select_lazada_category').on('click',function() {	
+
 				self.lazada_category_id = $('#lazada_category_id').val().length > 0 ? parseInt($('#lazada_category_id').val()) : null;
-				self.tree_category_id = $('#lazada_category_tree_ids').val().length > 0 ? $.parseJSON($('#lazada_category_tree_ids').val()) : [];				
+				self.tree_category_id = $('#lazada_category_tree_ids').val().length > 0 ? $.parseJSON($('#lazada_category_tree_ids').val()) : [];
+				self.lazada_category_id_selected = $('#select_lazada_category').val().length > 0 ? parseInt($('#select_lazada_category').val()) : null;
 				self.removeGroupByLevel(0);
 				self.toggleDisableSelectedButton();
 				var params = { 
@@ -367,13 +371,15 @@ var ss_product = {
 					return false;
 				}
 
-				if(self.tree_category_id.length > 0  && parseInt(self.tree_category_id.pop()) == parseInt(self.lazada_category_id)){
+				if(parseInt(self.lazada_category_id) == parseInt(self.lazada_category_id_selected) && self.tree_category_id.length > 0){
 					$(self.modal).closeModal();
 					return false;
 				}
 
 				$('#lazada_category_id').val(self.lazada_category_id);
 				$('#lazada_category_tree_ids').val(JSON.stringify(self.tree_category_id));
+				$('#select_lazada_category').val(self.getTreeNameCategoriesLazada());	
+				$('#select_lazada_category').next('label').addClass('active');
 				$(self.modal).closeModal();
 
 				ss_backend.callAjax({
@@ -398,7 +404,7 @@ var ss_product = {
 		            	ss_product.item_product.can_add = false;
 		            }
 				}).fail(function(jqXHR, textStatus, errorThrown) {
-				    self.notification({
+				    ss_backend.notification({
 				    	type: 'error',
 				    	title: errorThrown
 				    });
@@ -416,7 +422,7 @@ var ss_product = {
 		            $('.lazada-spu-attributes select').material_select();
 		            $('#wrap-lazada-spu-attributes').toggleClass('hide', response.length > 0 ? false : true);
 				}).fail(function(jqXHR, textStatus, errorThrown) {
-				    self.notification({
+				    ss_backend.notification({
 				    	type: 'error',
 				    	title: errorThrown
 				    });
@@ -496,6 +502,18 @@ var ss_product = {
 		toggleDisableSelectedButton: function(){
 			var self = this;
 			$(self.modal + ' ' + self.btn_select).toggleClass('disabled', self.lazada_category_id > 0 ? false : true);
+		},
+		getTreeNameCategoriesLazada: function(){
+			var self = this;
+			var tree_name = [];
+			
+			$(self.modal).find('.list-wrap li.selected').each(function(index, li) {
+				var name = $(this).find('span.text').text();
+				if(name != 'undefined' && name.length > 0){
+					tree_name.push(name);	
+				}				
+			});
+			return tree_name.length > 0 ? tree_name.join(' → ') : '';
 		}
 	},
 	lazada_brand:{

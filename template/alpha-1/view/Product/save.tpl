@@ -14,17 +14,18 @@
                         <input id="name" name="name" type="text" length="255" maxlength="255" autocomplete="off" value="{if !empty($product.name)}{$product.name}{/if}" class="required">
                         <label for="name">
                             Tên sản phẩm
-                            <small class="label-required">*</small>
+                            <small class="label-required text-red">*</small>
                         </label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="input-field col s12 m12 l12">
-                        <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off" readonly="true" value="{if !empty($product.lazada_category_tree_name)}{$product.lazada_category_tree_name}{/if}" >
-                        <label for="select_lazada_category" class="disabled" >
+                        <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off" readonly="true" value="{if !empty($product.lazada_category_tree_name)}{$product.lazada_category_tree_name}{/if}" class="required" >
+                        <label for="select_lazada_category">
                             {$this->element('/lazada/icon')}
-                            Danh mục Lazada                        
+                            Danh mục Lazada
+                            <small class="label-required text-red">*</small>               
                         </label>
 
                         <input type="hidden" id="lazada_category_id" name="lazada_category_id" value="{if !empty($product.lazada_category_id)}{$product.lazada_category_id}{/if}">
@@ -65,7 +66,7 @@
             <div class="card-content my-form">
                 <div class="row">
                     <div class="input-field col s12 m4 l3">
-                        {$this->Form->select('status',$list_status , ['name'=>'status','empty' => "Trạng thái",'default' => {"{if !empty($product.status)}{$product.status}{/if}"} ,'class' => ''])}
+                        {$this->Form->select('status',$list_status , ['name'=>'status','empty' => null,'default' => {"{if !empty($product.status)}{$product.status}{/if}"} ,'class' => ''])}
                         <label for="status">Trạng thái</label>
                     </div>
                 </div>

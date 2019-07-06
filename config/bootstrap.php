@@ -221,3 +221,4 @@ define('STATUS', 'status');
 define('MESSAGE', 'message');
 define('SUCCESS', 'success');
 define('ERROR', 'error');
+define('PAGINATION', 'pagination');

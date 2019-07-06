@@ -5,6 +5,9 @@ String.prototype.replaceAll = function (search, replacement) {
 
 var ss_backend = {
 	csrf_token: null,
+	init: function(){
+
+	},
 	alertWarning: function(params, callback){
 		if (typeof(callback) != 'function') {
 	        callback = function () {};
@@ -186,7 +189,8 @@ var ss_backend = {
 }
 
 $(document).ready(function() {
-    ss_backend.csrf_token = $('#csrf_token').val();
+	// ss_backend.init();
+    ss_backend.csrf_token = $('#csrf_token').val();    
     ss_backend.activeMenu();
 });
 

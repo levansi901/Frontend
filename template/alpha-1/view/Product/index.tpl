@@ -121,24 +121,26 @@
         	                    </td>
 
                                 <td class="center">
-                                	{if !empty($product.items.0.price)}
-                                        {$product.items.0.price}
+                                	{if !empty((float)$product.items.0.price)}
+                                        {$product.items.0.price|number_format:0:",":","}
                                     {/if}
                                 </td>
                                 <td class="center">
-        	                        {if !empty($product.items.0.price)}
-                                        {$product.items.0.price}
+        	                        {if !empty((float)$product.items.0.price)}
+                                        {$product.items.0.price|number_format:0:",":","}
                                     {/if}
         	                    </td>
 
                                 <td class="center">
-                                	10
+                                	
                                 </td>
 
                                 <td class="center">
-                                    <a class="btn btn-xxs green btn-small">
-                                        <i class="material-icons">check</i>
-                                    </a>
+                                    {if !empty($product.items.0.status)}
+                                        <i class="material-icons f-s-14 text-green">check</i>
+                                    {else}
+                                        <i class="material-icons f-s-14">no_encryption</i>
+                                    {/if}
                                 </td>
 
                                 <td rowspan="{$rowspan}" class="center">
@@ -181,8 +183,8 @@
                                                 {/if}
                                             </td>
                                             <td class="center">
-                                                {if !empty($item.price)}
-                                                    {$item.price}
+                                                {if !empty((float)$item.price)}
+                                                    {$item.price|number_format:0:",":","}
                                                 {/if}
                                             </td>
 
@@ -191,9 +193,11 @@
                                             </td>
 
                                             <td class="center">
-                                                <a class="btn btn-xxs blue-grey darken-4 btn-small">
-                                                    <i class="material-icons">no_encryption</i>
-                                                </a>
+                                                {if !empty($item.status)}
+                                                    <i class="material-icons f-s-14 text-green">check</i>
+                                                {else}
+                                                    <i class="material-icons f-s-14">no_encryption</i>
+                                                {/if}
                                             </td>
                                         </tr>
                                     {/if}
@@ -211,6 +215,37 @@
                     {/if}
                 </tbody>
             </table>
+        </div>
+        <div class="card-action">
+            <div class="pagination"> 
+                <a>
+                    <i class="material-icons">chevron_left</i>
+                </a>
+                <span>
+                    <a>
+                        1
+                    </a>
+                    <a>
+                        2
+                    </a>
+                    <a>
+                        3
+                    </a>
+                    <a>
+                        4
+                    </a>
+                    <a>
+                        5
+                    </a>
+                    <a>
+                        6
+                    </a>
+
+                </span>
+                <a>
+                    <i class="material-icons">chevron_right</i>
+                </a>
+            </div>
         </div>
     </div>
 </div>

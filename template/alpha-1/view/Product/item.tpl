@@ -21,7 +21,8 @@
             <div class="input-field col s12 m4 l3">
                 <input id="item-code-{$k}" data-name="item-code" name="items[{$k}][code]" type="text" class="w-100" length="100" maxlength="100" autocomplete="off" value="{if !empty($item.code)}{$item.code}{/if}" >
                 <label for="item-code-{$k}"> 
-                    Mã 
+                    Mã
+                    <small class="label-required text-red">*</small>
                 </label>
             </div>
 
@@ -37,7 +38,8 @@
             <div class="input-field col s12 m4 l3">
                 <input id="item-price-{$k}" data-name="item-price" name="items[{$k}][price]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price)}{$item.price}{/if}">
                 <label for="item-price-{$k}"> 
-                    Giá bán 
+                    Giá bán
+                    <small class="label-required text-red">*</small>
                 </label>
             </div>
 

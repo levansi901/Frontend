@@ -456,3 +456,21 @@ textarea.materialize-textarea,
 .text-red{
     color: #e53935;
 }
+
+.text-green{
+    color: #4CAF50;
+}
+
+.label-required{
+    font-size: 14px;
+}
+
+label.active > .label-required{
+    font-size: 12px;
+}
+
+.input-field label.fix-active{
+    font-size: 0.8rem;
+    -webkit-transform: translateY(-140%);
+    transform: translateY(-140%);
+}
