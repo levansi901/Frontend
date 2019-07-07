@@ -37,14 +37,14 @@
         </div>
     </div>
 
-    <div class="card">
+    <div id="wrap-list" class="card">
         <div class="card-content">      
         	<div class="s12">
         		<a href="/product/add" class="waves-effect waves-light btn m-b-xs" title="Thêm sản phẩm mới">
         			<i class="material-icons left">add</i>
             		Thêm sản phẩm mới
                 </a>				
-        	</div>      
+        	</div>
             <table class="display responsive-table custom-table">
                 <thead>
                     <tr>
@@ -216,35 +216,15 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-action">
-            <div class="pagination"> 
-                <a>
-                    <i class="material-icons">chevron_left</i>
-                </a>
-                <span>
-                    <a>
-                        1
-                    </a>
-                    <a>
-                        2
-                    </a>
-                    <a>
-                        3
-                    </a>
-                    <a>
-                        4
-                    </a>
-                    <a>
-                        5
-                    </a>
-                    <a>
-                        6
-                    </a>
-
-                </span>
-                <a>
-                    <i class="material-icons">chevron_right</i>
-                </a>
+        <div class="card-action p-v-xxs">
+            <div class="row no-m valign-wrapper">
+                <div class="col s12 m2 l1 no-p hide-on-small-only">
+                    {$this->Form->select('limit', $limit_pagination , ['name'=>'limit', 'empty' => null, 'default' => 20, 'class' => ''])}
+                </div>
+                <div class="col s12 m10 l11 right-align no-p">
+                    {$this->element('/layout/pagination',['pagination'=> $pagination])}
+                </div>
+                
             </div>
         </div>
     </div>

@@ -474,3 +474,40 @@ label.active > .label-required{
     -webkit-transform: translateY(-140%);
     transform: translateY(-140%);
 }
+
+.pagination{
+
+}
+
+.pagination > li{
+    width: 30px;
+    height: 30px;
+    line-height: 32px;
+    padding: 0;
+    text-align: center;
+    border-radius: 2px; 
+    background-color: #e3e3e3;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 0 0 5px;
+}
+
+.pagination > li > i{
+    font-size: 18px;
+    line-height: 32px;
+}
+
+.pagination > li:hover,
+.pagination > li.active
+{
+    background: #26a69a;
+    color: #fff;
+    transition: box-shadow .25s;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.pagination .count-record{
+    line-height: 32px;
+    margin-right: 5px;
+    font-size: 12px;
+}

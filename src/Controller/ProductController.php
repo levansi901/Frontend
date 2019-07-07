@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use Cake\Core\Configure;
 use Cake\Http\Client;
 
 
@@ -32,12 +33,16 @@ class ProductController extends AppController
             $pagination = !empty($data['products'][PAGINATION]) ? $data['products'][PAGINATION] : [];
         }   
 
+        // debug($pagination);
+        // exit;
         $this->set('list_status', $list_status);
         $this->set('list_shops', $list_shops);
         $this->set('list_has_inventory', $list_has_inventory);
         $this->set('list_has_image', $list_has_image);
         $this->set('products', $products);
         $this->set('pagination', $pagination);
+        $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));
+        
     }
 
     public function ajaxListProduct(){
@@ -197,18 +202,13 @@ class ProductController extends AppController
         return $result;
     }
 
-    public function ajaxUpdateStatus(){
-    	
+    public function ajaxUpdateStatus(){    	
     }
 
     public function ajaxDeleteProduct(){
-
     }
 
-
     public function productExport(){
-
-
     }	
 
 
