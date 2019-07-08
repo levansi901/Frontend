@@ -29,6 +29,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
+        '/product/list', ['controller' => 'Product', 'action' => 'listProduct']
+    );
+
+    $routes->connect(
         '/product/add', ['controller' => 'Product', 'action' => 'saveProduct']
     );
 

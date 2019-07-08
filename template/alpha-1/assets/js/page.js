@@ -160,7 +160,14 @@ var ss_backend = {
 	        dataType: typeof(params.data_type) != 'undefined' ? params.data_type : 'JSON',
 	        data: typeof(params.data) != 'undefined' ? params.data : {},    
 	        cache: typeof(params.cache) != 'undefined' ? params.cache : false,
-	    });
+	    }).fail(function(jqXHR, textStatus, errorThrown){
+	    	if(typeof(params.not_show_error) == 'undefined'){
+	    		ss_backend.notification({
+			    	type: 'error',
+			    	title: errorThrown
+			    });
+	    	}			
+		});
 	    return ajax;
 	},
 	activeMenu: function(){
@@ -180,17 +187,46 @@ var ss_backend = {
 		    ul_collasible_body.show();
 		    ul_collasible_body.closest('li').addClass('active');
 		    ul_collasible_body.closest('li').find('> a').addClass('active');
-	    }	   
-	    
-	},
-	activeLabelInput: function(){
-		// $('.input-field ')
+	    }	   	   
 	}
+}
+
+var ss_list = {
+	wrap_list: '#wrap-list',
+	form: '#form-list-data',
+	init: function(){
+		var self = this;
+		$(self.form).on('click', '.pagination > li[data-page]:not(.active)', function() {
+			var page = parseInt($(this).data('page'));
+			$(self.form).find('#page').val(page);
+
+		    var data = {};
+		    var params = {};
+		    $.map($(self.form).serializeArray(), function (n, i) {
+		        data[n['name']] = $.trim(n['value']);
+		        if($.trim(n['value']).length > 0){
+		        	params[n['name']] = $.trim(n['value']);
+		        }
+		    });
+		  
+		    var url = typeof($(self.wrap_list).data('url')) != 'undefined' ? $(self.wrap_list).data('url') : '';
+		    url += url.length > 0 ? '?' + $.param(params) : '';
+
+			ss_backend.callAjax({
+				url: url,
+				data_type: 'html',
+				data: data
+			}).done(function(response) {
+				$(self.wrap_list).html(response);
+			});
+		});
+	},
 }
 
 $(document).ready(function() {
 	// ss_backend.init();
     ss_backend.csrf_token = $('#csrf_token').val();    
+    $('#csrf_token').remove();
     ss_backend.activeMenu();
 });
 

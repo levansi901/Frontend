@@ -1,6 +1,6 @@
 {assign var=data_breadcrumb value=[
 0=>['title'=> 'Danh sách', 'url' => '/product'],
-1=>['title'=> "{$title_view}", 'url' => ""]
+1=>['title'=> "{$title_for_layout}", 'url' => ""]
 ]}
 
 {$this->element('/layout/breadcrumb',['data'=> $data_breadcrumb])}
@@ -153,9 +153,8 @@
         </div>
     </form>
 </div>
-<div class="hide">
-    <input type="hidden" id="csrf_token" value="{if !empty($csrf_token)}{$csrf_token}{/if}">
-</div>
+
+<input type="hidden" id="csrf_token" value="{if !empty($csrf_token)}{$csrf_token}{/if}">
 
 <div id="modal-lazada-category" class="modal modal-lazada-category">
     <div class="modal-content">

@@ -15,7 +15,7 @@ class ProductController extends AppController
     }
 
     public function index(){
-        static::$js_files[] = 'assets/js/product_list.js';
+        static::$js_files[] = 'assets/js/product_list.js';    
 
         // get data
         $http = new Client();
@@ -33,8 +33,6 @@ class ProductController extends AppController
             $pagination = !empty($data['products'][PAGINATION]) ? $data['products'][PAGINATION] : [];
         }   
 
-        // debug($pagination);
-        // exit;
         $this->set('list_status', $list_status);
         $this->set('list_shops', $list_shops);
         $this->set('list_has_inventory', $list_has_inventory);
@@ -42,11 +40,14 @@ class ProductController extends AppController
         $this->set('products', $products);
         $this->set('pagination', $pagination);
         $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));
+        $this->set('csrf_token', $this->request->getParam('_csrfToken'));
+        $this->set('title_for_layout', 'Sản phẩm');
         
     }
 
-    public function ajaxListProduct(){
-    	//param default
+    public function listProduct(){
+        $this->layout = false;
+
         $params = array(
             'id_filter' => '',
             'keyword' => '',
@@ -61,19 +62,34 @@ class ProductController extends AppController
             'create_from' => '',
             'create_to' => '',
             'page' => 1,
-            'sort' => 'Product.id',
+            'sort' => '',
             'direction' => 'DESC',
             'format' => '',
             'limit' => PAGE_DEFAULT,
             'lang' => LANG_DEFAULT,            
         );
 
+        if (!$this->request->is('ajax')) {
+            return $this->redirect('/product');            
+        }   	        
+
         // mere data port from view
-        $data_post = [];
-        if ($this->request->is('post') && !empty($this->data)) {
-            $data_post = $this->data;
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
+        if ($this->request->is('post') && !empty($data_post)) {
             $params = array_merge($params, $data_post);
         }
+
+        // get data
+        $http = new Client();
+        $response = $http->get(API_DOMAIN_URL . 'product/list?' . http_build_query(array_filter($params)));  
+        $result = $response->json;
+        $products = !empty($result[DATA]) ? $result[DATA] : [];
+        $pagination = !empty($result[PAGINATION]) ? $result[PAGINATION] : [];
+        
+        $this->set('products', $products);
+        $this->set('pagination', $pagination);
+        $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));
+        $this->render('list');
     }
 
     public function saveProduct($id = null){
@@ -88,9 +104,9 @@ class ProductController extends AppController
         static::$js_files[] = 'assets/plugins/auto-complete/jquery.auto-complete.min.js';
         static::$js_files[] = 'assets/js/product.js';
 
-        $title_view = 'Thêm sản phẩm mới';
+        $title_for_layout = 'Thêm sản phẩm';
         if(!empty($id)){
-            $title_view = 'Xem thông tin sản phẩm';
+            $title_for_layout = 'Xem thông tin sản phẩm';
         }                
 
         // get data inital
@@ -133,8 +149,7 @@ class ProductController extends AppController
         $this->set('lazada_normal_attributes', $lazada_normal_attributes);
         $this->set('lazada_sku_attributes', $lazada_sku_attributes);
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
-        $this->set('title_view', $title_view);
-        $this->set('title_for_layout', $title_view);
+        $this->set('title_for_layout', $title_for_layout);
         $this->set('url_reference', '/product/add');
         $this->render('save');
     }

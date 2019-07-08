@@ -18,21 +18,22 @@
         <span class="count-record"> {$start_record} - {$current_record} / {$total_record} </span>
 
         {if $current_page != 1}
-            <li title="Trang đầu">
+            <li data-page="1" title="Trang đầu">
                 <i class="material-icons">first_page</i>
             </li>
         {/if}
 
         {for $page = $start_page to $end_page}
-            <li class="{if $page == $current_page}active{/if}">
+            <li data-page="{$page}" class="{if $page == $current_page}active{/if}">
                 {$page}
             </li>
         {/for}
 
         {if $current_page != $number_page}
-            <li title="Trang cuối">
+            <li data-page="{$number_page}" title="Trang cuối">
                 <i class="material-icons">last_page</i>
             </li>
         {/if}
+        <input type="hidden" id="page" name="page" value="{$current_page}" />
     </div>
 {/if}
