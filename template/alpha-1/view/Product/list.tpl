@@ -179,8 +179,8 @@
 <div class="card-action p-v-xxs">
     <div class="row no-m valign-wrapper">
         <div class="col s12 m2 l1 no-p hide-on-small-only">
-            {$this->Form->select('limit', $limit_pagination , ['empty' => null, 'default' => 20])}
-            <input type="hidden" name="limit" value="" />
+            {$this->Form->select('limit', $limit_pagination, [id => 'limit', name => '', empty => null, default => {"{if !empty($pagination.limit)}{$pagination.limit}{else}20{/if}"}])}
+            <input type="hidden" name="limit" value="{if !empty($pagination.limit)}{$pagination.limit}{/if}" />
         </div>
         <div class="col s12 m10 l11 right-align no-p">
             {$this->element('/layout/pagination',['pagination'=> $pagination])}

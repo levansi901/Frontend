@@ -193,34 +193,68 @@ var ss_backend = {
 
 var ss_list = {
 	wrap_list: '#wrap-list',
+	wrap_filter: '#wrap-filter',
 	form: '#form-list-data',
 	init: function(){
 		var self = this;
+
+		//pagination click
 		$(self.form).on('click', '.pagination > li[data-page]:not(.active)', function() {
-			var page = parseInt($(this).data('page'));
-			$(self.form).find('#page').val(page);
-
-		    var data = {};
-		    var params = {};
-		    $.map($(self.form).serializeArray(), function (n, i) {
-		        data[n['name']] = $.trim(n['value']);
-		        if($.trim(n['value']).length > 0){
-		        	params[n['name']] = $.trim(n['value']);
-		        }
-		    });
-		  
-		    var url = typeof($(self.wrap_list).data('url')) != 'undefined' ? $(self.wrap_list).data('url') : '';
-		    url += url.length > 0 ? '?' + $.param(params) : '';
-
-			ss_backend.callAjax({
-				url: url,
-				data_type: 'html',
-				data: data
-			}).done(function(response) {
-				$(self.wrap_list).html(response);
-			});
+			var page = typeof($(this).data('page')) != 'undefined' ? parseInt($(this).data('page')) : null;
+			if(page == null) return false;
+			$(self.form).find('input[name="page"]').val(page);	
+			self.loadListData();
 		});
+
+		//limit change
+		$(self.form).on('change', 'select#limit', function() {
+			var limit = typeof($(this).val()) != 'undefined' ? parseInt($(this).val()) : null;
+			if(limit == null) return false;
+			$(self.form + ' input[name="limit"]').val(limit);
+			self.loadListData();
+		});
+
+		//search
+		$(self.form).on('click', '#filter-data', function() {
+			self.loadListData();
+		});
+
+		//reset input search
+		$(self.form).on('click', '#reset-filter', function() {
+			$(self.form).find('input[name="page"]').val(1);
+			$(self.wrap_filter).find('input').val('');
+			$(self.wrap_filter).find('select').val('').trigger('change');
+			self.loadListData();
+		});
+
 	},
+	loadListData: function(){
+		var self = this;
+
+		var data = {};
+	    var params = {};
+	    $.map($(self.form).serializeArray(), function (n, i) {
+	        data[n['name']] = $.trim(n['value']);
+	        if($.trim(n['value']).length > 0){
+	        	params[n['name']] = $.trim(n['value']);
+	        }
+	    });
+	  
+	    var url = typeof($(self.form).attr('action')) != 'undefined' ? $(self.form).attr('action') : '';
+	    url += url.length > 0 ? '?' + $.param(params) : '';
+
+		ss_backend.callAjax({
+			url: url,
+			data_type: 'html',
+			data: data
+		}).done(function(response) {
+			$(self.wrap_list).animate({
+			    scrollTop: 0
+			},100);
+			$(self.wrap_list).html(response);
+			$('select').material_select();
+		});
+	}
 }
 
 $(document).ready(function() {
