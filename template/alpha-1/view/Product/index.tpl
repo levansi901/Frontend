@@ -26,14 +26,28 @@
                     		Tìm kiếm
     	                </a>
 
-    	                <a  id="reset-filter" class="btn-floating br-2 btn waves-effect waves-light m-b-xs">
+    	                <a id="reset-filter" class="btn-floating btn waves-effect waves-light m-b-xs">
                     		<i class="material-icons">loop</i>
     	                </a>
 
-    	                <a class="btn-floating br-2 btn waves-effect waves-light blue-grey darken-4 m-b-xs">
+    	                <a id="more-filter" class="btn-floating btn waves-effect waves-light blue-grey darken-4 m-b-xs">
                     		<i class="material-icons">keyboard_arrow_down</i>
     	                </a>
                     </div>
+                </div>
+                <div class="row">
+                     <ul id="wrap-more-filter" class="collapsible">
+                        <li>
+                            <div class="collapsible-body">
+                                <div class="row">
+                                    <div class="input-field col s12 m4 l2">   
+                                        {$this->Form->select('status', $list_has_inventory , ['name'=>'status', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
+                                        <label for="status">Tình trạng</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>                        
+                      </ul>
                 </div>
             </div>
         </div>

@@ -194,6 +194,7 @@ var ss_backend = {
 var ss_list = {
 	wrap_list: '#wrap-list',
 	wrap_filter: '#wrap-filter',
+	wrap_more_filter: '#wrap-more-filter',
 	form: '#form-list-data',
 	init: function(){
 		var self = this;
@@ -227,6 +228,13 @@ var ss_list = {
 			self.loadListData();
 		});
 
+		// more filter
+		$(self.form).on('click', '#more-filter', function() {
+			console.log('more');
+			console.log(self.wrap_more_filter);
+			$(self.wrap_more_filter).find('.collapsible-body').show('slow');
+		});
+
 	},
 	loadListData: function(){
 		var self = this;
@@ -248,9 +256,10 @@ var ss_list = {
 			data_type: 'html',
 			data: data
 		}).done(function(response) {
-			$(self.wrap_list).animate({
-			    scrollTop: 0
-			},100);
+			$('html, body').animate({
+		        scrollTop: $(self.wrap_list).offset().top - 5
+		    }, 400);
+
 			$(self.wrap_list).html(response);
 			$('select').material_select();
 		});

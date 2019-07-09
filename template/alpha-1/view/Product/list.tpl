@@ -8,24 +8,15 @@
     <table class="display responsive-table custom-table">
         <thead>
             <tr>
-                <th rowspan="2" class="w-3">
+                <th class="w-3">
                     <input id="check-all" type="checkbox" class="filled-in no-text"/>
                     <label for="check-all"></label>
                 </th>
-                <th rowspan="2" class="w-3">
+                <th class="w-3">
                     <i class="material-icons f-s-22">photo_library</i>
                 </th>
-                <th rowspan="2">Tên sản phẩm</th>
-                <th colspan="4">Phiên bản sản phẩm</th>
-                <th rowspan="2">Tồn kho</th>
-                <th rowspan="2" class="w-3">TT</th>
-                <th rowspan="2" class="w-3">
-                    <i class="material-icons f-s-22">settings_applications</i>
-                </th>
-            </tr>
-
-            <tr>
-                <th> 
+                <th>Tên sản phẩm</th>
+                <th class="w-20"> 
                     Thuộc tính
                 </th>
 
@@ -37,8 +28,13 @@
                     Giá
                 </th>
 
-                <th> 
-                    Giá khuyến mãi
+                <th title="Giá khuyến mãi"> 
+                    Giá CK
+                </th>
+                <th>Tồn</th>
+                <th class="w-3">TT</th>
+                <th class="w-3">
+                    <i class="material-icons f-s-22">settings_applications</i>
                 </th>
             </tr>
         </thead>
