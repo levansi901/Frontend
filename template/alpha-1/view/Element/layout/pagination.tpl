@@ -41,7 +41,6 @@
             <li data-page="{$number_page}" title="Trang cuối">
                 <i class="material-icons">last_page</i>
             </li>
-        {/if}
-        <input type="hidden" id="page" name="page" value="{$current_page}" />
+        {/if}        
     </div>    
 {/if}

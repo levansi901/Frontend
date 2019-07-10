@@ -28,6 +28,7 @@ class ProductController extends AppController
         $data = !empty($result[DATA]) ? $result[DATA] : [];
 
         $list_status = $list_shops = $list_brands = $list_categories = $list_has_inventory = $list_has_image = $products = $pagination = [];
+
         if(!empty($data)){
         	$list_status = !empty($data['list_status']) ? $data['list_status'] : [];
             $list_shops = !empty($data['list_shops']) ? $data['list_shops'] : [];
@@ -67,10 +68,10 @@ class ProductController extends AppController
             'create_to' => '',
             'page' => 1,
             'sort' => '',
-            'direction' => 'DESC',
+            'direction' => '',
             'format' => '',
-            'limit' => PAGE_DEFAULT,
-            'lang' => LANG_DEFAULT,            
+            'lang' => '',
+            'limit' => PAGE_DEFAULT            
         );
 
         if (!$this->request->is('ajax')) {
@@ -90,6 +91,7 @@ class ProductController extends AppController
         $products = !empty($result[DATA]) ? $result[DATA] : [];
         $pagination = !empty($result[PAGINATION]) ? $result[PAGINATION] : [];
         
+        $this->set('params', $params);
         $this->set('products', $products);
         $this->set('pagination', $pagination);
         $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));

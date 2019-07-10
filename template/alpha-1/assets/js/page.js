@@ -196,6 +196,7 @@ var ss_list = {
 	wrap_filter: '#wrap-filter',
 	wrap_more_filter: '#wrap-more-filter',
 	form: '#form-list-data',
+	table: '#data-table',
 	init: function(){
 		var self = this;
 
@@ -228,10 +229,54 @@ var ss_list = {
 			self.loadListData();
 		});
 
-		// more filter
+		//more filter
 		$(self.form).on('click', '#more-filter', function() {			
 			self.toggleMoreFilter();
 		});
+
+		//sort data table
+		$(self.table).on('click', 'th.sorting, th.sorting_asc, th.sorting_desc', function() {
+			var sort = $(this).data('sort');
+			var direction = '';
+			if(sort == 'undefined'){
+				return false;
+			}
+
+			var type_sort = '';
+			if($(this).hasClass('sorting')){
+				type_sort = 'sorting';		
+			}
+
+			if($(this).hasClass('sorting_asc')){
+				type_sort = 'asc';
+			}
+
+			if($(this).hasClass('sorting_desc')){
+				type_sort = 'desc';
+			}
+
+			$(self.table).find('th[data-sort]').removeClass('sorting_asc sorting_desc').addClass('sorting');
+			switch(type_sort){
+				case 'sorting':
+				case 'desc':
+					$(this).removeClass('sorting').addClass('sorting_asc');
+					direction = 'asc';
+					break;
+				case 'asc':
+					$(this).removeClass('sorting').addClass('sorting_desc');
+					direction = 'desc';
+					break;
+			}
+
+			$(self.form).find('input[name="sort"]').val(sort);
+			$(self.form).find('input[name="direction"]').val(direction);
+
+
+			self.loadListData();
+		});
+
+		//delete record
+		
 	},
 	loadListData: function(){
 		var self = this;

@@ -6,7 +6,7 @@
         </a>                
     </div>
     
-    <table class="display responsive-table custom-table">
+    <table id="data-table" class="display responsive-table custom-table">
         <thead>
             <tr>
                 <th class="w-3">
@@ -16,20 +16,20 @@
                 <th class="w-3">
                     <i class="material-icons f-s-22">photo_library</i>
                 </th>
-                <th>Tên sản phẩm</th>
-                <th class="w-20"> 
+                <th class="w-30 sorting" data-sort="name">Tên sản phẩm</th>
+                <th class="w-15"> 
                     Thuộc tính
                 </th>
 
-                <th> 
+                <th class="w-15"> 
                     Mã
                 </th>
 
-                <th> 
+                <th class="w-15 sorting" data-sort="price"> 
                     Giá
                 </th>
 
-                <th title="Giá khuyến mãi"> 
+                <th class="w-15 sorting" data-sort="price" title="Giá khuyến mãi"> 
                     Giá KM
                 </th>
                 <th>Tồn</th>
@@ -83,8 +83,8 @@
                             {/if}
                         </td>
                         <td class="center">
-                            {if !empty((float)$product.items.0.price)}
-                                {$product.items.0.price|number_format:0:",":","}
+                            {if !empty((float)$product.items.0.price_discount)}
+                                {$product.items.0.price_discount|number_format:0:",":","}
                             {/if}
                         </td>
 
@@ -127,7 +127,7 @@
                                 <tr class="{$tr_class}">
                                     <td>
                                     </td>
-                                    
+
                                     <td class="center">
                                         {if !empty($item.code)}
                                             {$item.code}
@@ -135,18 +135,18 @@
                                     </td>
 
                                     <td class="center">
-                                        {if !empty($item.barcode)}
-                                            {$item.barcode}
-                                        {/if}
-                                    </td>
-                                    <td class="center">
                                         {if !empty((float)$item.price)}
                                             {$item.price|number_format:0:",":","}
                                         {/if}
                                     </td>
 
                                     <td class="center">
+                                        {if !empty((float)$item.price_discount)}
+                                            {$item.price_discount|number_format:0:",":","}
+                                        {/if}
+                                    </td>
 
+                                    <td>
                                     </td>
 
                                     <td class="center">
@@ -176,7 +176,7 @@
 <div class="card-action p-v-xxs">
     <div class="row no-m valign-wrapper">
         <div class="col s12 m2 l1 no-p hide-on-small-only">
-            {$this->Form->select('limit', $limit_pagination, [id => 'limit', name => '', empty => null, default => {"{if !empty($pagination.limit)}{$pagination.limit}{else}20{/if}"}])}
+            {$this->Form->select('limit', $limit_pagination, [id => 'limit', name => '', empty => null, default => {"{if !empty($pagination.limit)}{$pagination.limit}{else}PAGE_DEFAULT{/if}"}])}
             <input type="hidden" name="limit" value="{if !empty($pagination.limit)}{$pagination.limit}{/if}" />
         </div>
         <div class="col s12 m10 l11 right-align no-p">
@@ -184,3 +184,7 @@
         </div>        
     </div>
 </div>
+<input type="hidden" name="limit" value="{if !empty($pagination.limit)}{$pagination.limit}{/if}" />
+<input type="hidden" name="sort" value="{if !empty($params.sort)}{$params.sort}{/if}" />
+<input type="hidden" name="direction" value="{if !empty($params.direction)}{$params.direction}{/if}" />
+<input type="hidden" name="page" value="{if !empty($pagination.page)}{$pagination.page}{/if}" />
