@@ -15,6 +15,10 @@ class ProductController extends AppController
     }
 
     public function index(){
+        static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
+        
+        static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
+        static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
         static::$js_files[] = 'assets/js/product_list.js';    
 
         // get data

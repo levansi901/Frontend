@@ -154,8 +154,6 @@
     </form>
 </div>
 
-<input type="hidden" id="csrf_token" value="{if !empty($csrf_token)}{$csrf_token}{/if}">
-
 <div id="modal-lazada-category" class="modal modal-lazada-category">
     <div class="modal-content">
         <h4>Chọn danh mục</h4>

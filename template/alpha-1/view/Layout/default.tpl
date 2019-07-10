@@ -50,5 +50,6 @@
         </main>        
     </div>
     <div class="left-sidebar-hover"></div>
+    <input type="hidden" id="csrf_token" value="{if !empty($csrf_token)}{$csrf_token}{/if}">
 </body>
 </html>

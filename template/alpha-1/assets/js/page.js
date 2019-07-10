@@ -229,12 +229,9 @@ var ss_list = {
 		});
 
 		// more filter
-		$(self.form).on('click', '#more-filter', function() {
-			console.log('more');
-			console.log(self.wrap_more_filter);
-			$(self.wrap_more_filter).find('.collapsible-body').show('slow');
+		$(self.form).on('click', '#more-filter', function() {			
+			self.toggleMoreFilter();
 		});
-
 	},
 	loadListData: function(){
 		var self = this;
@@ -263,6 +260,25 @@ var ss_list = {
 			$(self.wrap_list).html(response);
 			$('select').material_select();
 		});
+	},
+	toggleMoreFilter: function(){
+		var self = this;
+		var is_show = false;
+		var icon = '';
+		if(!$(self.wrap_more_filter).find('.collapsible-body').is(':hidden')){
+			is_show = true;
+		}
+
+		if(is_show){
+			icon = 'keyboard_arrow_down';
+			$(self.wrap_more_filter).find('.collapsible-body').hide();
+		}else{
+			$(self.wrap_more_filter).find('.collapsible-body').show();
+			icon = 'keyboard_arrow_up';
+		}
+
+		$(self.form).find('#more-filter i').text(icon);
+		$(self.wrap_more_filter).toggleClass('active');
 	}
 }
 

@@ -5,6 +5,7 @@
             Thêm sản phẩm mới
         </a>                
     </div>
+    
     <table class="display responsive-table custom-table">
         <thead>
             <tr>
@@ -29,7 +30,7 @@
                 </th>
 
                 <th title="Giá khuyến mãi"> 
-                    Giá CK
+                    Giá KM
                 </th>
                 <th>Tồn</th>
                 <th class="w-3">TT</th>
