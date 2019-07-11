@@ -1,10 +1,10 @@
 {assign var=data_breadcrumb value=[0=>['title'=> {$title_for_layout},'url' => ""]]}
 {$this->element('/layout/breadcrumb',['data'=> $data_breadcrumb])}
 
-<div class="col s12 m12 l12">
+<div class="row no-m">
     <form id="form-list-data" action="/product/list" class="no-m no-p">    
-    	<div id="wrap-filter" class="card">
-            <div class="card-content">
+    	<div id="wrap-filter" class="card no-m">
+            <div class="card-content p-v-xs p-h-xs">
             	<div class="row no-m">
                     <div class="input-field col s12 m4 l3">
                         <input id="keyword" name="keyword" type="text" maxlength="100" autocomplete="off">
@@ -27,7 +27,7 @@
     	                </a>
 
     	                <a id="reset-filter" class="btn-floating btn waves-effect waves-light m-b-xs" title="Làm mới">
-                    		<i class="material-icons">loop</i>
+                    		<i class="material-icons">refresh</i>
     	                </a>
 
     	                <a id="more-filter" class="btn-floating btn waves-effect waves-light blue-grey darken-4 m-b-xs" title="Hiển thị bộ lọc khác">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <div class="row no-m">
+                <div class="row no-m p-h-xs">
                      <ul id="wrap-more-filter" class="collapsible no-m">
                         <li>
                             <div class="collapsible-body">

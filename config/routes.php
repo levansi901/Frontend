@@ -49,6 +49,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
+        '/product/delete', ['controller' => 'Product', 'action' => 'ajaxDeleteProduct']
+    );
+
+    $routes->connect(
         '/product/item/add', ['controller' => 'Product', 'action' => 'ajaxAddItem']
     );
 

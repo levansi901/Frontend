@@ -44,9 +44,7 @@
         {$this->element('layout/left_sidebar',['menus'=> []])}
 
         <main class="mn-inner">
-            <div class="row">
-                {$this->fetch('content')}
-            </div>
+            {$this->fetch('content')}
         </main>        
     </div>
     <div class="left-sidebar-hover"></div>

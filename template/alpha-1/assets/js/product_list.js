@@ -1,4 +1,6 @@
 var ss_product_list = {	
+	table: '#data-table',
+	form: '#form-list-data',
 	init: function(){
 		var self = this;	
 		$('select').material_select();
@@ -19,6 +21,67 @@ var ss_product_list = {
 	        	}
 	    	}
 	    });
+
+	    //delete record
+		$(self.table).on('click', '.delete-product', function() {
+			var id = typeof($(this).closest('tr').data('id')) != 'undefined' ? parseInt($(this).closest('tr').data('id')) : null;
+
+			ss_backend.alertWarning({
+				title: 'Xóa sản phẩm',
+				text: 'Bạn chắc chắn muốn xóa sản phẩm này ?'
+			}, function(rs){
+				ss_backend.callAjax({
+					url: '/product/delete',
+					data:{
+						ids: [id]
+					}
+				}).done(function(response) {
+					if(typeof(response.success) != 'undefined' && response.success){
+						$(self.table).find('tr[data-id="' + id + '"]').remove();
+					}	            
+				})
+			});
+		});
+
+		// delete multiple
+		$(self.form).on('click', '#delete-selected', function() {
+			var ids = [];
+			$(self.table + ' .select-record:checked').each(function (i, checkbox) {
+				var id = $(this).closest('tr').data('id');
+				if(typeof(id) != 'undefined' && parseInt(id) > 0){
+					ids.push(id);
+				}
+		    });
+
+		    if(ids.length == 0){
+		    	ss_backend.notification({
+					type: 'error',
+					title: 'Vui lòng chọn một bản ghi'
+				});
+		    }
+
+		    ss_backend.alertWarning({
+				title: 'Xóa sản phẩm',
+				text: 'Bạn chắc chắn muốn xóa những sản phẩm đã chọn ?'
+			}, function(rs){
+				ss_backend.callAjax({
+					url: '/product/delete',
+					data:{
+						ids: ids
+					}
+				}).done(function(response) {
+					if(typeof(response.success) != 'undefined' && response.success){
+						$.each(ids, function(i, product_item_id) {
+						  	$(self.table + ' tr[data-id="'+ product_item_id +'"]').remove();
+						});
+
+						if($(self.table + ' tr[data-id]').length == 0){
+							ss_list.loadListData();
+						}
+					}	            
+				})
+			});
+		});
 	},
 	
 }

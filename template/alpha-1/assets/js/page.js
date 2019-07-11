@@ -6,7 +6,11 @@ String.prototype.replaceAll = function (search, replacement) {
 var ss_backend = {
 	csrf_token: null,
 	init: function(){
+		var self = this;
+		self.csrf_token = $('#csrf_token').val();    
+    	$('#csrf_token').remove();
 
+    	self.activeMenu();
 	},
 	alertWarning: function(params, callback){
 		if (typeof(callback) != 'function') {
@@ -198,7 +202,7 @@ var ss_list = {
 	form: '#form-list-data',
 	table: '#data-table',
 	init: function(){
-		var self = this;
+		var self = this;		
 
 		//pagination click
 		$(self.form).on('click', '.pagination > li[data-page]:not(.active)', function() {
@@ -230,12 +234,12 @@ var ss_list = {
 		});
 
 		//more filter
-		$(self.form).on('click', '#more-filter', function() {			
+		$(self.form).on('click', '#more-filter', function() {
 			self.toggleMoreFilter();
 		});
 
 		//sort data table
-		$(self.table).on('click', 'th.sorting, th.sorting_asc, th.sorting_desc', function() {
+		$(self.form).on('click', 'th.sorting, th.sorting_asc, th.sorting_desc', function() {
 			var sort = $(this).data('sort');
 			var direction = '';
 			if(sort == 'undefined'){
@@ -271,12 +275,13 @@ var ss_list = {
 			$(self.form).find('input[name="sort"]').val(sort);
 			$(self.form).find('input[name="direction"]').val(direction);
 
-
 			self.loadListData();
 		});
 
-		//delete record
-		
+		// check all
+		$(self.form).on('change', '#select-all', function() {
+			$(self.table).find('.select-record').prop('checked', $(this).is(":checked"));
+		});
 	},
 	loadListData: function(){
 		var self = this;
@@ -304,6 +309,7 @@ var ss_list = {
 
 			$(self.wrap_list).html(response);
 			$('select').material_select();
+			$('.dropdown-button').dropdown();
 		});
 	},
 	toggleMoreFilter: function(){
@@ -328,10 +334,7 @@ var ss_list = {
 }
 
 $(document).ready(function() {
-	// ss_backend.init();
-    ss_backend.csrf_token = $('#csrf_token').val();    
-    $('#csrf_token').remove();
-    ss_backend.activeMenu();
+	ss_backend.init();
 });
 
 $(document).ajaxStart(function () {

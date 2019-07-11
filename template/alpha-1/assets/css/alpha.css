@@ -42,7 +42,7 @@ body {
 }
 
 a {
-    color: #0277bb;
+    color: #26a69a;
 }
 
 text {
@@ -1677,7 +1677,7 @@ li.active .nav-drop-icon {
 }
 
 .mn-inner {
-    padding: 25px 25px 9.5px 25px;
+    padding: 15px 25px 9.5px 25px;
     min-height: calc(100% - 181px);
 }
 

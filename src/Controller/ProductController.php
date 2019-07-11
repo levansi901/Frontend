@@ -175,8 +175,7 @@ class ProductController extends AppController
                     
                 }
             }
-            debug(json_encode($data_post));
-            exit;
+
             $http = new Client();
             $response = $http->post(API_DOMAIN_URL . 'product/save', json_encode($data_post), ['type' => 'json']);      
             $result = $response->getJson();
@@ -227,6 +226,21 @@ class ProductController extends AppController
     }
 
     public function ajaxDeleteProduct(){
+        $this->layout = false;
+        $this->autoRender = false;
+
+        $result = [];
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
+        $ids = !empty($data_post['ids']) ? $data_post['ids'] : [];
+        if ($this->request->is('post') && !empty($ids)) {      
+            $http = new Client();
+            $response = $http->post(API_DOMAIN_URL . 'product/delete', json_encode(['ids' => $ids]), ['type' => 'json']);      
+            $result = $response->getJson();
+            $data = !empty($result[DATA]) ? $result[DATA] : [];
+        }
+        $this->response->type('json');
+        $this->response->body(json_encode($result));
+        return $this->response;
     }
 
     public function productExport(){

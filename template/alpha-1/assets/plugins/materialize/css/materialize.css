@@ -3351,15 +3351,15 @@ nav ul a span.badge {
 }
 
 .left-align {
-  text-align: left;
+  text-align: left !important;
 }
 
 .right-align {
-  text-align: right;
+  text-align: right !important;
 }
 
 .center, .center-align {
-  text-align: center;
+  text-align: center !important;
 }
 
 .left {
@@ -5105,7 +5105,7 @@ button.btn-floating {
   background-color: #fff;
   margin: 0;
   display: none;
-  min-width: 140px;
+  min-width: 160px;
   max-height: 650px;
   overflow-y: auto;
   opacity: 0;
@@ -6318,8 +6318,8 @@ form p:last-child {
 }
 
 [type="checkbox"].filled-in:not(:checked) + label:after {
-  height: 19px;
-  width: 19px;
+  height: 18px;
+  width: 18px;
   background-color: transparent;
   border: 1px solid #c8c8c8;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
@@ -6346,8 +6346,8 @@ form p:last-child {
 
 [type="checkbox"].filled-in:checked + label:after {
   top: 0;
-  width: 19px;
-  height: 19px;
+  width: 18px;
+  height: 18px;
   border: 2px solid #26a69a;
   background-color: #26a69a;
   z-index: 0;

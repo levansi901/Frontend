@@ -117,9 +117,9 @@ $( document ).ready(function() {
     });
     
     // Right Dropdown
-    $('.dropdown-right').dropdown({
-        alignment: 'right' // Displays dropdown with edge aligned to the left of button
-    });
+    // $('.dropdown-right').dropdown({
+    //     alignment: 'right' // Displays dropdown with edge aligned to the left of button
+    // });
     
     // Initialize collapse button
     $('.button-collapse:not(.right-sidebar-button)').sideNav();

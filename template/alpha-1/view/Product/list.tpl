@@ -1,35 +1,54 @@
 <div class="card-content">      
     <div class="s12">
-        <a href="/product/add" class="waves-effect waves-light btn m-b-xs" title="Thêm sản phẩm mới">
+        <a href="/product/add" class="waves-effect waves-light btn m-b-xs m-r-xxs" title="Thêm sản phẩm mới">
             <i class="material-icons left">add</i>
             Thêm sản phẩm mới
-        </a>                
+        </a>  
+        <a data-activates="setting-list" class="dropdown-button btn-floating br-2 btn waves-effect waves-light m-b-xs" title="Hành động">
+            <i class="material-icons">settings</i>
+        </a>
+        <ul id="setting-list" class="dropdown-content">
+            <li>
+                <a title="Giảm giá đồng loạt">
+                    <i class="material-icons left">card_giftcard</i>
+                    Giảm giá đồng loạt
+                </a>   
+            </li>                                           
+            <li class="divider"></li>
+            <li>
+                <a id="delete-selected" title="Xóa sản phẩm">
+                    <i class="material-icons left text-red">delete_forever</i>
+                    Xóa
+                </a>                                            
+            </li>
+        </ul>
     </div>
-    
     <table id="data-table" class="display responsive-table custom-table">
         <thead>
             <tr>
                 <th class="w-3">
-                    <input id="check-all" type="checkbox" class="filled-in no-text"/>
-                    <label for="check-all"></label>
+                    <input id="select-all" type="checkbox" class="filled-in no-text"/>
+                    <label for="select-all"></label>
+                </th>
+                <th class="w-3 {if !empty($params.sort) && !empty($params.direction) && $params.sort == id}sorting_{$params.direction}{else}sorting{/if}" data-sort="id">
+                    ID
                 </th>
                 <th class="w-3">
                     <i class="material-icons f-s-22">photo_library</i>
                 </th>
-                <th class="w-30 sorting" data-sort="name">Tên sản phẩm</th>
-                <th class="w-15"> 
-                    Thuộc tính
+                <th class="w-30 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == name}sorting_{$params.direction}{else}sorting{/if}" data-sort="name">
+                    Tên sản phẩm
                 </th>
 
-                <th class="w-15"> 
+                <th class="w-15 left-align"> 
                     Mã
                 </th>
 
-                <th class="w-15 sorting" data-sort="price"> 
+                <th class="w-15 {if !empty($params.sort) && !empty($params.direction) && $params.sort == price}sorting_{$params.direction}{else}sorting{/if}" data-sort="price"> 
                     Giá
                 </th>
 
-                <th class="w-15 sorting" data-sort="price" title="Giá khuyến mãi"> 
+                <th class="{if !empty($params.sort) && !empty($params.direction) && $params.sort == price_discount}sorting_{$params.direction}{else}sorting{/if}" data-sort="price_discount" title="Giá khuyến mãi"> 
                     Giá KM
                 </th>
                 <th>Tồn</th>
@@ -43,65 +62,63 @@
             {if !empty($products)}
                 {foreach from = $products key = k_product item = product}
                     {assign var=url_edit value ="/product/edit-product/{$product.id}"}
-                    {assign var=rowspan value ={sizeof($product.items)}}
-                    {if empty(($k_product + 1) % 2)}
-                        {assign var = tr_class value = 'even'}
-                    {else}
-                        {assign var = tr_class value = 'odd'}
-                    {/if}
-                    <tr class="{$tr_class}">
-                        <td class="center" rowspan="{$rowspan}">
-                            <input id="row-{$k_product}" type="checkbox" class="filled-in no-text"/>
+                    <tr data-id="{$product.id}" >
+                        <td class="center">
+                            <input id="row-{$k_product}" type="checkbox" class="filled-in no-text select-record"/>
                             <label for="row-{$k_product}"></label>                              
                         </td>
 
-                        <td rowspan="{$rowspan}" class="center">
+                        <td>
+                            {if !empty($product.id)}
+                                {$product.id}
+                            {/if}
+                        </td>
+
+                        <td class="center">
                             <a class="btn btn-xxs blue-grey darken-4 btn-small">
                                 <i class="material-icons f-s-22">photo_camera</i>
                             </a>                                    
                         </td>
 
-                        <td rowspan="{$rowspan}">
+                        <td>
                             {if !empty($product.name)}
                                 {$product.name}
                             {/if}
                         </td>
 
-                        <td>
+
+                        <td >
+                            {if !empty($product.code)}
+                                {$product.code}
+                            {/if}
+                        </td>
+
+                        <td class="center">
+                            {if !empty((float)$product.price)}
+                                {$product.price|number_format:0:",":","}
+                            {/if}
+                        </td>
+
+                        <td class="center">
+                            {if !empty((float)$product.price_discount)}
+                                {$product.price_discount|number_format:0:",":","}
+                            {/if}
+                        </td>
+
+                        <td class="center">
                             
                         </td>
 
                         <td class="center">
-                            {if !empty($product.items.0.code)}
-                                {$product.items.0.code}
-                            {/if}
-                        </td>
-
-                        <td class="center">
-                            {if !empty((float)$product.items.0.price)}
-                                {$product.items.0.price|number_format:0:",":","}
-                            {/if}
-                        </td>
-                        <td class="center">
-                            {if !empty((float)$product.items.0.price_discount)}
-                                {$product.items.0.price_discount|number_format:0:",":","}
-                            {/if}
-                        </td>
-
-                        <td class="center">
-                            
-                        </td>
-
-                        <td class="center">
-                            {if !empty($product.items.0.status)}
+                            {if !empty($product.status)}
                                 <i class="material-icons f-s-14 text-green">check</i>
                             {else}
                                 <i class="material-icons f-s-14">no_encryption</i>
                             {/if}
                         </td>
 
-                        <td rowspan="{$rowspan}" class="center">
-                            <a class="dropdown-button btn btn-xxs blue-grey darken-4 btn-small " href="#" data-activates="setting-{$k_product}">
+                        <td class="center">
+                            <a class="dropdown-button btn btn-xxs btn-small" data-activates="setting-{$k_product}">
                                 <i class="material-icons">settings</i>
                             </a>
                             <ul id="setting-{$k_product}" class="dropdown-content">
@@ -114,52 +131,13 @@
                                 <li class="divider"></li>
                                 <li>
                                     <a class="delete-product" title="Xóa sản phẩm">
-                                        <i class="material-icons left">delete_forever</i>
+                                        <i class="material-icons left text-red">delete_forever</i>
                                         Xóa
                                     </a>                                            
                                 </li>
                             </ul>
                         </td>                                
-                    </tr>    
-                    {if !empty($product.items) && sizeof($product.items > 1)}
-                        {foreach from = $product.items key = k_item item = item}
-                            {if $k_item > 0}
-                                <tr class="{$tr_class}">
-                                    <td>
-                                    </td>
-
-                                    <td class="center">
-                                        {if !empty($item.code)}
-                                            {$item.code}
-                                        {/if}
-                                    </td>
-
-                                    <td class="center">
-                                        {if !empty((float)$item.price)}
-                                            {$item.price|number_format:0:",":","}
-                                        {/if}
-                                    </td>
-
-                                    <td class="center">
-                                        {if !empty((float)$item.price_discount)}
-                                            {$item.price_discount|number_format:0:",":","}
-                                        {/if}
-                                    </td>
-
-                                    <td>
-                                    </td>
-
-                                    <td class="center">
-                                        {if !empty($item.status)}
-                                            <i class="material-icons f-s-14 text-green">check</i>
-                                        {else}
-                                            <i class="material-icons f-s-14">no_encryption</i>
-                                        {/if}
-                                    </td>
-                                </tr>
-                            {/if}
-                        {/foreach}
-                    {/if} 
+                    </tr>
                 {/foreach}
             {else}
                 <tr >
