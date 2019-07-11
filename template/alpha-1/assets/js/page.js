@@ -278,10 +278,23 @@ var ss_list = {
 			self.loadListData();
 		});
 
-		// check all
+		//check all
 		$(self.form).on('change', '#select-all', function() {
-			$(self.table).find('.select-record').prop('checked', $(this).is(":checked"));
+			$(self.table).find('.select-record').prop('checked', $(this).is(":checked"));			
+			self.toggleShowActionList($(this).is(":checked"));
 		});
+
+		//checkbox change
+		$(self.form).on('change', 'input.select-record', function() {
+			if($(this).is(":checked") && $(self.table + ' input.select-record:checked').length == 1){
+				self.toggleShowActionList(true);
+			}
+
+			if(!$(this).is(":checked") && $(self.table + ' input.select-record:checked').length == 0){
+				self.toggleShowActionList(false);
+			}
+		});		
+
 	},
 	loadListData: function(){
 		var self = this;
@@ -330,6 +343,16 @@ var ss_list = {
 
 		$(self.form).find('#more-filter i').text(icon);
 		$(self.wrap_more_filter).toggleClass('active');
+	},
+	toggleShowActionList: function(show){
+		var self = this;
+		if(show){
+			$(self.table).find('thead > tr > th:not(:first-child, .action-column)').hide();
+			$(self.table).find('thead > tr > th.action-column').removeClass('hide');
+		}else{
+			$(self.table).find('thead > tr > th:not(:first-child, .action-column)').show();
+			$(self.table).find('thead > tr > th.action-column').addClass('hide');
+		}		
 	}
 }
 

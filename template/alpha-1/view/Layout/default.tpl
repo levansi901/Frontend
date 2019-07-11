@@ -38,9 +38,7 @@
 <body url-reference="{if isset($url_reference)}{$url_reference}{/if}">
     {$this->element('layout/pre-loader')}
 
-    <div class="mn-content fixed-sidebar">
-        {$this->element('layout/header')}
-        
+    <div class="mn-content fixed-sidebar">    
         {$this->element('layout/left_sidebar',['menus'=> []])}
 
         <main class="mn-inner">

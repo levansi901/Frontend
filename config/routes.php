@@ -69,5 +69,14 @@ Router::scope('/', function (RouteBuilder $routes) {
         '/lazada/brand/get', ['controller' => 'LazadaBrand', 'action' => 'getLazadaBrand']
     );
 
+    // order
+    $routes->connect(
+        '/order', ['controller' => 'Order', 'action' => 'index']
+    );
+
+    $routes->connect(
+        '/order/index', ['controller' => 'Order', 'action' => 'index']
+    );
+
     $routes->fallbacks(DashedRoute::class);
 });
