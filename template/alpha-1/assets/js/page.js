@@ -347,11 +347,11 @@ var ss_list = {
 	toggleShowActionList: function(show){
 		var self = this;
 		if(show){
-			$(self.table).find('thead > tr > th:not(:first-child, .action-column)').hide();
-			$(self.table).find('thead > tr > th.action-column').removeClass('hide');
+			$(self.table).find('thead > tr > th:not(:first-child)').addClass('hide-text');
+			$(self.table).find('thead > tr > th > #wrap-action-list').removeClass('hide');
 		}else{
-			$(self.table).find('thead > tr > th:not(:first-child, .action-column)').show();
-			$(self.table).find('thead > tr > th.action-column').addClass('hide');
+			$(self.table).find('thead > tr > th:not(:first-child)').removeClass('hide-text');
+			$(self.table).find('thead > tr > th > #wrap-action-list').addClass('hide');
 		}		
 	}
 }

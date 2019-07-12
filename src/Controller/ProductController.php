@@ -8,8 +8,7 @@ use Cake\Http\Client;
 class ProductController extends AppController
 {
 
-    public function initialize()
-    {
+    public function initialize() {
         parent::initialize();
         $this->set('title_for_layout', 'Sản phẩm');
     }
@@ -222,10 +221,7 @@ class ProductController extends AppController
         return $result;
     }
 
-    public function ajaxUpdateStatus(){    	
-    }
-
-    public function ajaxDeleteProduct(){
+    public function deleteProduct(){
         $this->layout = false;
         $this->autoRender = false;
 
@@ -243,8 +239,25 @@ class ProductController extends AppController
         return $this->response;
     }
 
-    public function productExport(){
-    }	
+    public function changeStatusProduct(){
+        $this->layout = false;
+        $this->autoRender = false;
+
+        $result = [];
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
+        $ids = !empty($data_post['ids']) ? $data_post['ids'] : [];
+        $status = isset($data_post['status']) ? intval($data_post['status']) : 1;
+
+        if ($this->request->is('post') && !empty($ids)) {      
+            $http = new Client();
+            $response = $http->post(API_DOMAIN_URL . 'product/change-status', json_encode(['ids' => $ids, 'status' => $status]), ['type' => 'json']);      
+            $result = $response->getJson();
+            $data = !empty($result[DATA]) ? $result[DATA] : [];
+        }
+        $this->response->type('json');
+        $this->response->body(json_encode($result));
+        return $this->response;
+    }
 
 
 

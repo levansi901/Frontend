@@ -1473,7 +1473,7 @@ li.active .nav-drop-icon {
 .side-nav.fixed ul li a.active-page {
     font-weight: 500;
     color: rgba(0,0,0,0.9);
-    background-color: #E3E3E3!important;
+    background-color: #ccd5db !important;
 }
 
 .side-nav ul ul li a,
@@ -1490,7 +1490,7 @@ li.active .nav-drop-icon {
 
 .side-nav ul ul li a:hover,
 .side-nav.fixed ul ul li a:hover {
-    background-color: #E3E3E3!important;
+    background-color: #ccd5db !important;
 }
 
 .side-nav ul li:hover,
@@ -1511,7 +1511,7 @@ li.active .nav-drop-icon {
 }
 
 .side-nav li a:hover {
-    background-color: #ECECEC!important;
+    background-color: #ccd5db !important;
     -webkit-transition: all 0s;
     -moz-transition: all 0s;
     -o-transition: all 0s;
@@ -1522,7 +1522,7 @@ li.active .nav-drop-icon {
 .side-nav.fixed ul li:focus,
 .side-nav ul li.active,
 .side-nav.fixed ul li.active {
-    background-color: #F3F3F3!important;
+    background-color: #f3f7f9 !important;
 }
 
 .side-nav.fixed ul li.active > a.collapsible-header,

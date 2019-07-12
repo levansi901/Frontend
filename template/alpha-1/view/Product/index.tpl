@@ -1,5 +1,3 @@
-<!-- {assign var=data_breadcrumb value=[0=>['title'=> {$title_for_layout},'url' => ""]]}
-{$this->element('/layout/breadcrumb',['data'=> $data_breadcrumb])} -->
 <div class="row m-b-xs">
     <div class="col s6 m6 l6 no-p">
         <span class="page-title no-m">
@@ -7,7 +5,7 @@
         </span>        
     </div>
     <div class="col s6 m6 l6 no-p right-align">
-        <a href="/product/add" class="waves-effect waves-light btn" title="Thêm sản phẩm mới">
+        <a href="/product/add" class="waves-effect waves-light green btn" title="Thêm sản phẩm mới">
             <i class="material-icons left">add</i>
             Thêm sản phẩm mới
         </a>
@@ -17,7 +15,7 @@
 <div class="row no-m">
     <form id="form-list-data" action="/product/list" class="no-m no-p">    
     	<div id="wrap-filter" class="card no-m">
-            <div class="card-content p-v-xs p-h-xs m-b-xs">
+            <div class="card-content p-v-xs p-h-xs m-b-xs p-b-0">
             	<div class="row no-m">
                     <div class="input-field col s12 m4 l6">
                         <input id="keyword" name="keyword" type="text" maxlength="100" autocomplete="off">
@@ -44,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="row no-m p-h-xs">
+                <div class="row no-m m-l-n-xs m-r-n-xs">
                      <ul id="wrap-more-filter" class="collapsible no-m">
                         <li>
                             <div class="collapsible-body">

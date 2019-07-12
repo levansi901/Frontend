@@ -22,29 +22,8 @@ var ss_product_list = {
 	    	}
 	    });
 
-	    //delete record
-		$(self.table).on('click', '.delete-product', function() {
-			var id = typeof($(this).closest('tr').data('id')) != 'undefined' ? parseInt($(this).closest('tr').data('id')) : null;
-
-			ss_backend.alertWarning({
-				title: 'Xóa sản phẩm',
-				text: 'Bạn chắc chắn muốn xóa sản phẩm này ?'
-			}, function(rs){
-				ss_backend.callAjax({
-					url: '/product/delete',
-					data:{
-						ids: [id]
-					}
-				}).done(function(response) {
-					if(typeof(response.success) != 'undefined' && response.success){
-						$(self.table).find('tr[data-id="' + id + '"]').remove();
-					}	            
-				})
-			});
-		});
-
-		// delete multiple
-		$(self.form).on('click', '#delete-selected', function() {
+		// delete
+		$(self.form).on('click', '.delete-selected', function() {
 			var ids = [];
 			$(self.table + ' .select-record:checked').each(function (i, checkbox) {
 				var id = $(this).closest('tr').data('id');
@@ -82,6 +61,50 @@ var ss_product_list = {
 				})
 			});
 		});
+
+		// disable | enable 
+		$(self.form).on('click', '.change-status-selected', function() {
+			var ids = [];
+			var status = typeof($(this).data('status')) != 'undefined' ? parseInt($(this).data('status')) : 1;
+			$(self.table + ' .select-record:checked').each(function (i, checkbox) {
+				var id = $(this).closest('tr').data('id');
+				if(typeof(id) != 'undefined' && parseInt(id) > 0){
+					ids.push(id);
+				}
+		    });
+
+		    if(ids.length == 0){
+		    	ss_backend.notification({
+					type: 'error',
+					title: 'Vui lòng chọn một bản ghi'
+				});
+		    }
+
+		    var icon_status = '<i class="material-icons f-s-18">no_encryption</i>';
+		    if(status == 1){
+		    	icon_status = '<i class="material-icons f-s-18 text-green">check</i>';
+		    }
+
+		    ss_backend.alertWarning({
+				title: 'Thay đổi trạng thái sản phẩm',
+				text: 'Bạn chắc chắn muốn thay đổi trạng thái những sản phẩm đã chọn ?'
+			}, function(rs){
+				ss_backend.callAjax({
+					url: '/product/change-status',
+					data:{
+						ids: ids,
+						status: status
+					}
+				}).done(function(response) {
+					if(typeof(response.success) != 'undefined' && response.success){
+						$.each(ids, function(i, product_item_id) {
+						  	$(self.table + ' tr[data-id="'+ product_item_id +'"] .status-column').html(icon_status);
+						});
+					}	            
+				})
+			});
+		});
+
 	},
 	
 }

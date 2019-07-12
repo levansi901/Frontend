@@ -49,7 +49,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/product/delete', ['controller' => 'Product', 'action' => 'ajaxDeleteProduct']
+        '/product/delete', ['controller' => 'Product', 'action' => 'deleteProduct']
+    );
+
+    $routes->connect(
+        '/product/change-status', ['controller' => 'Product', 'action' => 'changeStatusProduct']
     );
 
     $routes->connect(

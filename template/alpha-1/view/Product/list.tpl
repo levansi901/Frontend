@@ -1,39 +1,51 @@
 <div class="card-content p-t-10 p-b-0 p-h-xs">   
-    <div class="s12 hide">
-        <a href="/product/add" class="waves-effect waves-light btn m-b-xs m-r-xxs" title="Thêm sản phẩm mới">
-            <i class="material-icons left">add</i>
-            Thêm sản phẩm mới
-        </a>  
-        <a data-activates="setting-list" class="dropdown-button btn-floating br-2 btn waves-effect waves-light m-b-xs" title="Hành động">
-            <i class="material-icons">settings</i>
-        </a>
-        <ul id="setting-list" class="dropdown-content">
-            <li>
-                <a title="Giảm giá đồng loạt">
-                    <i class="material-icons left">card_giftcard</i>
-                    Giảm giá đồng loạt
-                </a>   
-            </li>                                           
-            <li class="divider"></li>
-            <li>
-                <a id="delete-selected" title="Xóa sản phẩm">
-                    <i class="material-icons left text-red">delete_forever</i>
-                    Xóa
-                </a>                                            
-            </li>
-        </ul>
-    </div>
-    <table id="data-table" class="display responsive-table custom-table">
+    <table id="data-table" class="display responsive-table custom-table highlight">
         <thead>
             <tr>
                 <th class="w-3">
                     <input id="select-all" type="checkbox" class="filled-in no-text"/>
                     <label for="select-all"></label>
+                    <div id="wrap-action-list" class="hide">
+                            <a data-activates="action-list" class="dropdown-button waves-effect waves-light btn btn-action" title="Chọn hành động">
+                            <i class="material-icons left">expand_more</i>
+                            Chọn hành động
+                        </a>  
+                        <ul id="action-list" class="dropdown-content">
+                            <li class="hide">
+                                <a title="Giảm giá đồng loạt">
+                                    <i class="material-icons left">card_giftcard</i>
+                                    Giảm giá đồng loạt
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="change-status-selected" data-status="1" title="Kích hoạt sản phẩm">
+                                    <i class="material-icons f-s-14 text-green">check</i>
+                                    Hoạt động
+                                </a>   
+                            </li>
+
+                            <li>
+                                <a class="change-status-selected" data-status="0" title="Tạm ngừng hoạt động sản phẩm">
+                                    <i class="material-icons f-s-14">no_encryption</i>
+                                    Không hoạt động
+                                </a>   
+                            </li>
+
+                            <li class="divider"></li>
+                            <li>
+                                <a class="delete-selected" title="Xóa sản phẩm">
+                                    <i class="material-icons left text-red">delete_forever</i>
+                                    Xóa
+                                </a>                                            
+                            </li>
+                        </ul>
+                    </div>
                 </th>
-                <th class="w-3 scale-transition">                    
-                    <i class="material-icons f-s-22">photo_library</i>
+                <th class="w-3">                    
+                    
                 </th>
-                <th class="w-30 scale-transition left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == name}sorting_{$params.direction}{else}sorting{/if}" data-sort="name">
+                <th class="w-30 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == name}sorting_{$params.direction}{else}sorting{/if}" data-sort="name">
                     Sản phẩm
                 </th>
 
@@ -45,32 +57,11 @@
                     Giá
                 </th>
 
-                <th class="{if !empty($params.sort) && !empty($params.direction) && $params.sort == price_discount}sorting_{$params.direction}{else}sorting{/if}" data-sort="price_discount" title="Giá khuyến mãi"> 
+                <th class="w-15 {if !empty($params.sort) && !empty($params.direction) && $params.sort == price_discount}sorting_{$params.direction}{else}sorting{/if}" data-sort="price_discount" title="Giá khuyến mãi"> 
                     Giá KM
                 </th>
-                <th>Tồn</th>
+                <th class="w-10">Tồn</th>
                 <th class="w-3">TT</th>
-                <th class="action-column left-align hide" colspan="7">
-                    <a data-activates="action-list" class="dropdown-button waves-effect waves-light btn" title="Chọn hành động">
-                        <i class="material-icons left">settings</i>
-                        Chọn hành động
-                    </a>  
-                    <ul id="action-list" class="dropdown-content">
-                        <li>
-                            <a title="Giảm giá đồng loạt">
-                                <i class="material-icons left">card_giftcard</i>
-                                Giảm giá đồng loạt
-                            </a>   
-                        </li>                                           
-                        <li class="divider"></li>
-                        <li>
-                            <a id="delete-selected" title="Xóa sản phẩm">
-                                <i class="material-icons left text-red">delete_forever</i>
-                                Xóa
-                            </a>                                            
-                        </li>
-                    </ul>
-                </th>
             </tr>
         </thead>
         <tbody>                    
@@ -83,9 +74,9 @@
                         </td>
 
                         <td class="center">
-                            <a class="btn btn-xxs blue-grey darken-4 btn-small">
-                                <i class="material-icons f-s-22">photo_camera</i>
-                            </a>                                    
+                            <a class="img" href="/product/edit/{$product.id}">
+                                <img src="/no-image.png"/>
+                            </a>                            
                         </td>
 
                         <td>
@@ -95,7 +86,6 @@
                                 </a>                                
                             {/if}
                         </td>
-
 
                         <td >
                             {if !empty($product.code)}
@@ -119,11 +109,11 @@
                             
                         </td>
 
-                        <td class="center">
+                        <td class="center status-column">
                             {if !empty($product.status)}
-                                <i class="material-icons f-s-14 text-green">check</i>
+                                <i class="material-icons f-s-18 text-green">check</i>
                             {else}
-                                <i class="material-icons f-s-14">no_encryption</i>
+                                <i class="material-icons f-s-18">no_encryption</i>
                             {/if}
                         </td>                              
                     </tr>
