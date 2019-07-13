@@ -24,7 +24,7 @@
 
                     <div class="input-field col s12 m4 l3">
                         {$this->Form->select('shop_id', $list_shops , ['name'=>'shop_id', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
-                        <label for="shop_id">Cửa hàng</label>
+                        <label for="shop_id">Chi nhánh</label>
                     </div>               
 
                     <div class="input-field col s12 m4 l3 right-align">

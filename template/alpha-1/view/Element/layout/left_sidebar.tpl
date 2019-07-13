@@ -1,29 +1,9 @@
 <aside id="slide-out" class="side-nav white fixed">
-    <div class="side-nav-wrapper">        
-        <div class="sidebar-account-settings">
-            <ul>
-                <li class="no-padding">
-                    <a class="waves-effect waves-grey"><i class="material-icons">mail_outline</i>Inbox</a>
-                </li>
-                <li class="no-padding">
-                    <a class="waves-effect waves-grey"><i class="material-icons">star_border</i>Starred<span class="new badge">18</span></a>
-                </li>
-                <li class="no-padding">
-                    <a class="waves-effect waves-grey"><i class="material-icons">done</i>Sent Mail</a>
-                </li>
-                <li class="no-padding">
-                    <a class="waves-effect waves-grey"><i class="material-icons">history</i>History<span class="new grey lighten-1 badge">3 new</span></a>
-                </li>
-                <li class="divider"></li>
-                <li class="no-padding">
-                    <a class="waves-effect waves-grey"><i class="material-icons">exit_to_app</i>Sign Out</a>
-                </li>
-            </ul>
-        </div>
+    <div class="side-nav-wrapper">
         <ul id="left-sidebar" class="sidebar-menu collapsible collapsible-accordion" data-collapsible="accordion">
             <li class="no-padding">
                 <a class="waves-effect waves-grey" href="/">
-                    <i class="material-icons">settings_input_svideo</i>
+                    <i class="material-icons">home</i>
                     Tổng quan
                 </a>
                 </li>
@@ -37,14 +17,30 @@
                     <ul>
                         <li><a href="/product">Danh sách</a></li>
                         <li><a href="/product/add">Thêm sản phẩm mới</a></li>
-                        <li><a href="/brand">Danh mục</a></li>
-                        <li><a href="/brand">Thương hiệu</a></li>
                     </ul>
                 </div>
             </li>
+
             <li class="no-padding">
                 <a class="collapsible-header waves-effect waves-grey">
-                    <i class="material-icons">code</i>
+                    <i class="material-icons">store_mall_directory</i>
+                    Kho hàng
+                    <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
+                </a>
+                <div class="collapsible-body">
+                    <ul>
+                        <li><a href="/inventory/bill">Danh sách phiếu</a></li>
+                        <li><a href="/inventory/add-supplier">Nhập hàng</a></li>
+                        <li><a href="/inventory/transfer">Chuyển kho</a></li>
+                        <li><a href="/inventory/another">Xuất nhập khác</a></li>
+                        <li><a href="/inventory/check">Kiểm kho</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="no-padding">
+                <a class="collapsible-header waves-effect waves-grey">
+                    <i class="material-icons">dvr</i>
                     Đơn hàng
                     <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
                 </a>
@@ -55,39 +51,10 @@
                     </ul>
                 </div>
             </li>
+                
             <li class="no-padding">
                 <a class="collapsible-header waves-effect waves-grey">
-                    <i class="material-icons">desktop_windows</i>
-                    Bán hàng
-                    <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
-                </a>
-                <div class="collapsible-body">
-                    <ul>
-                        <li><a href="/sale/retail">Bán lẻ</a></li>
-                        <li><a href="/sale">Hóa đơn bán hàng</a></li>                        
-                    </ul>
-                </div>
-            </li>
-            <li class="no-padding">
-                <a class="collapsible-header waves-effect waves-grey">
-                    <i class="material-icons">mode_edit</i>
-                    Kho hàng
-                    <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
-                </a>
-                <div class="collapsible-body">
-                    <ul>
-                        <li><a href="/store">Danh sách phiếu</a></li>
-                        <li><a href="/store/product">Sản phẩm XNK</a></li>
-                        <li><a href="/store/add-supplier">Nhập hàng mới</a></li>
-                        <li><a href="/store/return-supplier">Trả hàng</a></li>
-                        <li><a href="/store/transfer">Chuyển kho</a></li>
-                        <li><a href="/store/another">Xuất nhập khác</a></li>                 
-                    </ul>
-                </div>
-            </li>
-            <li class="no-padding">
-                <a class="collapsible-header waves-effect waves-grey">
-                    <i class="material-icons">grid_on</i>
+                    <i class="material-icons">account_circle</i>
                     Khách hàng
                     <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
                 </a>
@@ -98,36 +65,27 @@
                 </div>
             </li>
             <li class="no-padding">
-                <a class="waves-effect waves-grey" href="charts.html">
+                <a class="collapsible-header waves-effect waves-grey">
                     <i class="material-icons">trending_up</i>
                     Báo cáo
-                </a>
-            </li>
-            <li class="no-padding">
-                <a class="collapsible-header waves-effect waves-grey">
-                    <i class="material-icons">tag_faces</i>
-                    Cài đặt
                     <i class="nav-drop-icon material-icons">keyboard_arrow_right</i>
                 </a>
                 <div class="collapsible-body">
                     <ul>
-                        <li><a href="404.html">404 Page</a></li>
-                        <li><a href="500.html">500 Page</a></li>
-                        <li><a href="invoice.html">Invoice</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="sign-in.html">Sign In</a></li>
-                        <li><a href="sign-up.html">Sign Up</a></li>
-                        <li><a href="lock-screen.html">Lock Screen</a></li>
-                        <li><a href="pattern-lock-screen.html">Pattern Lock Screen</a></li>
-                        <li><a href="forgot.html">Forgot Password</a></li>
-                        <li><a href="pricing-tables.html">Pricing Tables</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                        <li><a href="timeline.html">Timeline</a></li>
-                        <li><a href="calendar.html">Calendar</a></li>
-                        <li><a href="coming-soon.html">Coming Soon</a></li>
+                        <li><a href="#">Doanh thu</a></li>
+                        <li><a href="#">Đơn hàng</a></li>
+                        <li><a href="#">Tồn kho</a></li>
+                        <li><a href="#">Sản phẩm</a></li>
+                        <li><a href="#">Khách hàng</a></li>
+                        <li><a href="#">Tài chính</a></li>
                     </ul>
                 </div>
+            </li>
+            <li class="no-padding">
+                <a class="collapsible-header waves-effect waves-grey">
+                    <i class="material-icons">settings</i>
+                    Cài đặt
+                </a>                
             </li>
         </ul>
     </div>

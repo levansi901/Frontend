@@ -82,5 +82,46 @@ Router::scope('/', function (RouteBuilder $routes) {
         '/order/index', ['controller' => 'Order', 'action' => 'index']
     );
 
+    // bill
+    $routes->connect(
+        '/inventory/bill', ['controller' => 'Bill', 'action' => 'index']
+    );
+
+    $routes->connect(
+        '/inventory/bill/index', ['controller' => 'Bill', 'action' => 'index']
+    );
+
+    $routes->connect(
+        '/inventory/bill/list', ['controller' => 'Bill', 'action' => 'listBill']
+    );
+
+    $routes->connect(
+        '/inventory/save', ['controller' => 'Bill', 'action' => 'ajaxSaveBill']
+    );
+
+    $routes->connect(
+        '/inventory/save/:id', ['controller' => 'Bill', 'action' => 'ajaxSaveBill'], ['pass' => array('id'), "id" => "[0-9]+"]
+    );
+
+    $routes->connect(
+        '/inventory/edit/:id', ['controller' => 'Bill', 'action' => 'saveBill'], ['pass' => array('id'), "id" => "[0-9]+"]
+    );
+
+    $routes->connect(
+        '/inventory/add-supplier', ['controller' => 'Bill', 'action' => 'addSupplier']
+    );
+
+    $routes->connect(
+        '/inventory/transfer', ['controller' => 'Bill', 'action' => 'addTransfer']
+    );
+
+    $routes->connect(
+        '/inventory/another', ['controller' => 'Bill', 'action' => 'addAnother']
+    );
+
+    $routes->connect(
+        '/inventory/check', ['controller' => 'Bill', 'action' => 'addCheck']
+    );
+
     $routes->fallbacks(DashedRoute::class);
 });
