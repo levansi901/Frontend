@@ -57,12 +57,14 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/product/item/add', ['controller' => 'Product', 'action' => 'ajaxAddItem']
+        '/product/item/get', ['controller' => 'Product', 'action' => 'getProductItems']
     );
 
     $routes->connect(
         '/product/lazada/load-attributes', ['controller' => 'Product', 'action' => 'ajaxLoadLazadaAttributes']
     );
+
+    
 
     // lazada
     $routes->connect(

@@ -539,7 +539,7 @@ var ss_product = {
 			        return '<div class="autocomplete-suggestion" data-name="' +  name + '">' + name.replace(re, "<b>$1</b>") + '</div>';
 			    },
 			    onSelect: function(e, term, item){
-			    	$(self.input).val(item.data('name'));		        
+			    	$(self.input).val(item.data('name'));
 			    }
 			});
 		},

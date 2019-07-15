@@ -15,7 +15,7 @@
                         <div class="input-field col s12 m12 l12">
                             <input id="filter_product" type="text" length="255" maxlength="255" autocomplete="off" value="" class="">
                             <label for="name">
-                                Tìm kiếm sản phẩm (F3)
+                                Tìm kiếm sản phẩm (F4)
                             </label>
                         </div>
                     </div> 

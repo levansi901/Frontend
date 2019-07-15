@@ -203,8 +203,10 @@ class BillController extends AppController
     }
 
     public function addSupplier(){
+        static::$css_layout[] = 'assets/plugins/auto-complete/jquery.auto-complete.css';
         static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
         
+        static::$js_files[] = 'assets/plugins/auto-complete/jquery.auto-complete.min.js';
         static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
         static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
         static::$js_files[] = 'assets/js/bill_add_supplier.js';
@@ -212,6 +214,7 @@ class BillController extends AppController
         $list_shops = [];
         
         $this->set('list_shops', $list_shops);
+        $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_for_layout', 'Nhập hàng mới');
     }
 
