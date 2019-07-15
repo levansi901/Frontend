@@ -35,8 +35,8 @@ class ProductController extends AppController
             $list_has_image = !empty($data['list_has_image']) ? $data['list_has_image'] : [];       
         	$products = !empty($data['products'][DATA]) ? $data['products'][DATA] : [];
             $pagination = !empty($data['products'][PAGINATION]) ? $data['products'][PAGINATION] : [];
-        }   
-
+        }
+        
         $this->set('list_status', $list_status);
         $this->set('list_shops', $list_shops);
         $this->set('list_has_inventory', $list_has_inventory);

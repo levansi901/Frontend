@@ -18,7 +18,7 @@ class BillController extends AppController
         
         static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
         static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
-        static::$js_files[] = 'assets/js/bill_list.js';    
+        static::$js_files[] = 'assets/js/bill_list.js';
 
         // get data
         $http = new Client();
@@ -203,6 +203,12 @@ class BillController extends AppController
     }
 
     public function addSupplier(){
+        static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
+        
+        static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
+        static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
+        static::$js_files[] = 'assets/js/bill_add_supplier.js';
+
         $list_shops = [];
         
         $this->set('list_shops', $list_shops);
