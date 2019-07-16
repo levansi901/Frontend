@@ -1,8 +1,10 @@
 var ss_add_supplier = {	
-	form: '#bill-form',	
+	form: '#bill-form',
+	table: '#item-table',
+	row_template: '',
 	init: function(){
 		var self = this;
-
+		self.row_template = $('#template-list tr:first-child').clone().html();
 		$('select').material_select();
 
 		self.autoSuggest();
@@ -28,7 +30,7 @@ var ss_add_supplier = {
 		var self = this;
 		$('#filter_product').autoComplete({
 		    source: function(keyword, suggest){
-		    	ss_backend.callAjax({
+		    	ss_page.callAjax({
 					url: '/product/item/get',
 					data:{
 						keyword: keyword
@@ -41,33 +43,54 @@ var ss_add_supplier = {
 		        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 		        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
 		        var name = typeof(item.name) != 'undefined' ? item.name : '';
-		        return '<div class="autocomplete-suggestion" data-name="' +  name + '">' + name.replace(re, "<b>$1</b>") + '</div>';
+		        var code = typeof(item.code) != 'undefined' ? item.code : '';
+		        var id = typeof(item.id) != 'undefined' ? item.id : '';
+		        var price = typeof(item.price) != 'undefined' ? ss_page.parseNumberToTextMoney(item.price) : 0;
+		        var quantity = typeof(item.quantity) != 'undefined' ? ss_page.parseNumberToTextMoney(item.quantity) : 0;
+
+		        return  '<div class="autocomplete-suggestion" data-id="' +  id + '">' +
+		        			'<div class="suggestion-content">' +
+		        				'<div class="suggestion-content-name">' + name.replace(re, "<b>$1</b>") + '</div>' +
+		        				'<div class="suggestion-content-code">' + code + '</div>' +
+		        			'</div>' +
+		        			'<div class="suggestion-price">' +
+		        				'<div class="suggestion-content-price"> ' + price + '</div>' +
+		        				'<div class="suggestion-content-quantity">Số lượng: ' + quantity + '</div>' +
+		        			'</div>' +		        			
+		        		'</div>';
 		    },
 		    onSelect: function(e, term, item){
-		    	// $('#filter_product').val(item.data('name'));		
-		    	console.log(item);
-		    	self.loadDataToList();
+		    	self.loadDataToList({
+		    		product_item_id: item.data('id')
+		    	});
 		    }
 		});
 	},
 	loadDataToList: function(params){
-		var id = typeof(params.id) != 'undefined' ? parseInt(params.id) : null;
-		if(!id > 0){
-			ss_backend.notification({
-				type: 'error',
+		var self = this;
+		var product_item_id = typeof(params.product_item_id) != 'undefined' ? parseInt(params.product_item_id) : null;
+		if(!product_item_id > 0){
+			ss_page.notification({
+				
 				title: 'ID sản phẩm không hợp lệ'
 			});
 			return false;
 		}
 		
-		ss_backend.callAjax({
+		ss_page.callAjax({			
 			url: '/product/item/get',
 			data:{
-				keyword: keyword
+				product_item_id: product_item_id
 			}
 		}).done(function(response) {
-		    suggest(response);
+		    console.log(response);
+		    $(self.table).append(self.row_template);
+		    self.toggleNoRecord(false);
 		});
+	},
+	toggleNoRecord: function(show){
+		var self = this;
+		$(self.table).find('tr.no-record').toggleClass('hide', show ? false : true);
 	}
 }
 

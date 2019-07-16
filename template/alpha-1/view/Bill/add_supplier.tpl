@@ -13,7 +13,7 @@
                 <div class="card-content">
                     <div class="row">
                         <div class="input-field col s12 m12 l12">
-                            <input id="filter_product" type="text" length="255" maxlength="255" autocomplete="off" value="" class="">
+                            <input id="filter_product" type="text" length="255" maxlength="255" autocomplete="off" value="">
                             <label for="name">
                                 Tìm kiếm sản phẩm (F4)
                             </label>
@@ -21,69 +21,25 @@
                     </div> 
 
                     <div class="row">
-                        <table id="data-table" class="display responsive-table custom-table">
+                        <table id="item-table" class="display responsive-table custom-table">
                             <thead>
                                 <tr>
-                                    <th class="w-3">
-                                        <input id="select-all" type="checkbox" class="filled-in no-text"/>
-                                        <label for="select-all"></label>
-                                        <div id="wrap-action-list" class="hide">
-                                                <a data-activates="action-list" class="dropdown-button waves-effect waves-light btn btn-action" title="Chọn hành động">
-                                                <i class="material-icons left">expand_more</i>
-                                                Chọn hành động
-                                            </a>  
-                                            <ul id="action-list" class="dropdown-content">
-                                                <li class="hide">
-                                                    <a title="Giảm giá đồng loạt">
-                                                        <i class="material-icons left">card_giftcard</i>
-                                                        Giảm giá đồng loạt
-                                                    </a>
-                                                </li>
-
-                                                <li>
-                                                    <a class="change-status-selected" data-status="1" title="Kích hoạt sản phẩm">
-                                                        <i class="material-icons f-s-14 text-green">check</i>
-                                                        Hoạt động
-                                                    </a>   
-                                                </li>
-
-                                                <li>
-                                                    <a class="change-status-selected" data-status="0" title="Tạm ngừng hoạt động sản phẩm">
-                                                        <i class="material-icons f-s-14">no_encryption</i>
-                                                        Không hoạt động
-                                                    </a>   
-                                                </li>
-
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a class="delete-selected" title="Xóa sản phẩm">
-                                                        <i class="material-icons left text-red">delete_forever</i>
-                                                        Xóa
-                                                    </a>                                            
-                                                </li>
-                                            </ul>
-                                        </div>
+                                    <th class="w-15 left-align">                    
+                                        Mã
                                     </th>
-                                    <th class="w-3">                    
-                                        
-                                    </th>
-                                    <th class="w-30 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == name}sorting_{$params.direction}{else}sorting{/if}" data-sort="name">
+                                    <th class="w-30 left-align">
                                         Sản phẩm
                                     </th>
 
-                                    <th class="w-15 left-align"> 
-                                        Mã
+                                    <th class="w-15 right-align"> 
+                                        Giá nhập
                                     </th>
 
-                                    <th class="w-15 {if !empty($params.sort) && !empty($params.direction) && $params.sort == price}sorting_{$params.direction}{else}sorting{/if}" data-sort="price"> 
-                                        Giá
+                                    <th class="w-15 right-align"> 
+                                        Số lượng
                                     </th>
-
-                                    <th class="w-15 {if !empty($params.sort) && !empty($params.direction) && $params.sort == price_discount}sorting_{$params.direction}{else}sorting{/if}" data-sort="price_discount" title="Giá khuyến mãi"> 
-                                        Giá KM
-                                    </th>
-                                    <th class="w-10">Tồn</th>
-                                    <th class="w-3">TT</th>
+                                    <th class="w-20 right-align">Thành tiền</th>
+                                    <th class="w-3"></th>
                                 </tr>
                             </thead>
                             <tbody>                    
@@ -183,7 +139,6 @@
         <div class="mn-header navbar-fixed">
             <nav class="white nav-action">
                 <div class="row right-align">                        
-
                     <span class="waves-effect waves-light btn s6 blue-grey darken-4">
                         <i class="material-icons left lh-36">close</i>
                         Hủy
@@ -192,11 +147,40 @@
                     <span class="waves-effect waves-light btn s6 m-l-lg m-r-xs btn-submit-form">
                         <i class="material-icons left lh-36">check</i>
                         Lưu
-                    </span>
-                    
+                    </span>                
                 </div>    
             </nav>
         </div>
     </form>
 </div>
+
+<table id="template-list" class="hide">
+    <tbody>
+        <tr>
+            <td data-code="" class="left-align">
+
+            </td>
+
+            <td data-name="" class="left-align">
+
+            </td>
+
+            <td class="left-align">
+                <input id="price" data-price="" type="number" length="11" maxlength="11" autocomplete="off" value="">
+            </td>
+
+            <td class="left-align">
+                <input id="quantity" data-quantity="" type="number" length="11" maxlength="11" autocomplete="off" value="">
+            </td>
+
+            <td data-row-total="" class="left-align">
+
+            </td>
+
+            <td class="center">
+                <i class="material-icons f-s-14 center remove-item">close</i>
+            </td>
+        </tr>
+    </tbody>
+</table>
 

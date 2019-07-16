@@ -102,7 +102,7 @@ var ss_product = {
 		validateItem: function(){
 			var self = this;
 			if($(self.wrap_list + ' .li-item').length < 1) {
-				ss_backend.notification({
+				ss_page.notification({
 					type: 'error',
 					title: 'Sản phẩm hiện tại chưa có phiên bản nào'
 				});
@@ -128,7 +128,7 @@ var ss_product = {
 				});
 				
 				if(code.length == 0){
-					ss_backend.showValidateError({
+					ss_page.showValidateError({
 						input_object: input_code,
 						error_message: 'Mã sản phẩm không được để trống'
 					});					
@@ -138,7 +138,7 @@ var ss_product = {
 				}
 
 				if(price_discount > price){
-					ss_backend.showValidateError({
+					ss_page.showValidateError({
 						input_object: input_price_discount,
 						error_message: 'Giá khuyến mãi không thể lớn hơn giá bán'
 					});
@@ -211,7 +211,7 @@ var ss_product = {
 		removeItem: function(index){
 			var self = this;
 			var li_item = $(self.wrap_list + ' .li-item[data-index="'+ index +'"]');
-			ss_backend.alertWarning({
+			ss_page.alertWarning({
 				title: 'Xóa phiên bản sản phẩm',
 				text: 'Bạn chắc chắn muốn xóa phiên bản này ?'
 			}, function(rs){		
@@ -274,7 +274,7 @@ var ss_product = {
 		            		break;
 		            }
 	
-		            ss_backend.ajaxSubmitForm({
+		            ss_page.ajaxSubmitForm({
 		            	url: $(self.form).attr('action'),
 		            	data: new FormData(this_form),
 		            	url_redirect: redirect_page,
@@ -382,7 +382,7 @@ var ss_product = {
 				$('#select_lazada_category').next('label').addClass('active');
 				$(self.modal).closeModal();
 
-				ss_backend.callAjax({
+				ss_page.callAjax({
 					url: '/product/lazada/load-attributes',
 					data_type: 'html',
 					data:{
@@ -404,13 +404,13 @@ var ss_product = {
 		            	ss_product.item_product.can_add = false;
 		            }
 				}).fail(function(jqXHR, textStatus, errorThrown) {
-				    ss_backend.notification({
+				    ss_page.notification({
 				    	type: 'error',
 				    	title: errorThrown
 				    });
 				});
 
-				ss_backend.callAjax({
+				ss_page.callAjax({
 					url: '/product/lazada/load-attributes',
 					data_type: 'html',
 					data:{
@@ -422,7 +422,7 @@ var ss_product = {
 		            $('.lazada-spu-attributes select').material_select();
 		            $('#wrap-lazada-spu-attributes').toggleClass('hide', response.length > 0 ? false : true);
 				}).fail(function(jqXHR, textStatus, errorThrown) {
-				    ss_backend.notification({
+				    ss_page.notification({
 				    	type: 'error',
 				    	title: errorThrown
 				    });
@@ -444,7 +444,7 @@ var ss_product = {
 			var tree_category_id = typeof(params['tree_category_id']) != 'undefined' ? params['tree_category_id'] : null;
 			var parent_id = typeof(params['parent_id']) != 'undefined' ? params['parent_id'] : null;
 
-			ss_backend.callAjax({
+			ss_page.callAjax({
 				url: '/lazada/category/get',
 				data:{
 					tree_category_id: tree_category_id,
@@ -523,7 +523,7 @@ var ss_product = {
 
 			$(self.input).autoComplete({
 			    source: function(keyword, suggest){
-			    	ss_backend.callAjax({
+			    	ss_page.callAjax({
 						url: '/lazada/brand/get',
 						data:{
 							keyword: keyword

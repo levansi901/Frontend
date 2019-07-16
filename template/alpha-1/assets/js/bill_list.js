@@ -33,17 +33,17 @@ var ss_bill_list = {
 		    });
 
 		    if(ids.length == 0){
-		    	ss_backend.notification({
+		    	ss_page.notification({
 					type: 'error',
 					title: 'Vui lòng chọn một bản ghi'
 				});
 		    }
 
-		    ss_backend.alertWarning({
+		    ss_page.alertWarning({
 				title: 'Xóa sản phẩm',
 				text: 'Bạn chắc chắn muốn xóa những sản phẩm đã chọn ?'
 			}, function(rs){
-				ss_backend.callAjax({
+				ss_page.callAjax({
 					url: '/product/delete',
 					data:{
 						ids: ids

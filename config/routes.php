@@ -57,7 +57,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/product/item/get', ['controller' => 'Product', 'action' => 'getProductItems']
+        '/product/item/get', ['controller' => 'Product', 'action' => 'getProductItem']
     );
 
     $routes->connect(

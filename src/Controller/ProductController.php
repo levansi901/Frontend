@@ -259,16 +259,13 @@ class ProductController extends AppController
         return $this->response;
     }
 
-    public function getProductItems(){
+    public function getProductItem(){
         $data_post = $this->request->data;
-
-        $keyword = !empty(trim($data_post['keyword'])) ? trim($data_post['keyword']) : '';
         $data = [];
-
-        if ($this->request->is('post') && !empty($keyword)) {
+        if ($this->request->is('post') && !empty($data_post)) {
             $http = new Client();       
-            $url_api = API_DOMAIN_URL . 'product/item/get?keyword=' . $keyword;
-            $response = $http->get($url_api);  
+            $url_api = API_DOMAIN_URL . 'product/item/get?' . http_build_query(array_filter($data_post));
+            $response = $http->get($url_api);              
             $result = $response->getJson();
             $data = !empty($result[DATA]) ? $result[DATA] : [];
         }
@@ -277,8 +274,6 @@ class ProductController extends AppController
         $this->response->body(json_encode($data));
         return $this->response;
     }
-
-
 
 
 
