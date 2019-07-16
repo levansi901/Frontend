@@ -78,7 +78,7 @@ aside::-webkit-scrollbar-thumb{
     padding: 6px 5px;
     border-top: 1px solid #ddd;
     vertical-align: middle;
-    padding: 7px 10px;
+    padding: 7px;
 }
 
 .custom-table > thead > tr > th{
@@ -103,6 +103,7 @@ aside::-webkit-scrollbar-thumb{
     padding: 5px;
     height: 30px;
     box-sizing: border-box;
+    border-radius: 2px;
 }
 
 .custom-table td.center,
@@ -111,8 +112,12 @@ aside::-webkit-scrollbar-thumb{
     vertical-align: middle;
 }
 
-.custom-table > tbody > tr:hover{
+.custom-table > tbody > tr:not(.no-record):hover{
     background: rgb(255, 252, 210) !important;
+}
+
+.custom-table > tbody > tr:hover input{
+    background: #fff;
 }
 
 .custom-table > thead > tr:first-child > th{
@@ -332,6 +337,10 @@ textarea.materialize-textarea,
 
 .w-10{
 	width: 10%;
+}
+
+.w-12{
+    width: 12%;
 }
 
 .w-15{

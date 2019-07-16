@@ -8,13 +8,13 @@
 
 <div class="row">
     <form id="bill-form" role="form" action="" method="POST" enctype="multipart/form-data">
-        <div class="col s12 m8 l8">
+        <div class="col s12 m9 l9">
             <div class="card">    
                 <div class="card-content">
                     <div class="row">
                         <div class="input-field col s12 m12 l12">
-                            <input id="filter_product" type="text" length="255" maxlength="255" autocomplete="off" value="">
-                            <label for="name">
+                            <input id="filter_product" type="text" maxlength="255" autocomplete="off" value="">
+                            <label for="filter_product">
                                 Tìm kiếm sản phẩm (F4)
                             </label>
                         </div>
@@ -27,7 +27,8 @@
                                     <th class="w-15 left-align">                    
                                         Mã
                                     </th>
-                                    <th class="w-30 left-align">
+
+                                    <th class="w-40 left-align">
                                         Sản phẩm
                                     </th>
 
@@ -35,11 +36,12 @@
                                         Giá nhập
                                     </th>
 
-                                    <th class="w-15 right-align"> 
+                                    <th class="w-12 right-align"> 
                                         Số lượng
                                     </th>
-                                    <th class="w-20 right-align">Thành tiền</th>
-                                    <th class="w-3"></th>
+                                    
+                                    <th class="w-15 right-align">Thành tiền</th>
+                                    <th class="w-3 no-p"></th>
                                 </tr>
                             </thead>
                             <tbody>                    
@@ -94,7 +96,7 @@
             </div>
         </div>
 
-        <div class="col s12 m4 l4">
+        <div class="col s12 m3 l3">
             <div class="card">    
                 <div class="card-content">
                     <div class="row">
@@ -156,28 +158,22 @@
 
 <table id="template-list" class="hide">
     <tbody>
-        <tr>
-            <td data-code="" class="left-align">
+        <tr data-id="">
+            <td data-code="" class="left-align"></td>
 
+            <td data-name="" class="left-align"></td>
+
+            <td data-price="" class="left-align">
+                <input id="price" type="text" maxlength="12" autocomplete="off" value="" class="auto-numeric f-s-12 right-align">
             </td>
 
-            <td data-name="" class="left-align">
-
+            <td data-quantity="1" class="left-align">
+                <input id="quantity" type="text" maxlength="12" autocomplete="off" value="1" class="auto-numeric f-s-12 right-align">
             </td>
 
-            <td class="left-align">
-                <input id="price" data-price="" type="number" length="11" maxlength="11" autocomplete="off" value="">
-            </td>
+            <td data-row-total="" class="right-align"></td>
 
-            <td class="left-align">
-                <input id="quantity" data-quantity="" type="number" length="11" maxlength="11" autocomplete="off" value="">
-            </td>
-
-            <td data-row-total="" class="left-align">
-
-            </td>
-
-            <td class="center">
+            <td class="center no-p">
                 <i class="material-icons f-s-14 center remove-item">close</i>
             </td>
         </tr>

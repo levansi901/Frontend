@@ -4,31 +4,20 @@ var ss_add_supplier = {
 	row_template: '',
 	init: function(){
 		var self = this;
-		self.row_template = $('#template-list tr:first-child').clone().html();
+		self.row_template = $('#template-list tbody').html();
 		$('select').material_select();
 
 		self.autoSuggest();
-		// $('.auto-numeric').autoNumeric('init', {
-  //           mDec: 0,
-  //           vMin: 0,
-  //           vMax: 9999999999
-  //       });        
-
-  //       $('.input-date-picker').datepicker({
-  //       	timepicker: true,
-  //       	onSelect(formattedDate, date, inst) {
-	 //        	var input = $(inst.el);	        	
-	 //        	if(input.data('name') == 'item-time_start_discount'){
-	 //        		var input_time_end = input.closest('.li-item').find('input[data-name="item-time_end_discount"]');
-	 //        		var datepicker = input_time_end.datepicker().data('datepicker');
-	 //        		datepicker.update('minDate', date);
-	 //        	}
-	 //    	}
-	 //    });
+		$('.auto-numeric').autoNumeric('init', {
+            mDec: 0,
+            vMin: 0,
+            vMax: 9999999999
+        });
 	},
 	autoSuggest: function(){
 		var self = this;
 		$('#filter_product').autoComplete({
+			minChars: 1,
 		    source: function(keyword, suggest){
 		    	ss_page.callAjax({
 					url: '/product/item/get',
@@ -71,7 +60,7 @@ var ss_add_supplier = {
 		var product_item_id = typeof(params.product_item_id) != 'undefined' ? parseInt(params.product_item_id) : null;
 		if(!product_item_id > 0){
 			ss_page.notification({
-				
+				type: 'error',
 				title: 'ID sản phẩm không hợp lệ'
 			});
 			return false;
@@ -82,10 +71,65 @@ var ss_add_supplier = {
 			data:{
 				product_item_id: product_item_id
 			}
-		}).done(function(response) {
-		    console.log(response);
-		    $(self.table).append(self.row_template);
-		    self.toggleNoRecord(false);
+		}).done(function(item) {
+			
+			var data = typeof(item[0]) != 'undefined' ? item[0] : [];
+			if($.isEmptyObject(data)){	
+				ss_page.notification({
+					type: 'error',
+					title: 'Không lấy được thông tin sản phẩm'
+				});
+				return false;
+			}
+
+			// check this item has exist in list
+			var has_item = false;
+			$(self.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
+				if($(this).data('id') == data.id){
+					var td_quantity = $(this).find('td[data-quantity]');
+					var old_quantity = typeof(td_quantity.attr('data-quantity')) != 'undefined' ? parseInt(td_quantity.attr('data-quantity')) : 1;
+					td_quantity.attr('data-quantity', old_quantity + 1);
+					td_quantity.find('input#quantity').val(ss_page.parseNumberToTextMoney(old_quantity + 1));
+					has_item = true;
+					return false;
+				}
+			});
+
+			if(has_item){
+				return false;
+			}
+
+			self.toggleNoRecord(false);
+		    $(self.table + ' > tbody').prepend(self.row_template);
+
+		    var tr = $(self.table + ' tbody > tr:first-child');
+		    // fill data to row
+		    if(typeof(data.id) != 'undefined'){
+		    	tr.attr('data-id', data.id);			    	
+		    }
+
+		    if(typeof(data.code) != 'undefined'){
+		    	var td_code = tr.find('td[data-code]');
+		    	td_code.attr('data-code', data.code);
+		    	td_code.html(data.code);
+		    }
+
+		    if(typeof(data.name) != 'undefined'){
+		    	var td_name = tr.find('td[data-name]');
+		    	td_name.attr('data-name', data.name);
+		    	td_name.html(data.code);
+		    }
+
+		    if(typeof(data.price) != 'undefined'){
+		    	var td_price = tr.find('td[data-price]');
+		    	td_price.attr('data-price', data.price);
+		    	td_price.find('input#price').val(ss_page.parseNumberToTextMoney(data.price));
+
+		    	var td_row_total = tr.find('td[data-row-total]');
+		    	td_row_total.attr('data-row-total', data.price);
+		    	td_row_total.html(ss_page.parseNumberToTextMoney(data.price));
+		    }
+					   		   
 		});
 	},
 	toggleNoRecord: function(show){
