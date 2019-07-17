@@ -10,7 +10,7 @@
     <form id="bill-form" role="form" action="" method="POST" enctype="multipart/form-data">
         <div class="col s12 m9 l9">
             <div class="card">    
-                <div class="card-content">
+                <div class="card-content p-b-0">
                     <div class="row">
                         <div class="input-field col s12 m12 l12">
                             <input id="filter_product" type="text" maxlength="255" autocomplete="off" value="">
@@ -20,7 +20,7 @@
                         </div>
                     </div> 
 
-                    <div class="row">
+                    <div class="row no-m">
                         <table id="bill-table" class="display responsive-table custom-table">
                             <thead>
                                 <tr>
@@ -41,7 +41,7 @@
                                     </th>
                                     
                                     <th class="w-12 right-align">Thành tiền</th>
-                                    <th class="w-3 no-p"></th>
+                                    <th class="w-3"></th>
                                 </tr>
                             </thead>
                             <tbody>                    
@@ -54,14 +54,55 @@
                                 </tr>
                             </tbody>
                         </table>                    
-                    </div>
+                    </div>                   
+                </div>
+                <div class="card-action">
+                    <div class="row no-m f-s-13">
+                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p m-b-xs">
+                            <span>
+                                Số lượng
+                            </span>
+                            <span class="right m-r-md">
+                                3
+                            </span>
+                        </div>
 
-                    <div class="row">
-                        <div class="col s12 m6 l4">
+                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p m-b-xs">
+                            <span>
+                                Tổng tiền
+                            </span>
+                            <span class="right m-r-md">
+                                300,000
+                            </span>
+                        </div>
 
+                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p m-b-xs">
+                            <span>
+                                Chiết khấu
+                            </span>
+                            <span class="right m-r-md">
+                                10,000
+                            </span>
+                        </div>
+
+                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p m-b-xs">
+                            <span>
+                                Chi phí khác
+                            </span>
+                            <span class="right m-r-md">
+                                100,000
+                            </span>
+                        </div>
+
+                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p">
+                            <span>
+                                Tiền cần trả
+                            </span>
+                            <span class="right m-r-md">
+                                500,000
+                            </span>
                         </div>
                     </div>
-                    
                 </div>
             </div>
 

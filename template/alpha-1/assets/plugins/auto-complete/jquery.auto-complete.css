@@ -25,13 +25,14 @@
     font-weight: normal;
     line-height: 28px;
     border-bottom: 1px solid #ddd;
+    cursor: pointer;
 }
 .autocomplete-suggestion b { 
 	font-weight: normal; 
 	color: #26a69a; 
 }
 .autocomplete-suggestion.selected { 
-	background: #f0f0f0; 
+	background: #f3f7f9; 
 }
 
 .autocomplete-suggestion .suggestion-content{
