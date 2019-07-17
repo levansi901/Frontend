@@ -195,6 +195,9 @@ table.custom-table td a.img img{
     margin: auto;
 }
 
+table.custom-table .remove-item{
+    cursor: pointer;
+}
 
 .lh-30{
     line-height: 30px !important;    

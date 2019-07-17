@@ -21,10 +21,10 @@
                     </div> 
 
                     <div class="row">
-                        <table id="item-table" class="display responsive-table custom-table">
+                        <table id="bill-table" class="display responsive-table custom-table">
                             <thead>
                                 <tr>
-                                    <th class="w-15 left-align">                    
+                                    <th class="w-20 left-align">                    
                                         Mã
                                     </th>
 
@@ -40,7 +40,7 @@
                                         Số lượng
                                     </th>
                                     
-                                    <th class="w-15 right-align">Thành tiền</th>
+                                    <th class="w-12 right-align">Thành tiền</th>
                                     <th class="w-3 no-p"></th>
                                 </tr>
                             </thead>
