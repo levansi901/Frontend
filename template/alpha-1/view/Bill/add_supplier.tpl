@@ -3,9 +3,10 @@
         <span class="page-title no-m">
            Nhập hàng mới
         </span>
-    </div>    
+    </div>
 </div>
-
+<div class="my-button">reference</div>
+<div class="my-popper">popper</div>
 <div class="row">
     <form id="bill-form" role="form" action="" method="POST" enctype="multipart/form-data">
         <div class="col s12 m9 l9">
@@ -24,7 +25,7 @@
                         <table id="bill-table" class="display responsive-table custom-table">
                             <thead>
                                 <tr>
-                                    <th class="w-20 left-align">                    
+                                    <th class="w-18 left-align">                    
                                         Mã
                                     </th>
 
@@ -40,8 +41,8 @@
                                         Số lượng
                                     </th>
                                     
-                                    <th class="w-12 right-align">Thành tiền</th>
-                                    <th class="w-3"></th>
+                                    <th class="w-13 right-align">Thành tiền</th>
+                                    <th class="w-1"></th>
                                 </tr>
                             </thead>
                             <tbody>                    
@@ -62,8 +63,8 @@
                             <span>
                                 Số lượng
                             </span>
-                            <span class="right m-r-md">
-                                3
+                            <span id="label-total-quantity" data-total-quantity="" class="right m-r-md">
+                                0
                             </span>
                         </div>
 
@@ -71,8 +72,8 @@
                             <span>
                                 Tổng tiền
                             </span>
-                            <span class="right m-r-md">
-                                300,000
+                            <span id="label-total" data-total=""  class="right m-r-md">
+                                0
                             </span>
                         </div>
 
@@ -80,8 +81,8 @@
                             <span>
                                 Chiết khấu
                             </span>
-                            <span class="right m-r-md">
-                                10,000
+                            <span id="label-total-discount" data-total-discount="" class="right m-r-md">
+                                0
                             </span>
                         </div>
 
@@ -89,8 +90,8 @@
                             <span>
                                 Chi phí khác
                             </span>
-                            <span class="right m-r-md">
-                                100,000
+                            <span id="label-total-other" data-total-other="" class="right m-r-md">
+                                0
                             </span>
                         </div>
 
@@ -98,8 +99,8 @@
                             <span>
                                 Tiền cần trả
                             </span>
-                            <span class="right m-r-md">
-                                500,000
+                            <span id="label-total-final" data-total-final="" class="right m-r-md">
+                                0
                             </span>
                         </div>
                     </div>
@@ -221,3 +222,38 @@
     </tbody>
 </table>
 
+<div id="popover-item">
+    <div class="row popover-item">
+        <div class="input-field col s12 m12 l12">
+            <input id="popover-item-price" type="text" autocomplete="off" value="">
+            <label for="popover-item-price">
+                Đơn giá 
+            </label>
+        </div>
+
+        <div class="input-field col s12 m12 l12">
+            <input id="popover-item-discount" type="text" autocomplete="off" value="">
+            <label for="popover-item-discount">
+                Chiết khấu thường
+            </label>
+        </div>
+
+        <div class="input-field col s12 m12 l12">
+            <input id="popover-item-vat" type="text" autocomplete="off" value="">
+            <label for="popover-item-vat">
+                Thuế (%)
+            </label>
+        </div>
+    </div>
+</div>
+
+<div id="popover-discount">
+    <div class="row popover-item">
+        <div class="input-field col s12 m12 l12">
+            <input id="popover-item-discount" type="text" autocomplete="off" value="">
+            <label for="popover-item-discount">
+                Chiết khấu thường
+            </label>
+        </div>
+    </div>
+</div>

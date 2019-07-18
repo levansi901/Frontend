@@ -194,16 +194,17 @@ var ss_page = {
 	    return ajax;
 	},
 	parseNumberToTextMoney: function(number){
-		if (typeof(number) == 'undefined') number = '';
+		if (typeof(number) != 'number' || isNaN(number) || typeof(number) == 'undefined') {
+	        return 0;
+	    }	    
     	return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 	},
 	parseTextMoneyToNumber: function(text_number){
-		if (typeof(text_number) != 'number' || isNaN(text_number) || typeof(text_number) == 'undefined') {
+		if (isNaN(text_number) || typeof(text_number) == 'undefined') {
 	        return 0;
 	    }
 		return number = parseFloat(text_number.toString().replace(/,/g, ''));
 	}
-
 }
 
 var ss_list = {
@@ -370,11 +371,10 @@ var ss_list = {
 var ss_bill_calculate = {
 	table: '#bill-table',
 	row_template: null,
-	items: [],
 	total: 0,
+	total_quantity: 0,
 	total_discount: 0,
-	total_coupon: 0,
-	total_voucher: 0,
+	total_other: 0,
 	total_vat: 0,
 	total_final: 0,
 	init: function(params){
@@ -394,26 +394,46 @@ var ss_bill_calculate = {
         	}
 		});
 
-		$(self.table).on('change', 'tbody td[data-quantity] input#quantity', function(e) {
-			var quantity = $(this).val();
-			if(!parseInt(quantity) > 0){
-				quantity = 1;
-				$(this).val(1);
+		$(self.table).on('keydown', 'tbody td[data-quantity] input#quantity', function(e) {
+			var quantity = ss_page.parseTextMoneyToNumber($(this).val());
+
+			switch(e.which){
+				case 38:
+					quantity += 1;
+					$(this).val(ss_page.parseNumberToTextMoney(quantity));
+					break;
+				case 40:
+					quantity -= 1;
+					$(this).val(ss_page.parseNumberToTextMoney(quantity));
+					break;
 			}
-			$(this).closest('td[data-quantity]').attr('data-quantity',quantity);
+
+			if(!parseInt($(this).val()) > 0){
+				quantity = 1;
+				$(this).val(quantity);				
+			}
+
+			$(this).closest('td[data-quantity]').attr('data-quantity', quantity);
 			self.calculateTotal();
-		});
-		
+		});		
 	},
 	calculateTotal: function(){
 		var self = this;
 
+		self.total = 0;
+		self.total_quantity = 0;
+		self.total_discount = 0;
+		self.total_other = 0;
+		self.total_vat = 0;
+		self.total_final = 0;
+
 		$(self.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
-			var id = typeof($(this).data('id')) != 'undefined' ? $(this).data('id') : null;
-			var price = typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? $(this).find('td[data-price]').attr('data-price') : 0;
-			var quantity = typeof($(this).find('td[data-quantity]').attr('data-quantity')) ? $(this).find('td[data-quantity]').attr('data-quantity') : 1;
+			var id = typeof($(this).data('id')) != 'undefined' ? parseInt($(this).data('id')) : null;
+			var price = typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? parseFloat($(this).find('td[data-price]').attr('data-price')) : 0;
+			var quantity = typeof($(this).find('td[data-quantity]').attr('data-quantity')) ? parseInt($(this).find('td[data-quantity]').attr('data-quantity')) : 1;
 			var row_total = parseInt(price) * parseInt(quantity);
-				
+			
+			self.total_quantity += quantity;		
 			self.total += row_total;
 
 			// show label row total 
@@ -421,6 +441,11 @@ var ss_bill_calculate = {
 			$(this).find('td[data-row-total]').html(ss_page.parseNumberToTextMoney(row_total));
 		});
 
+		$('#label-total-quantity').attr('data-total-quantity', self.total_quantity).text(ss_page.parseNumberToTextMoney(self.total_quantity));
+		$('#label-total').attr('data-total', self.total).text(ss_page.parseNumberToTextMoney(self.total));
+		$('#label-total-discount').attr('data-total-discount', self.total_discount).text(ss_page.parseNumberToTextMoney(self.total_discount));
+		$('#label-total-vat').attr('data-total-vat', self.total_vat).text(ss_page.parseNumberToTextMoney(self.total_vat));
+		$('#label-total-final').attr('data-total-final', self.total_final).text(ss_page.parseNumberToTextMoney(self.total_final));
 	},
 	toggleNoRecord: function(show){
 		var self = this;

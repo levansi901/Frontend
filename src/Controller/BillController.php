@@ -16,7 +16,8 @@ class BillController extends AppController
     public function index(){
         static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
         
-        static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
+        
+        static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';        
         static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
         static::$js_files[] = 'assets/js/bill_list.js';
 
@@ -205,9 +206,11 @@ class BillController extends AppController
     public function addSupplier(){
         static::$css_layout[] = 'assets/plugins/auto-complete/jquery.auto-complete.css';
         static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
-        
+        static::$css_layout[] = 'assets/plugins/popover/jquery.webui-popover.css';
+
         static::$js_files[] = 'assets/plugins/auto-complete/jquery.auto-complete.min.js';
         static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
+        static::$js_files[] = 'assets/plugins/popover/jquery.webui-popover.js';
         static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
         static::$js_files[] = 'assets/js/bill_add_supplier.js';
 
