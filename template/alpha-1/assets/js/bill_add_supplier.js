@@ -3,7 +3,7 @@ var ss_add_supplier = {
 	init: function(){
 		var self = this;
 
-		ss_bill_calculate.init({
+		ss_bill.init({
 			row_template: $('#template-list tbody').html()
 		});
 	
@@ -12,9 +12,7 @@ var ss_add_supplier = {
             mDec: 0,
             vMin: 0,
             vMax: 9999999999
-        });
-
-		$('.my-button').webuiPopover({url:'#popover-item'});
+        });		
 	},
 }
 

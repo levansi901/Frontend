@@ -5,8 +5,7 @@
         </span>
     </div>
 </div>
-<div class="my-button">reference</div>
-<div class="my-popper">popper</div>
+
 <div class="row">
     <form id="bill-form" role="form" action="" method="POST" enctype="multipart/form-data">
         <div class="col s12 m9 l9">
@@ -174,6 +173,10 @@
                                 Ghi chú
                             </label>
                         </div>
+                        <a id="123" href="#" >shop pop</a>
+                        <div class="webui-popover-content">
+                           <p>popover content</p>
+                        </div>
                     </div> 
                     
                 </div>
@@ -205,7 +208,7 @@
 
             <td data-name="" class="left-align"></td>
 
-            <td data-price="" class="left-align">
+            <td data-price="" data-discount="" data-vat="" class="left-align">
                 <input id="price" type="text" maxlength="12" autocomplete="off" value="" class="auto-numeric f-s-12 right-align">
             </td>
 
@@ -222,8 +225,8 @@
     </tbody>
 </table>
 
-<div id="popover-item">
-    <div class="row popover-item">
+<div id="popover-item" style="display: none;">
+    <div class="row popover-xs">
         <div class="input-field col s12 m12 l12">
             <input id="popover-item-price" type="text" autocomplete="off" value="">
             <label for="popover-item-price">
@@ -247,11 +250,11 @@
     </div>
 </div>
 
-<div id="popover-discount">
-    <div class="row popover-item">
+<div id="popover-discount" style="display: none;">
+    <div class="row popover-xs">
         <div class="input-field col s12 m12 l12">
-            <input id="popover-item-discount" type="text" autocomplete="off" value="">
-            <label for="popover-item-discount">
+            <input id="popover-bill-discount" type="text" autocomplete="off" value="">
+            <label for="popover-bill-discount">
                 Chiết khấu thường
             </label>
         </div>

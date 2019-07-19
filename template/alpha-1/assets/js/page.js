@@ -368,7 +368,7 @@ var ss_list = {
 	}
 }
 
-var ss_bill_calculate = {
+var ss_bill = {
 	table: '#bill-table',
 	row_template: null,
 	total: 0,
@@ -384,6 +384,8 @@ var ss_bill_calculate = {
 		if(typeof(params.row_template) != 'undefined'){
 			self.row_template = params.row_template
 		}
+
+		$('#123').webuiPopover();
 
 		self.autoSuggest();
 
@@ -415,7 +417,13 @@ var ss_bill_calculate = {
 
 			$(this).closest('td[data-quantity]').attr('data-quantity', quantity);
 			self.calculateTotal();
-		});		
+		});
+
+		$(self.table).on('click', 'input#price', function(e) {
+			e.stopPropagation();
+			WebuiPopovers.show({'content': $('#popover-item').html()});
+
+		});
 	},
 	calculateTotal: function(){
 		var self = this;

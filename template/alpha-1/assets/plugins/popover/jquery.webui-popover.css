@@ -1,11 +1,12 @@
 .webui-popover-content {
   display: none;
 }
+
 .webui-popover-rtl {
   direction: rtl;
   text-align: right;
 }
-/*  webui popover  */
+
 .webui-popover {
   position: absolute;
   top: 0;
@@ -19,17 +20,20 @@
   white-space: normal;
   background-color: #ffffff;
   background-clip: padding-box;
-  border: 1px solid #cccccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
+  /*border: 1px solid #cccccc;*/
+  /*border: 1px solid rgba(0, 0, 0, 0.2);*/
+  border-radius: 2px;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(160, 160, 160, 0.2);
 }
+
 .webui-popover.top,
 .webui-popover.top-left,
 .webui-popover.top-right {
   margin-top: -10px;
 }
+
 .webui-popover.right,
 .webui-popover.right-top,
 .webui-popover.right-bottom {
@@ -303,6 +307,7 @@
     transform: rotate(360deg);
   }
 }
+
 .webui-popover-backdrop {
   background-color: rgba(0, 0, 0, 0.65);
   width: 100%;
@@ -312,6 +317,7 @@
   left: 0;
   z-index: 9998;
 }
+
 .webui-popover .dropdown-menu {
   display: block;
   position: relative;
@@ -319,4 +325,9 @@
   border: none;
   box-shadow: none;
   float: none;
+}
+
+
+.popover-xs{
+  width: 230px;
 }
