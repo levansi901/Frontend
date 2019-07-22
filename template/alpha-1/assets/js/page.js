@@ -31,7 +31,7 @@ var ss_page = {
 		    ul_collasible_body.closest('li').find('> a').addClass('active');
 	    }	   	   
 	},
-	alertWarning: function(params, callback){
+	alertWarning: function(params = {}, callback){
 		if (typeof(callback) != 'function') {
 	        callback = function () {};
 	    }
@@ -65,7 +65,7 @@ var ss_page = {
 
 		});
 	},
-	notification: function(params, callback){
+	notification: function(params = {}, callback){
 		if (typeof(callback) != 'function') {
 	        callback = function () {};
 	    }
@@ -94,7 +94,7 @@ var ss_page = {
 
 	    Materialize.toast(icon + title, time, wrap_class, callback);
 	},
-	showValidateError: function(params, callback){
+	showValidateError: function(params = {}, callback){
 		var input = typeof(params.input_object) != 'undefined' ? params.input_object : null;
 		var error_message = typeof(params.error_message) != 'undefined' ? params.error_message : null;	
 
@@ -109,7 +109,7 @@ var ss_page = {
 			callback();
 		}		
 	},
-	ajaxSubmitForm: function(params){
+	ajaxSubmitForm: function(params = {}){
 		var self = this;
 	    var url = typeof(params.url) != 'undefined' ? params.url : '';	    
 	    var type = typeof(params.type) != 'undefined' ? params.type : 'POST';
@@ -170,7 +170,7 @@ var ss_page = {
             });
 		});
 	},
-	callAjax: function(params){
+	callAjax: function(params = {}){
 		var self = this;
 		
 		var ajax = $.ajax({
@@ -356,7 +356,7 @@ var ss_list = {
 		$(self.form).find('#more-filter i').text(icon);
 		$(self.wrap_more_filter).toggleClass('active');
 	},
-	toggleShowActionList: function(show){
+	toggleShowActionList: function(show = true){
 		var self = this;
 		if(show){
 			$(self.table).find('thead > tr > th:not(:first-child)').addClass('hide-text');
@@ -370,22 +370,21 @@ var ss_list = {
 
 var ss_bill = {
 	table: '#bill-table',
+	popover_item: '#popover-item',
 	row_template: null,
 	total: 0,
 	total_quantity: 0,
 	total_discount: 0,
 	total_other: 0,
 	total_vat: 0,
-	total_final: 0,
-	init: function(params){
+	total_final: 0,	
+	init: function(params = {}){
 		var self = this;
 
 		// get params
 		if(typeof(params.row_template) != 'undefined'){
 			self.row_template = params.row_template
 		}
-
-		$('#123').webuiPopover();
 
 		self.autoSuggest();
 
@@ -421,8 +420,18 @@ var ss_bill = {
 
 		$(self.table).on('click', 'input#price', function(e) {
 			e.stopPropagation();
-			WebuiPopovers.show({'content': $('#popover-item').html()});
+			var price = typeof($(this).closest('td[data-price]')) != 'undefined' ? parseFloat($(this).closest('td[data-price]').attr('data-price')) : 0
+			self.reloadPopoverItem({
+				price: price,
+				discount: typeof($(this).closest('tr')) != 'undefined' ? parseFloat($(this).closest('tr').attr('data-discount')) : 0,
+				vat: typeof($(this).closest('tr')) != 'undefined' ? parseFloat($(this).closest('tr').attr('data-vat')) : 0
+			});
+			console.log($(self.popover_item).html());
+			$(this).webuiPopover({
+				content: $(self.popover_item).html()
+			});
 
+			WebuiPopovers.show(this);
 		});
 	},
 	calculateTotal: function(){
@@ -455,7 +464,7 @@ var ss_bill = {
 		$('#label-total-vat').attr('data-total-vat', self.total_vat).text(ss_page.parseNumberToTextMoney(self.total_vat));
 		$('#label-total-final').attr('data-total-final', self.total_final).text(ss_page.parseNumberToTextMoney(self.total_final));
 	},
-	toggleNoRecord: function(show){
+	toggleNoRecord: function(show = true){
 		var self = this;
 		$(self.table).find('tr.no-record').toggleClass('hide', show ? false : true);
 	},
@@ -501,7 +510,7 @@ var ss_bill = {
 		    }
 		});
 	},
-	loadDataToList: function(params){
+	loadDataToList: function(params = {}){
 		var self = this;
 		var product_item_id = typeof(params.product_item_id) != 'undefined' ? parseInt(params.product_item_id) : null;
 		if(!product_item_id > 0){
@@ -577,6 +586,17 @@ var ss_bill = {
 		    // focus input quantity
 		    tr.find('td[data-quantity] input#quantity').focus().select();
 		});
+	},
+	reloadPopoverItem: function(params = {}){
+		var self = this;
+
+		var price = typeof(params.price) != 'undefined' ? parseFloat(params.price) : 0;
+		var discount = typeof(params.discount) != 'undefined' ? parseFloat(params.discount) : 0;
+		var vat = typeof(params.vat) != 'undefined' ? parseFloat(params.vat) : 0;
+
+		$(self.popover_item).find('input#popover-item-price').val(price);
+		$(self.popover_item).find('input#popover-item-discount').val(discount);
+		$(self.popover_item).find('input#popover-item-vat').val(vat);
 	}
 }
 

@@ -229,21 +229,21 @@
     <div class="row popover-xs">
         <div class="input-field col s12 m12 l12">
             <input id="popover-item-price" type="text" autocomplete="off" value="">
-            <label for="popover-item-price">
+            <label class="alway-active">
                 Đơn giá 
             </label>
         </div>
 
         <div class="input-field col s12 m12 l12">
             <input id="popover-item-discount" type="text" autocomplete="off" value="">
-            <label for="popover-item-discount">
+            <label class="alway-active">
                 Chiết khấu thường
             </label>
         </div>
 
         <div class="input-field col s12 m12 l12">
             <input id="popover-item-vat" type="text" autocomplete="off" value="">
-            <label for="popover-item-vat">
+            <label class="alway-active">
                 Thuế (%)
             </label>
         </div>

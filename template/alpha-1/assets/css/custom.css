@@ -666,3 +666,12 @@ label.active > .label-required{
 .hide-text{
     text-indent: -9999px;
 }
+
+.alway-active{
+    font-size: 0.8rem !important;
+    -webkit-transform: translateY(-140%);
+    transform: translateY(-140%);
+    position: absolute !important;
+    top: 0.8rem !important;
+    cursor: text !important;
+}
