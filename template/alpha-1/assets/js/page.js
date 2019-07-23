@@ -371,6 +371,7 @@ var ss_list = {
 var ss_bill = {
 	table: '#bill-table',
 	popover_item: '#popover-item',
+	popover_item_content: '',
 	row_template: null,
 	total: 0,
 	total_quantity: 0,
@@ -385,6 +386,7 @@ var ss_bill = {
 		if(typeof(params.row_template) != 'undefined'){
 			self.row_template = params.row_template
 		}
+		self.popover_item_content = $(self.popover_item).html();
 
 		self.autoSuggest();
 
@@ -419,16 +421,16 @@ var ss_bill = {
 		});
 
 		$(self.table).on('click', 'input#price', function(e) {
-			e.stopPropagation();
-			var price = typeof($(this).closest('td[data-price]')) != 'undefined' ? parseFloat($(this).closest('td[data-price]').attr('data-price')) : 0
-			self.reloadPopoverItem({
-				price: price,
-				discount: typeof($(this).closest('tr')) != 'undefined' ? parseFloat($(this).closest('tr').attr('data-discount')) : 0,
-				vat: typeof($(this).closest('tr')) != 'undefined' ? parseFloat($(this).closest('tr').attr('data-vat')) : 0
+			// e.stopPropagation();
+			var content = self.getPopoverItemContent({
+				price: typeof($(this).closest('td[data-price]')) != 'undefined' ? parseFloat($(this).closest('td[data-price]').attr('data-price')) : 0,
+				discount: typeof($(this).closest('tr').attr('data-discount')) != 'undefined' ? parseFloat($(this).closest('tr').attr('data-discount')) : 0,
+				vat: typeof($(this).closest('tr').attr('data-vat')) != 'undefined' ? parseFloat($(this).closest('tr').attr('data-vat')) : 0
 			});
-			console.log($(self.popover_item).html());
+			console.log(content);
+
 			$(this).webuiPopover({
-				content: $(self.popover_item).html()
+				content: content
 			});
 
 			WebuiPopovers.show(this);
@@ -587,16 +589,18 @@ var ss_bill = {
 		    tr.find('td[data-quantity] input#quantity').focus().select();
 		});
 	},
-	reloadPopoverItem: function(params = {}){
+	getPopoverItemContent: function(params = {}){
 		var self = this;
-
 		var price = typeof(params.price) != 'undefined' ? parseFloat(params.price) : 0;
 		var discount = typeof(params.discount) != 'undefined' ? parseFloat(params.discount) : 0;
 		var vat = typeof(params.vat) != 'undefined' ? parseFloat(params.vat) : 0;
-
-		$(self.popover_item).find('input#popover-item-price').val(price);
-		$(self.popover_item).find('input#popover-item-discount').val(discount);
-		$(self.popover_item).find('input#popover-item-vat').val(vat);
+		var popover = $(self.popover_item_content);
+		
+		$(popover).find('input#popover-item-price').val(price).trigger('change');
+		$(popover).find('input#popover-item-discount').val(discount).trigger('change');
+		$(popover).find('input#popover-item-vat').val(vat).trigger('change');
+		console.log($(popover));
+		return $(popover).html();
 	}
 }
 

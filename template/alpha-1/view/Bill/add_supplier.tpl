@@ -225,7 +225,7 @@
     </tbody>
 </table>
 
-<div id="popover-item" style="display: none;">
+<div id="popover-item">
     <div class="row popover-xs">
         <div class="input-field col s12 m12 l12">
             <input id="popover-item-price" type="text" autocomplete="off" value="">
