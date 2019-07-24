@@ -1976,6 +1976,7 @@ blockquote {
 
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-floating) {
     color: #EE3182;
+    text-transform: none;
 }
 
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-floating):hover {

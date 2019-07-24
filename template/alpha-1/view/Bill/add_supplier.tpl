@@ -58,7 +58,7 @@
                 </div>
                 <div class="card-action">
                     <div class="row no-m f-s-13">
-                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p m-b-xs">
+                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
                             <span>
                                 Số lượng
                             </span>
@@ -67,7 +67,7 @@
                             </span>
                         </div>
 
-                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p m-b-xs">
+                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
                             <span>
                                 Tổng tiền
                             </span>
@@ -76,25 +76,27 @@
                             </span>
                         </div>
 
-                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p m-b-xs">
-                            <span>
-                                Chiết khấu
-                            </span>
+                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
+                            <a id="btn-bill-discount" href="javascript:">
+                                Chiết khấu (F6)
+                                <i class="material-icons v-align-b">arrow_drop_down</i>
+                            </a>
                             <span id="label-total-discount" data-total-discount="" class="right m-r-md">
                                 0
                             </span>
                         </div>
 
-                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p m-b-xs">
-                            <span>
-                                Chi phí khác
-                            </span>
+                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
+                            <a id="btn-bill-fee-other" href="javascript:">
+                                Chi phí khác (F7)
+                                <i class="material-icons v-align-b">arrow_drop_down</i>
+                            </a>
                             <span id="label-total-other" data-total-other="" class="right m-r-md">
                                 0
                             </span>
                         </div>
 
-                        <div class="col s6 m6 l5 offset-l7 offset-m6 no-p">
+                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p">
                             <span>
                                 Tiền cần trả
                             </span>
@@ -108,7 +110,7 @@
 
             <div class="card">    
                 <div class="card-content">     
-                    <span class="page-title no-m">
+                    <span class="page-title no-m lh-20">
                        Thanh toán
                     </span>           
                     <div class="switch right-align">
@@ -123,7 +125,7 @@
 
             <div class="card">    
                 <div class="card-content">     
-                    <span class="page-title no-m">
+                    <span class="page-title no-m lh-20">
                        Nhập hàng
                     </span>           
                     <div class="switch right-align">
@@ -173,10 +175,6 @@
                                 Ghi chú
                             </label>
                         </div>
-                        <a id="123" href="#" >shop pop</a>
-                        <div class="webui-popover-content">
-                           <p>popover content</p>
-                        </div>
                     </div> 
                     
                 </div>
@@ -201,62 +199,21 @@
     </form>
 </div>
 
-<table id="template-list" class="hide">
-    <tbody>
-        <tr data-id="">
-            <td data-code="" class="left-align"></td>
+{$this->element('/bill/template_row')}
+{$this->element('/layout/popover_item')}
+{$this->element('/layout/popover_discount')}
 
-            <td data-name="" class="left-align"></td>
+<div id="modal-bill-other" class="modal">
+    <div class="modal-content">
+        <h4>Chọn danh mục</h4>
+        <div class="row group-level">        
+        </div>  
 
-            <td data-price="" data-discount="" data-vat="" class="left-align">
-                <input id="price" type="text" maxlength="12" autocomplete="off" value="" class="auto-numeric f-s-12 right-align">
-            </td>
-
-            <td data-quantity="1" class="left-align">
-                <input id="quantity" type="text" maxlength="12" autocomplete="off" value="1" class="auto-numeric f-s-12 right-align">
-            </td>
-
-            <td data-row-total="" class="right-align"></td>
-
-            <td class="center no-p">
-                <i class="material-icons f-s-14 center remove-item">close</i>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<div id="popover-item">
-    <div class="row popover-xs">
-        <div class="input-field col s12 m12 l12">
-            <input id="popover-item-price" type="text" autocomplete="off" value="">
-            <label class="alway-active">
-                Đơn giá 
-            </label>
-        </div>
-
-        <div class="input-field col s12 m12 l12">
-            <input id="popover-item-discount" type="text" autocomplete="off" value="">
-            <label class="alway-active">
-                Chiết khấu thường
-            </label>
-        </div>
-
-        <div class="input-field col s12 m12 l12">
-            <input id="popover-item-vat" type="text" autocomplete="off" value="">
-            <label class="alway-active">
-                Thuế (%)
-            </label>
-        </div>
-    </div>
-</div>
-
-<div id="popover-discount" style="display: none;">
-    <div class="row popover-xs">
-        <div class="input-field col s12 m12 l12">
-            <input id="popover-bill-discount" type="text" autocomplete="off" value="">
-            <label for="popover-bill-discount">
-                Chiết khấu thường
-            </label>
-        </div>
-    </div>
+        <div class="row m-b-xs right">
+            <a class="modal-close waves-effect waves-light btn black m-r-xs s6">Hủy bỏ</a>
+            <a id="select-lazada-category" class="waves-effect waves-light btn s6 disabled">
+                Đồng ý
+            </a>
+        </div>      
+    </div>    
 </div>

@@ -11,6 +11,10 @@ var ss_page = {
     	$('#csrf_token').remove();
 
     	self.activeMenu();
+
+    	$(document).on('focus', '.auto-numeric', function(e) {
+    		$(this).select();
+    	});
 	},
 	activeMenu: function(){
 		var href = window.location.href.split(document.domain);
@@ -200,10 +204,12 @@ var ss_page = {
     	return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 	},
 	parseTextMoneyToNumber: function(text_number){
-		if (isNaN(text_number) || typeof(text_number) == 'undefined') {
+		if (typeof(text_number) == 'undefined') {
 	        return 0;
 	    }
-		return number = parseFloat(text_number.toString().replace(/,/g, ''));
+
+		var number = parseFloat(text_number.toString().replace(/,/g, ''));
+		return number;
 	}
 }
 
@@ -372,6 +378,9 @@ var ss_bill = {
 	table: '#bill-table',
 	popover_item: '#popover-item',
 	popover_item_content: '',
+	popover_discount: '#popover-discount',
+	popover_discount_content: '',
+	modal_fee_other: '#modal-bill-other',
 	row_template: null,
 	total: 0,
 	total_quantity: 0,
@@ -387,17 +396,42 @@ var ss_bill = {
 			self.row_template = params.row_template
 		}
 		self.popover_item_content = $(self.popover_item).html();
-
-		self.autoSuggest();
+		self.popover_discount_content = $(self.popover_discount).html();
+		
+		// popover discount
+		$('#btn-bill-discount').webuiPopover({
+			animation: 'pop',
+	    	content: self.popover_discount_content,
+	    	onShow: function(element) {		    		
+	    		var bill_discount = typeof($('#label-total-discount').attr('data-discount')) != 'undefined' ? parseFloat($('#label-total-discount').attr('data-discount')) : 0;
+	    		element.find('input#popover-bill-discount').val(ss_page.parseNumberToTextMoney(bill_discount));
+	    		element.find('input#popover-bill-discount').autoNumeric('init', {
+		            mDec: 0,
+		            vMin: 0,
+		            vMax: 9999999999
+		        });
+		        element.find('input#popover-item-price').select();
+	    	},
+	    	onHide: function(element) {
+	    		var bill_discount = typeof(element.find('input#popover-bill-discount')) != 'undefined' ? ss_page.parseTextMoneyToNumber(element.find('input#popover-bill-discount').val()) : 0;
+	    		
+	    		$('#label-total-discount').attr('data-total-discount', bill_discount);
+	    		$('#label-total-discount').attr('data-discount', bill_discount);
+	    		$('#label-total-discount').text(ss_page.parseNumberToTextMoney(bill_discount));
+	    		self.calculateTotal();
+	    	}
+	    });
 
 		$(self.table).on('click', '.remove-item', function(e) {
 			$(this).closest('tr').remove();
         	if($(self.table + 'tbody tr[data-id]').length == 0){
         		self.toggleNoRecord(true);
         	}
+
+        	self.calculateTotal();
 		});
 
-		$(self.table).on('keydown', 'tbody td[data-quantity] input#quantity', function(e) {
+		$(self.table).on('keyup', 'tbody td[data-quantity] input#quantity', function(e) {
 			var quantity = ss_page.parseTextMoneyToNumber($(this).val());
 
 			switch(e.which){
@@ -420,21 +454,10 @@ var ss_bill = {
 			self.calculateTotal();
 		});
 
-		$(self.table).on('click', 'input#price', function(e) {
-			// e.stopPropagation();
-			var content = self.getPopoverItemContent({
-				price: typeof($(this).closest('td[data-price]')) != 'undefined' ? parseFloat($(this).closest('td[data-price]').attr('data-price')) : 0,
-				discount: typeof($(this).closest('tr').attr('data-discount')) != 'undefined' ? parseFloat($(this).closest('tr').attr('data-discount')) : 0,
-				vat: typeof($(this).closest('tr').attr('data-vat')) != 'undefined' ? parseFloat($(this).closest('tr').attr('data-vat')) : 0
-			});
-			console.log(content);
-
-			$(this).webuiPopover({
-				content: content
-			});
-
-			WebuiPopovers.show(this);
+		$(document).on('click', '#btn-bill-fee-other', function(e) {
+			$(self.modal_fee_other).openModal();
 		});
+
 	},
 	calculateTotal: function(){
 		var self = this;
@@ -459,6 +482,8 @@ var ss_bill = {
 			$(this).find('td[data-row-total]').attr('data-row-total', row_total);
 			$(this).find('td[data-row-total]').html(ss_page.parseNumberToTextMoney(row_total));
 		});
+
+		self.total_final = self.total;
 
 		$('#label-total-quantity').attr('data-total-quantity', self.total_quantity).text(ss_page.parseNumberToTextMoney(self.total_quantity));
 		$('#label-total').attr('data-total', self.total).text(ss_page.parseNumberToTextMoney(self.total));
@@ -587,20 +612,39 @@ var ss_bill = {
 
 		    // focus input quantity
 		    tr.find('td[data-quantity] input#quantity').focus().select();
+
+		    // popover 	
+		    tr.find('input#price').webuiPopover({
+		    	animation: 'pop',
+		    	content: self.popover_item_content,
+		    	onShow: function(element) {		    		
+		    		var price = typeof(tr.find('td[data-price]').attr('data-price')) != 'undefined' ? parseFloat(tr.find('td[data-price]').attr('data-price')) : 0;
+		    		var discount = typeof(tr.attr('data-discount')) != 'undefined' ? parseFloat(tr.attr('data-discount')) : '';
+		    		var vat = typeof(tr.attr('data-vat')) != 'undefined' ? parseFloat(tr.attr('data-vat')) : '';
+
+		    		element.find('input#popover-item-price').val(ss_page.parseNumberToTextMoney(price));
+		    		element.find('input#popover-item-discount').val(ss_page.parseNumberToTextMoney(discount));
+		    		element.find('input#popover-item-vat').val(ss_page.parseNumberToTextMoney(vat));
+
+		    		element.find('.auto-numeric').autoNumeric('init', {
+			            mDec: 0,
+			            vMin: 0,
+			            vMax: 9999999999
+			        });
+			        element.find('input#popover-item-price').select();
+		    	},
+		    	onHide: function(element) {
+		    		var price = typeof(element.find('input#popover-item-price')) != 'undefined' ? ss_page.parseTextMoneyToNumber(element.find('input#popover-item-price').val()) : 0;
+		    		var discount = typeof(element.find('input#popover-item-discount')) != 'undefined' ? ss_page.parseTextMoneyToNumber(element.find('input#popover-item-discount').val()) : 0;
+		    		var vat = typeof(element.find('input#popover-item-vat')) != 'undefined' ? ss_page.parseTextMoneyToNumber(element.find('input#popover-item-vat').val()) : 0;
+	
+		    		tr.find('td[data-price]').attr('data-price', price);
+		    		tr.find('td[data-price] input#price').val(ss_page.parseNumberToTextMoney(price));
+
+		    		self.calculateTotal();
+		    	}
+		    });
 		});
-	},
-	getPopoverItemContent: function(params = {}){
-		var self = this;
-		var price = typeof(params.price) != 'undefined' ? parseFloat(params.price) : 0;
-		var discount = typeof(params.discount) != 'undefined' ? parseFloat(params.discount) : 0;
-		var vat = typeof(params.vat) != 'undefined' ? parseFloat(params.vat) : 0;
-		var popover = $(self.popover_item_content);
-		
-		$(popover).find('input#popover-item-price').val(price).trigger('change');
-		$(popover).find('input#popover-item-discount').val(discount).trigger('change');
-		$(popover).find('input#popover-item-vat').val(vat).trigger('change');
-		console.log($(popover));
-		return $(popover).html();
 	}
 }
 

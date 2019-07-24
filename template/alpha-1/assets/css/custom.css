@@ -199,6 +199,14 @@ table.custom-table .remove-item{
     cursor: pointer;
 }
 
+table.custom-table td[data-price] input#price{
+    cursor: pointer;
+}
+
+.lh-20{
+    line-height: 20px !important;    
+}
+
 .lh-30{
     line-height: 30px !important;    
 }
@@ -674,4 +682,8 @@ label.active > .label-required{
     position: absolute !important;
     top: 0.8rem !important;
     cursor: text !important;
+}
+
+.v-align-b{
+    vertical-align: bottom;
 }

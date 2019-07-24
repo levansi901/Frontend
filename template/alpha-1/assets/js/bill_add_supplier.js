@@ -4,8 +4,9 @@ var ss_add_supplier = {
 		var self = this;
 
 		ss_bill.init({
-			row_template: $('#template-list tbody').html()
+			row_template: $('#template-row tbody').html()
 		});
+		ss_bill.autoSuggest();
 	
 		$('select').material_select();
 		$('.auto-numeric').autoNumeric('init', {
