@@ -215,6 +215,10 @@ table.custom-table td[data-price] input#price{
 	line-height: 36px !important;    
 }
 
+.lh-45{
+    line-height: 45px !important;    
+}
+
 [type="radio"]:not(:checked) + label, [type="radio"]:checked + label{
 	padding-left: 26px;
 }
@@ -289,6 +293,24 @@ table.custom-table td[data-price] input#price{
 .modal-lazada-category .list-wrap li span{
 	display: inline-block;
 	line-height: 24px;
+}
+
+.modal .modal-footer{
+    border-top: 1px solid #ddd;
+}
+
+.modal-mini{
+
+}
+
+.modal .modal-header{
+    padding: 10px;
+    line-height: 35px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.54);
+    border-bottom: 1px solid #ddd;
 }
 
 .btn-mini {
@@ -370,6 +392,23 @@ textarea.materialize-textarea,
 	width: 20%;
 }
 
+
+.w-25{
+    width: 25%;
+}
+
+.w-27{
+    width: 27%;
+}
+
+.w-28{
+    width: 28%;
+}
+
+.w-29{
+    width: 29%;
+}
+
 .w-30{
 	width: 30%;
 }
@@ -384,6 +423,10 @@ textarea.materialize-textarea,
 
 .w-60{
 	width: 60%;
+}
+
+.w-65{
+    width: 65%;
 }
 
 .w-70{
@@ -686,4 +729,8 @@ label.active > .label-required{
 
 .v-align-b{
     vertical-align: bottom;
+}
+
+.border-t{
+    border-top: 1px solid #ddd;
 }

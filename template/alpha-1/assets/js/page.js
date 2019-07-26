@@ -380,7 +380,7 @@ var ss_bill = {
 	popover_item_content: '',
 	popover_discount: '#popover-discount',
 	popover_discount_content: '',
-	modal_fee_other: '#modal-bill-other',
+	modal_fee_other: '#modal-fee-other',
 	row_template: null,
 	total: 0,
 	total_quantity: 0,
@@ -402,8 +402,13 @@ var ss_bill = {
 		$('#btn-bill-discount').webuiPopover({
 			animation: 'pop',
 	    	content: self.popover_discount_content,
-	    	onShow: function(element) {		    		
+	    	onShow: function(element) {
 	    		var bill_discount = typeof($('#label-total-discount').attr('data-discount')) != 'undefined' ? parseFloat($('#label-total-discount').attr('data-discount')) : 0;
+	    		var type_discount = typeof($('#label-total-discount').attr('data-type-discount')) != 'undefined' ? $('#label-total-discount').attr('data-type-discount') : 'MONEY';
+
+	    		element.find('select#type_discount').val(type_discount);
+        		element.find('select#type_discount').material_select();
+	    		
 	    		element.find('input#popover-bill-discount').val(ss_page.parseNumberToTextMoney(bill_discount));
 	    		element.find('input#popover-bill-discount').autoNumeric('init', {
 		            mDec: 0,
@@ -414,10 +419,11 @@ var ss_bill = {
 	    	},
 	    	onHide: function(element) {
 	    		var bill_discount = typeof(element.find('input#popover-bill-discount')) != 'undefined' ? ss_page.parseTextMoneyToNumber(element.find('input#popover-bill-discount').val()) : 0;
-	    		
+	    		var type_discount = typeof(element.find('select#type_discount')) != 'undefined' ? element.find('select#type_discount').val() : 'MONEY';
+
 	    		$('#label-total-discount').attr('data-total-discount', bill_discount);
 	    		$('#label-total-discount').attr('data-discount', bill_discount);
-	    		$('#label-total-discount').text(ss_page.parseNumberToTextMoney(bill_discount));
+	    		$('#label-total-discount').attr('data-type-discount', type_discount);
 	    		self.calculateTotal();
 	    	}
 	    });
@@ -452,11 +458,7 @@ var ss_bill = {
 
 			$(this).closest('td[data-quantity]').attr('data-quantity', quantity);
 			self.calculateTotal();
-		});
-
-		$(document).on('click', '#btn-bill-fee-other', function(e) {
-			$(self.modal_fee_other).openModal();
-		});
+		});		
 
 	},
 	calculateTotal: function(){
@@ -494,49 +496,7 @@ var ss_bill = {
 	toggleNoRecord: function(show = true){
 		var self = this;
 		$(self.table).find('tr.no-record').toggleClass('hide', show ? false : true);
-	},
-	autoSuggest: function(){
-		var self = this;
-		$('#filter_product').autoComplete({
-			minChars: 1,
-			delay: 300,
-		    source: function(keyword, suggest){
-		    	ss_page.callAjax({
-					url: '/product/item/get',
-					data:{
-						keyword: keyword
-					}
-				}).done(function(response) {
-				    suggest(response);
-				});
-		    },
-		    renderItem: function (item, search){
-		        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-		        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-		        var name = typeof(item.name) != 'undefined' ? item.name : '';
-		        var code = typeof(item.code) != 'undefined' ? item.code : '';
-		        var id = typeof(item.id) != 'undefined' ? item.id : '';
-		        var price = typeof(item.price) != 'undefined' ? ss_page.parseNumberToTextMoney(item.price) : 0;
-		        var quantity = typeof(item.quantity) != 'undefined' ? ss_page.parseNumberToTextMoney(item.quantity) : 0;
-
-		        return  '<div class="autocomplete-suggestion" data-id="' +  id + '">' +
-		        			'<div class="suggestion-content">' +
-		        				'<div class="suggestion-content-name">' + name.replace(re, "<b>$1</b>") + '</div>' +
-		        				'<div class="suggestion-content-code">' + code + '</div>' +
-		        			'</div>' +
-		        			'<div class="suggestion-price">' +
-		        				'<div class="suggestion-content-price"> ' + price + '</div>' +
-		        				'<div class="suggestion-content-quantity">Số lượng: ' + quantity + '</div>' +
-		        			'</div>' +		        			
-		        		'</div>';
-		    },
-		    onSelect: function(e, term, item){
-		    	self.loadDataToList({
-		    		product_item_id: item.data('id')
-		    	});
-		    }
-		});
-	},
+	},	
 	loadDataToList: function(params = {}){
 		var self = this;
 		var product_item_id = typeof(params.product_item_id) != 'undefined' ? parseInt(params.product_item_id) : null;
@@ -645,6 +605,120 @@ var ss_bill = {
 		    	}
 		    });
 		});
+	},
+	autoSuggest: function(){
+		var self = this;
+		$('#filter_product').autoComplete({
+			minChars: 1,
+			delay: 300,
+		    source: function(keyword, suggest){
+		    	ss_page.callAjax({
+					url: '/product/item/get',
+					data:{
+						keyword: keyword
+					}
+				}).done(function(response) {
+				    suggest(response);
+				});
+		    },
+		    renderItem: function (item, search){
+		        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+		        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+		        var name = typeof(item.name) != 'undefined' ? item.name : '';
+		        var code = typeof(item.code) != 'undefined' ? item.code : '';
+		        var id = typeof(item.id) != 'undefined' ? item.id : '';
+		        var price = typeof(item.price) != 'undefined' ? ss_page.parseNumberToTextMoney(item.price) : 0;
+		        var quantity = typeof(item.quantity) != 'undefined' ? ss_page.parseNumberToTextMoney(item.quantity) : 0;
+
+		        return  '<div class="autocomplete-suggestion" data-id="' +  id + '">' +
+		        			'<div class="suggestion-content">' +
+		        				'<div class="suggestion-content-name">' + name.replace(re, "<b>$1</b>") + '</div>' +
+		        				'<div class="suggestion-content-code">' + code + '</div>' +
+		        			'</div>' +
+		        			'<div class="suggestion-price">' +
+		        				'<div class="suggestion-content-price"> ' + price + '</div>' +
+		        				'<div class="suggestion-content-quantity">Số lượng: ' + quantity + '</div>' +
+		        			'</div>' +		        			
+		        		'</div>';
+		    },
+		    onSelect: function(e, term, item){
+		    	self.loadDataToList({
+		    		product_item_id: item.data('id')
+		    	});
+		    }
+		});
+	},
+	fee_other: {
+		total: 0,
+		data: [],
+		modal: '#modal-fee-other',
+		list: '#list-fee-other',
+		btn_add: '#btn-add-fee-other',
+		btn_save: '#btn-save-fee-other',
+		btn_delete: '.delete-fee-other',
+		row_template: '',
+		event: function(){
+			var self = this;
+			self.row_template = $(self.list + ' div.row:first-child').clone();
+			
+			$(document).on('click', '#btn-bill-fee-other', function(e) {
+				$(self.modal_fee_other).openModal({
+					dismissible: false
+				});
+			});
+
+			$(self.modal).on('click', self.btn_add, function(e) {
+				self.addRow();
+			});
+
+			$(self.modal).on('click', self.btn_delete, function(e) {
+				$(this).closest('div.row').remove();
+				self.calculateFeeOther();
+			});
+
+			$(self.modal).on('keyup', 'input.fee-other', function(e) {
+				
+			});
+
+			$(self.modal).on('click', self.btn_save, function(e) {
+				
+			});
+		},
+		addRow: function(){
+			var self = this;
+			$(self.list).append(self.row_template);
+			$(self.list + ' .row:last-child').find('input').val('');
+			$(self.list + ' .row:last-child').find('input.auto-numeric').autoNumeric('init', {
+	            mDec: 0,
+	            vMin: 0,
+	            vMax: 9999999999
+	        });
+		},
+		calculateFeeOther: function(apply_value = false){
+			var self = this;
+			self.total = 0;
+			self.data = [];
+			$(self.list).find('div.row').each(function(index, row) {
+				var name = typeof($(this).find('input.name-fee-other').val()) != 'undefined' ? $(this).find('input.name-fee-other').val() : 0;
+				var fee = typeof($(this).find('input.fee-other').val()) != 'undefined' ? parseTextMoneyToNumber(parseFloat($(this).find('input.fee-other').val())) : 0;
+				if(!name.length > 0 || !fee > 0){
+					continue;
+				}
+
+				self.total += fee;
+
+				self.data.push({
+					name: name,
+					fee: fee
+				});
+			});
+
+			if(apply_value){
+				$('#label-total-other').text(parseNumberToTextMoney(self.total));
+				$('input#data_total_other').val($.parseJSON(self.data));
+			}
+			
+		}
 	}
 }
 

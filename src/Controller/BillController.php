@@ -37,14 +37,13 @@ class BillController extends AppController
         	$products = !empty($data['products'][DATA]) ? $data['products'][DATA] : [];
             $pagination = !empty($data['products'][PAGINATION]) ? $data['products'][PAGINATION] : [];
         }   
-
         $this->set('list_status', $list_status);
         $this->set('list_shops', $list_shops);
         $this->set('list_has_inventory', $list_has_inventory);
         $this->set('list_has_image', $list_has_image);
         $this->set('products', $products);
         $this->set('pagination', $pagination);
-        $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));
+        $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));        
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_for_layout', 'Sản phẩm');
     }
@@ -153,6 +152,7 @@ class BillController extends AppController
         $this->set('product', $product);
         $this->set('lazada_normal_attributes', $lazada_normal_attributes);
         $this->set('lazada_sku_attributes', $lazada_sku_attributes);
+        
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_for_layout', $title_for_layout);
         $this->set('url_reference', '/product/add');
@@ -217,6 +217,7 @@ class BillController extends AppController
         $list_shops = [];
         
         $this->set('list_shops', $list_shops);
+        $this->set('type_discount', Configure::read('TYPE_DISCOUNT'));
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_for_layout', 'Nhập hàng mới');
     }

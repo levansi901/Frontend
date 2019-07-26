@@ -13,7 +13,7 @@ var ss_add_supplier = {
             mDec: 0,
             vMin: 0,
             vMax: 9999999999
-        });		
+        });
 	},
 }
 

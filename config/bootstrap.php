@@ -222,11 +222,22 @@ define('MESSAGE', 'message');
 define('SUCCESS', 'success');
 define('ERROR', 'error');
 define('PAGINATION', 'pagination');
+
+define('PERCENT', 'PERCENT');
+define('MONEY', 'MONEY');
+
 Configure::write('LIMIT_PAGINATION',
     array(
         10 => 10,
         20 => 20,
         50 => 50,
         100 => 100,
+    )
+);
+
+Configure::write('TYPE_DISCOUNT',
+    array(
+        MONEY => '$',
+        PERCENT => '%',        
     )
 );
