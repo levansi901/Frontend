@@ -13,11 +13,7 @@ var ss_product = {
 
 		$('select').material_select();
 
-		$('.auto-numeric').autoNumeric('init', {
-            mDec: 0,
-            vMin: 0,
-            vMax: 9999999999
-        });        
+		$('.auto-numeric').autoNumeric('init', default_option_autonumric);        
 
         $('.input-date-picker').datepicker({
         	timepicker: true,
@@ -70,11 +66,7 @@ var ss_product = {
 
 			$(self.wrap_list + ' .li-item:last-child select').material_select();
 
-			$(self.wrap_list + ' .li-item:last-child .auto-numeric').autoNumeric('init', {
-	            mDec: 0,
-	            vMin: 0,
-	            vMax: 9999999999
-	        });
+			$(self.wrap_list + ' .li-item:last-child .auto-numeric').autoNumeric('init', default_option_autonumric);
 
 	        $(self.wrap_list + ' .li-item:last-child .input-date-picker').datepicker({
 	        	timepicker: true,

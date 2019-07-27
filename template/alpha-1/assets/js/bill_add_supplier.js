@@ -7,13 +7,10 @@ var ss_add_supplier = {
 			row_template: $('#template-row tbody').html()
 		});
 		ss_bill.autoSuggest();
-	
+		ss_bill.fee_other.event();
+
 		$('select').material_select();
-		$('.auto-numeric').autoNumeric('init', {
-            mDec: 0,
-            vMin: 0,
-            vMax: 9999999999
-        });
+		$('.auto-numeric').autoNumeric('init', default_option_autonumric);
 	},
 }
 

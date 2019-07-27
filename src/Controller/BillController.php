@@ -214,9 +214,10 @@ class BillController extends AppController
         static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
         static::$js_files[] = 'assets/js/bill_add_supplier.js';
 
-        $list_shops = [];
+        $list_shop = $payment_method = [];
         
-        $this->set('list_shops', $list_shops);
+        $this->set('list_shop', $list_shop);
+        $this->set('payment_method', $payment_method);
         $this->set('type_discount', Configure::read('TYPE_DISCOUNT'));
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_for_layout', 'Nhập hàng mới');

@@ -110,17 +110,40 @@
             </div>
 
             <div class="card">    
-                <div class="card-content">     
-                    <span class="page-title no-m lh-20">
-                       Thanh toán
-                    </span>           
-                    <div class="switch right-align">
-                        <label>
-                            <input type="checkbox">
-                            <span class="lever"></span>
-                            Thanh toán cho nhà cung cấp
-                        </label>
+                <div class="card-content">
+                    <div class="row">
+                        <span class="page-title no-m lh-20">
+                           Thanh toán
+                        </span>           
+                        <div class="switch right-align">
+                            <label>
+                                <input type="checkbox">
+                                <span class="lever"></span>
+                                Thanh toán cho nhà cung cấp
+                            </label>
+                        </div>
                     </div>
+
+                    <div class="row">
+                        <div class="input-field col s12 m6 l6">
+                            {$this->Form->select('payment_method_id', $payment_method , ['name'=>'payment_method_id', 'empty' => '-- Chọn --', 'default' => '' , 'class' => ''])}
+                            <label for="payment_method_id">Hình thức thanh toán</label>
+                        </div>
+
+                        <div class="input-field col s12 m6 l6">
+                            <input id="payment_amount" name="payment_amount" type="text" autocomplete="off" value="" class="auto-numeric">
+                            <label for="payment_amount">
+                                Số tiền thanh toán
+                            </label>
+                        </div>
+
+                        <div class="input-field col s12 m6 l6">
+                            <input id="code_reference" name="code_reference" type="text" autocomplete="off" value="" class="">
+                            <label for="code_reference">
+                                Mã tham chiếu
+                            </label>
+                        </div>
+                    </div>           
                 </div>
             </div>
 
@@ -199,55 +222,12 @@
         </div>
 
         <div class="hide">
-            <input id="data_total_other" name="data_total_other" type="hidden" value="" />
+            <input id="data_fee_other" name="data_fee_other" type="hidden" value="" />
         </div>
     </form>
 </div>
 
 {$this->element('/bill/template_row')}
-{$this->element('/layout/popover_item')}
-{$this->element('/layout/popover_discount')}
-
-<div id="modal-fee-other" class="modal">
-    <div class="modal-header">
-        Chi phí khác
-        <i class="material-icons f-s-14 lh-36 right modal-close">close</i>
-    </div>
-    <div class="modal-content p-xxs">
-        <div id="list-fee-other">
-            <div class="row">
-                <div class="input-field col w-65">
-                    <input type="text" autocomplete="off" value="" class="name-fee-other">
-                    <label class="alway-active">Tên chi phí</label>
-                </div>
-                <div class="input-field col w-30">
-                    <input type="text" autocomplete="off" value="" class="auto-numeric right-align fee-other">
-                    <label class="alway-active">Chi phí</label>
-                </div>
-                <div class="input-field col w-5 no-p center-align delete-fee-other">
-                    <i class="material-icons f-s-13 lh-45">close</i>
-                </div>
-            </div>
-        </div>
-
-        <div class="row no-m">
-            <div class="col w-65">
-                <a id="btn-add-fee-other" class="waves-effect waves-light btn green m-b-xs">
-                    <i class="material-icons left">add</i>
-                    Thêm chi phí
-                </a>
-            </div>
-            <div class="col w-30">
-                Tổng: <span id="label-total-fee-other" class="right-align"></span>
-            </div>            
-        </div>
-    </div>
-    <div class="modal-footer">
-        <a id="btn-save-fee-other" class="waves-effect waves-light btn s6">
-            Đồng ý
-        </a>
-        <a class="modal-close waves-effect waves-light btn black m-r-xs s6">
-            Đóng
-        </a>        
-    </div>   
-</div>
+{$this->element('/bill/popover_item')}
+{$this->element('/bill/popover_discount')}
+{$this->element('/bill/modal_fee_other')}

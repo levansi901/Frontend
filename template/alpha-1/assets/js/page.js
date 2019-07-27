@@ -380,7 +380,6 @@ var ss_bill = {
 	popover_item_content: '',
 	popover_discount: '#popover-discount',
 	popover_discount_content: '',
-	modal_fee_other: '#modal-fee-other',
 	row_template: null,
 	total: 0,
 	total_quantity: 0,
@@ -410,11 +409,7 @@ var ss_bill = {
         		element.find('select#type_discount').material_select();
 	    		
 	    		element.find('input#popover-bill-discount').val(ss_page.parseNumberToTextMoney(bill_discount));
-	    		element.find('input#popover-bill-discount').autoNumeric('init', {
-		            mDec: 0,
-		            vMin: 0,
-		            vMax: 9999999999
-		        });
+	    		element.find('input#popover-bill-discount').autoNumeric('init', default_option_autonumric);
 		        element.find('input#popover-item-price').select();
 	    	},
 	    	onHide: function(element) {
@@ -586,11 +581,7 @@ var ss_bill = {
 		    		element.find('input#popover-item-discount').val(ss_page.parseNumberToTextMoney(discount));
 		    		element.find('input#popover-item-vat').val(ss_page.parseNumberToTextMoney(vat));
 
-		    		element.find('.auto-numeric').autoNumeric('init', {
-			            mDec: 0,
-			            vMin: 0,
-			            vMax: 9999999999
-			        });
+		    		element.find('.auto-numeric').autoNumeric('init', default_option_autonumric);
 			        element.find('input#popover-item-price').select();
 		    	},
 		    	onHide: function(element) {
@@ -659,10 +650,15 @@ var ss_bill = {
 		row_template: '',
 		event: function(){
 			var self = this;
-			self.row_template = $(self.list + ' div.row:first-child').clone();
-			
+			self.row_template = $(self.list + ' div.row:first-child').length > 0 ? $(self.list + ' div.row:first-child').clone()[0].outerHTML : '';
+			var data_fee_other = $('input#data_fee_other').val();
+			if(typeof(data_fee_other) != 'undefined' && data_fee_other.length > 0){
+				self.data = $.parseJSON(data_fee_other);
+			}
+
 			$(document).on('click', '#btn-bill-fee-other', function(e) {
-				$(self.modal_fee_other).openModal({
+				self.loadList();
+				$(self.modal).openModal({
 					dismissible: false
 				});
 			});
@@ -677,34 +673,35 @@ var ss_bill = {
 			});
 
 			$(self.modal).on('keyup', 'input.fee-other', function(e) {
-				
+				self.calculateFeeOther();
 			});
 
 			$(self.modal).on('click', self.btn_save, function(e) {
-				
+				self.calculateFeeOther(true);
+				$(self.modal).closeModal();
 			});
 		},
-		addRow: function(){
+		addRow: function(data = {}){
 			var self = this;
+			var name = typeof(data.name) != 'undefined' ? data.name : '';
+			var fee = typeof(data.fee) != 'undefined' ? ss_page.parseNumberToTextMoney(data.fee) : '';
+
 			$(self.list).append(self.row_template);
-			$(self.list + ' .row:last-child').find('input').val('');
-			$(self.list + ' .row:last-child').find('input.auto-numeric').autoNumeric('init', {
-	            mDec: 0,
-	            vMin: 0,
-	            vMax: 9999999999
-	        });
+			$(self.list + ' .row:last-child').find('input.name-fee-other').val(name);
+			$(self.list + ' .row:last-child').find('input.fee-other').val(fee);
+			$(self.list + ' .row:last-child').find('input.auto-numeric').autoNumeric('init', default_option_autonumric);
 		},
 		calculateFeeOther: function(apply_value = false){
 			var self = this;
 			self.total = 0;
 			self.data = [];
 			$(self.list).find('div.row').each(function(index, row) {
-				var name = typeof($(this).find('input.name-fee-other').val()) != 'undefined' ? $(this).find('input.name-fee-other').val() : 0;
-				var fee = typeof($(this).find('input.fee-other').val()) != 'undefined' ? parseTextMoneyToNumber(parseFloat($(this).find('input.fee-other').val())) : 0;
-				if(!name.length > 0 || !fee > 0){
-					continue;
+				var name = typeof($(this).find('input.name-fee-other').val()) != 'undefined' ? $(this).find('input.name-fee-other').val() : '';
+				var fee = typeof($(this).find('input.fee-other').val()) != 'undefined' ? ss_page.parseTextMoneyToNumber($(this).find('input.fee-other').val()) : 0;
+				if(!fee > 0){
+					return;				
 				}
-
+				
 				self.total += fee;
 
 				self.data.push({
@@ -713,15 +710,35 @@ var ss_bill = {
 				});
 			});
 
-			if(apply_value){
-				$('#label-total-other').text(parseNumberToTextMoney(self.total));
-				$('input#data_total_other').val($.parseJSON(self.data));
+			$(self.modal + ' #label-total-fee-other').text(ss_page.parseNumberToTextMoney(self.total));
+
+			if(apply_value){			
+				$('#label-total-other').text(ss_page.parseNumberToTextMoney(self.total));
+				$('#label-total-other').attr('data-total-other', self.total);				
+				$('input#data_fee_other').val(JSON.stringify(self.data));
+			}			
+		},
+		loadList: function(){
+			var self = this;
+			$(self.modal + ' ' + self.list).html('');
+			if($.isEmptyObject(self.data)){
+				self.addRow();
+			}else{
+				$.each(self.data, function(index, item) {
+				  	self.addRow(item);
+				});
 			}
 			
 		}
 	}
 }
 
+
+var default_option_autonumric = {
+	mDec: 0,
+    vMin: 0,
+    vMax: 9999999999
+}
 $(document).ready(function() {
 	ss_page.init();
 });
