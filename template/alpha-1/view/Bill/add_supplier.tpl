@@ -124,7 +124,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div id="wrap-payment" class="row">
                         <div class="input-field col s12 m6 l6">
                             {$this->Form->select('payment_method_id', $payment_method , ['name'=>'payment_method_id', 'empty' => '-- Chọn --', 'default' => '' , 'class' => ''])}
                             <label for="payment_method_id">Hình thức thanh toán</label>
