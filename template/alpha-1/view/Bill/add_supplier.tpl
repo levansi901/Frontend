@@ -13,9 +13,9 @@
                 <div class="card-content p-b-0">
                     <div class="row">
                         <div class="input-field col s12 m12 l12">
-                            <input id="filter_product" type="text" maxlength="255" autocomplete="off" value="">
+                            <input id="filter_product" type="text" maxlength="255" autocomplete="off" value="" shortcut="114">
                             <label for="filter_product">
-                                Tìm kiếm sản phẩm (F4)
+                                Tìm kiếm sản phẩm (F3)
                             </label>
                         </div>
                     </div> 
@@ -78,7 +78,7 @@
                         </div>
 
                         <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
-                            <a id="btn-bill-discount" href="javascript:">
+                            <a id="btn-bill-discount" href="javascript:" shortcut="117">
                                 Chiết khấu (F6)
                                 <i class="material-icons v-align-b">arrow_drop_down</i>
                             </a>
@@ -88,7 +88,7 @@
                         </div>
 
                         <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
-                            <a id="btn-bill-fee-other" href="javascript:">
+                            <a id="btn-bill-fee-other" href="javascript:" shortcut="118">
                                 Chi phí khác (F7)
                                 <i class="material-icons v-align-b">arrow_drop_down</i>
                             </a>
@@ -117,14 +117,14 @@
                         </span>           
                         <div class="switch right-align">
                             <label>
-                                <input type="checkbox">
+                                <input id="payment-confirm" type="checkbox">
                                 <span class="lever"></span>
                                 Thanh toán cho nhà cung cấp
                             </label>
                         </div>
                     </div>
 
-                    <div id="wrap-payment" class="row">
+                    <div id="wrap-payment" class="row no-m hide">
                         <div class="input-field col s12 m6 l6">
                             {$this->Form->select('payment_method_id', $payment_method , ['name'=>'payment_method_id', 'empty' => '-- Chọn --', 'default' => '' , 'class' => ''])}
                             <label for="payment_method_id">Hình thức thanh toán</label>
@@ -173,9 +173,9 @@
                         </div>
 
                         <div class="input-field col s12 m12 l12">
-                            <input id="supplier" name="supplier" type="text" length="255" maxlength="255" autocomplete="off" value="" class="">
+                            <input id="supplier" name="supplier" type="text" length="255" maxlength="255" autocomplete="off" value="" class="" shortcut="115">
                             <label for="supplier">
-                                Nhà cung cấp
+                                Nhà cung cấp (F4)
                             </label>
                         </div>
 

@@ -15,6 +15,19 @@ var ss_page = {
     	$(document).on('focus', '.auto-numeric', function(e) {
     		$(this).select();
     	});
+
+    	$(document).on('keydown', function (e) {
+		    var shortcut = e.keyCode;
+		    var disabled = $('[shortcut="' + shortcut + '"]').attr('disabled');
+		    if ($('[shortcut="' + shortcut + '"]').length > 0 && typeof disabled == "undefined") {
+		        if ($('[shortcut="' + shortcut + '"]').is('[type=text]')) {
+		            $('[shortcut="' + shortcut + '"]').focus();
+		        } else {
+		            $('[shortcut="' + shortcut + '"]').trigger('click');
+		        }
+		        e.preventDefault();
+		    }
+		});
 	},
 	activeMenu: function(){
 		var href = window.location.href.split(document.domain);
@@ -397,7 +410,7 @@ var ss_bill = {
 		self.popover_item_content = $(self.popover_item).html();
 		self.popover_discount_content = $(self.popover_discount).html();
 		
-		// popover discount
+		// event
 		$('#btn-bill-discount').webuiPopover({
 			animation: 'pop',
 	    	content: self.popover_discount_content,
@@ -453,7 +466,11 @@ var ss_bill = {
 
 			$(this).closest('td[data-quantity]').attr('data-quantity', quantity);
 			self.calculateTotal();
-		});		
+		});
+
+		$(document).on('change', '#payment-confirm', function(e) {
+			$('#wrap-payment').toggleClass('hide', !$(this).is(':checked'));		
+		});
 
 	},
 	calculateTotal: function(){
