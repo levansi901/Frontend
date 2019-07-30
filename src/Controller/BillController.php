@@ -204,20 +204,30 @@ class BillController extends AppController
     }
 
     public function addSupplier(){
+        static::$css_layout[] = 'assets/plugins/select2/css/select2.css';
         static::$css_layout[] = 'assets/plugins/auto-complete/jquery.auto-complete.css';
         static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
         static::$css_layout[] = 'assets/plugins/popover/jquery.webui-popover.css';
 
+        static::$js_files[] = 'assets/plugins/select2/js/select2.full.js';
         static::$js_files[] = 'assets/plugins/auto-complete/jquery.auto-complete.min.js';
         static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
-        static::$js_files[] = 'assets/plugins/popover/jquery.webui-popover.js';
-        static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
+        static::$js_files[] = 'assets/plugins/popover/jquery.webui-popover.js';        
+        static::$js_files[] = 'assets/js/bill.js';
         static::$js_files[] = 'assets/js/bill_add_supplier.js';
 
-        $list_shop = $payment_method = [];
-        
+        $list_shop = [];
+        // get data
+        $http = new Client();
+        $response = $http->get(API_DOMAIN_URL . 'bill/inital-data-form');  
+        $result = $response->json;
+        $data = !empty($result[DATA]) ? $result[DATA] : [];
+        if(!empty($data)){
+            $list_shop = !empty($data['list_shop']) ? $data['list_shop'] : [];
+        }
+
         $this->set('list_shop', $list_shop);
-        $this->set('payment_method', $payment_method);
+        $this->set('payment_method', Configure::read('PAYMENT_METHOD'));
         $this->set('type_discount', Configure::read('TYPE_DISCOUNT'));
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_for_layout', 'Nhập hàng mới');

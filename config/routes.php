@@ -86,6 +86,10 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     // bill
     $routes->connect(
+        '/inventory', ['controller' => 'Bill', 'action' => 'index']
+    );
+
+    $routes->connect(
         '/inventory/bill', ['controller' => 'Bill', 'action' => 'index']
     );
 

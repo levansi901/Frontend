@@ -226,6 +226,11 @@ define('PAGINATION', 'pagination');
 define('PERCENT', 'PERCENT');
 define('MONEY', 'MONEY');
 
+
+define('COD', 'COD');
+define('ONLINE_BANKING', 'ONLINE_BANKING');
+define('CASH', 'CASH');
+
 Configure::write('LIMIT_PAGINATION',
     array(
         10 => 10,
@@ -239,5 +244,13 @@ Configure::write('TYPE_DISCOUNT',
     array(
         MONEY => '$',
         PERCENT => '%',        
+    )
+);
+
+Configure::write('PAYMENT_METHOD',
+    array(
+        COD => 'Thu hộ(COD)',
+        ONLINE_BANKING => 'Chuyển khoản',
+        CASH => 'Tiền mặt',
     )
 );

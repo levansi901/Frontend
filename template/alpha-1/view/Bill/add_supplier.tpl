@@ -168,15 +168,16 @@
                 <div class="card-content">
                     <div class="row">
                         <div class="input-field col s12 m12 l12">
-                            {$this->Form->select('shop_id', $list_shops , ['name'=>'shop_id', 'empty' => null, 'default' => '' , 'class' => ''])}
+                            {$this->Form->select('shop_id', $list_shop , ['name'=>'shop_id', 'empty' => null, 'default' => '' , 'class' => ''])}
                             <label for="shop_id">Chi nhánh</label>
                         </div>
 
                         <div class="input-field col s12 m12 l12">
                             <input id="supplier" name="supplier" type="text" length="255" maxlength="255" autocomplete="off" value="" class="" shortcut="115">
                             <label for="supplier">
-                                Nhà cung cấp (F4)
+                                Nhà cung cấp (F4)                                
                             </label>
+                            <i id="btn-add-supplier" class="material-icons green-text btn-input-field tooltipped" data-tooltip="Thêm nhà cung cấp">add</i>
                         </div>
 
                         <div class="input-field col s12 m12 l12">
@@ -231,3 +232,4 @@
 {$this->element('/bill/popover_item')}
 {$this->element('/bill/popover_discount')}
 {$this->element('/bill/modal_fee_other')}
+{$this->element('/bill/modal_add_supplier')}

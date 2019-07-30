@@ -760,3 +760,10 @@ label.active > .label-required{
 .auto-numeric{
     text-align: right;
 }
+
+.input-field .btn-input-field{
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    cursor: pointer;
+}
