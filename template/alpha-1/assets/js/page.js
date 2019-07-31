@@ -114,6 +114,11 @@ var ss_page = {
 			callback();
 		}		
 	},
+	clearValidateError: function(wrap_object = null){
+		if(wrap_object.length > 0){
+			wrap_object.find('label.error').remove();
+		}
+	},
 	ajaxSubmitForm: function(params = {}){
 		var self = this;
 	    var url = typeof(params.url) != 'undefined' ? params.url : '';	    

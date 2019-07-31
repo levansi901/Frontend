@@ -129,5 +129,10 @@ Router::scope('/', function (RouteBuilder $routes) {
         '/inventory/check', ['controller' => 'Bill', 'action' => 'addCheck']
     );
 
+    // supplier
+    $routes->connect(
+        '/supplier/quick-add-supplier', ['controller' => 'Supplier', 'action' => 'quickAddSupplier']
+    );
+
     $routes->fallbacks(DashedRoute::class);
 });

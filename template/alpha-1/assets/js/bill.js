@@ -82,7 +82,6 @@ var ss_bill = {
 		$(document).on('change', '#payment-confirm', function(e) {
 			$('#wrap-payment').toggleClass('hide', !$(this).is(':checked'));		
 		});
-
 	},
 	calculateTotal: function(){
 		var self = this;
@@ -360,21 +359,18 @@ var ss_bill = {
 		}
 	},
 	supplier:{
-		modal: '#modal-fee-other',
+		modal: '#modal-add-supplier',
 		btn_add_supplier: '#btn-add-supplier',
 		input: 'supplier',
 		event: function(){
-			var self = this;
-			$(self.modal + ' select.select2').select2();
+			var self = this;			
 
 			$(document).on('click', '#btn-add-supplier', function(e) {
-				self.clearModal();	
-				$(self.modal).openModal({
-					dismissible: false
-				});
+				self.loadModal();				
 			});
 
 			$(self.modal).on('click', self.btn_add_supplier, function(e) {
+				ss_page.clearValidateError($(self.modal));
 				var input_name_supplier = $(self.modal + ' input#name_supplier');
 				var input_address_supplier = $(self.modal + ' input#address_supplier');
 
@@ -385,6 +381,7 @@ var ss_bill = {
 						input_object: input_name_supplier,
 						error_message: 'Vui lòng nhập tên nhà cung cấp'
 					});
+					return false;
 				}
 
 				if(!$.trim(address).length > 0){
@@ -392,6 +389,7 @@ var ss_bill = {
 						input_object: input_address_supplier,
 						error_message: 'Vui lòng nhập địa chỉ nhà cung cấp'
 					});
+					return false;
 				}
 
 				var data = {
@@ -444,10 +442,32 @@ var ss_bill = {
 			    }
 			});
 		},
+		loadModal: function(){
+			var self = this;
+			if(!$(self.modal + ' .modal-content')[0].hasChildNodes()){
+				ss_page.callAjax({
+					url: '/supplier/quick-add-supplier',
+					data_type: 'html'
+				}).done(function(response) {
+					$(self.modal + ' .modal-content').html(response);
+					$(self.modal + ' select.select2').select2();
+					$(self.modal).openModal({
+						dismissible: false
+					});
+				});
+			}else{
+				self.clearModal();
+				$(self.modal).openModal({
+					dismissible: false
+				});
+			}
+		},
 		clearModal: function(){
 			var self = this;
+			ss_page.clearValidateError($(self.modal));
+
 			$(self.modal).find('input').val('');
-			$(self.modal).find('select').val('');
+			$(self.modal).find('select').val('').trigger('change');
 		},
 		showSupplier: function(){
 
