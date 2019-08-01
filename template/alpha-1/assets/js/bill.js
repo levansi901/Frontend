@@ -365,12 +365,13 @@ var ss_bill = {
 		event: function(){
 			var self = this;			
 
-			$(document).on('click', '#btn-add-supplier', function(e) {
+			$(document).on('click', '#btn-quick-add-supplier', function(e) {
 				self.loadModal();				
 			});
 
 			$(self.modal).on('click', self.btn_add_supplier, function(e) {
 				ss_page.clearValidateError($(self.modal));
+
 				var input_name_supplier = $(self.modal + ' input#name_supplier');
 				var input_address_supplier = $(self.modal + ' input#address_supplier');
 
@@ -399,18 +400,28 @@ var ss_bill = {
 					phone: typeof($(self.modal + ' input#phone_supplier').val()) != 'undefined' ? $(self.modal + ' input#phone_supplier').val() : '',
 					group: typeof($(self.modal + ' input#group_supplier').val()) != 'undefined' ? $(self.modal + ' input#group_supplier').val() : '',
 					city_id: typeof($(self.modal + ' input#city_id_supplier').val()) != 'undefined' ? $(self.modal + ' input#city_id_supplier').val() : '',
-					district_id: typeof($(self.modal + ' input#district_id_supplier').val()) != 'undefined' ? $(self.modal + ' input#district_id_supplier').val() : ''
+					district_id: typeof($(self.modal + ' input#district_id_supplier').val()) != 'undefined' ? $(self.modal + ' input#district_id_supplier').val() : '',
+					city_name: typeof($(self.modal + ' input#city_name_supplier').val()) != 'undefined' ? $(self.modal + ' input#city_name_supplier').val() : '',
+					district_name: typeof($(self.modal + ' input#district_name_supplier').val()) != 'undefined' ? $(self.modal + ' input#district_name_supplier').val() : ''
 				}
 
 				ss_page.callAjax({
-					url: '/supplier/add-supplier',
+					url: '/supplier/quick-add-supplier',
 					data: data
 				}).done(function(response) {
+					var success = typeof(response.success) != 'undefined' ? response.success : false;
+					var message = typeof(response.message) != 'undefined' ? response.message : '';
+					console.log(response);
+					$(self.modal).closeModal();
 
-				    $(self.modal).closeModal();
-				    ss_page.notification({
-				    	title: 'Thêm nhà cung cấp mới thành công'
-				    });
+					if(success){
+
+					}else{
+						ss_page.notification({
+							type: 'error',
+					    	title: message
+					    });
+					}				    				   
 				}).fail(function(jqXHR, textStatus, errorThrown) {
 					$(self.modal).closeModal();
 				    ss_page.notification({
@@ -446,7 +457,7 @@ var ss_bill = {
 			var self = this;
 			if(!$(self.modal + ' .modal-content')[0].hasChildNodes()){
 				ss_page.callAjax({
-					url: '/supplier/quick-add-supplier',
+					url: '/supplier/view-quick-add-supplier',
 					data_type: 'html'
 				}).done(function(response) {
 					$(self.modal + ' .modal-content').html(response);

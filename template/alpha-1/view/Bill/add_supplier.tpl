@@ -177,7 +177,7 @@
                             <label for="supplier">
                                 Nhà cung cấp (F4)                                
                             </label>
-                            <i id="btn-add-supplier" class="material-icons green-text btn-input-field tooltipped" data-tooltip="Thêm nhà cung cấp">add</i>
+                            <i id="btn-quick-add-supplier" class="material-icons green-text btn-input-field tooltipped" data-tooltip="Thêm nhà cung cấp">add</i>
                         </div>
 
                         <div class="input-field col s12 m12 l12">
