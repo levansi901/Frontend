@@ -13,6 +13,10 @@ class SupplierController extends AppController
         $this->set('title_for_layout', 'Nhà cung cấp');
     }
 
+    public function listSupplier(){
+
+    }
+
     public function viewQuickAddSupplier(){
         $this->layout = false;
 
@@ -51,15 +55,14 @@ class SupplierController extends AppController
 
         $result = [];
         $data_post = !empty($this->request->data) ? $this->request->data : [];
-        $keyword = !empty($data_post['keyword']) ? trim($data_post['keyword']) : '';
-        if ($this->request->is('post') || !empty($keyword)) {
+        if (!$this->request->is('post') || empty($data_post['keyword'])) {
             $result = [
                 MESSAGE => 'Dữ liệu không hợp lệ'
             ];
         }
 
         $http = new Client();
-        $response = $http->get(API_DOMAIN_URL . 'supplier/get?keyword='. $keyword);    
+        $response = $http->get(API_DOMAIN_URL . 'supplier/list?'. http_build_query(array_filter($data_post)));    
         $result = $response->getJson();
 
         $this->response->type('json');

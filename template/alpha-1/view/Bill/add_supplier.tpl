@@ -173,7 +173,7 @@
                         </div>
 
                         <div id="wrap-input-supplier" class="input-field col s12 m12 l12">
-                            <input id="supplier-suggest" type="text" autocomplete="off" value="" shortcut="115" placeholder="Nhà cung cấp (F4)">
+                            <input id="supplier-suggest" type="text" autocomplete="off" value="" shortcut="115" placeholder="Tìm nhà cung cấp (F4)">
                             <label for="supplier" class="alway-active">
                                 Nhà cung cấp
                                 <small class="label-required text-red">*</small>

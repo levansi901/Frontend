@@ -138,7 +138,7 @@ Router::scope('/', function (RouteBuilder $routes) {
         '/supplier/quick-add-supplier', ['controller' => 'Supplier', 'action' => 'ajaxQuickAddSupplier']
     );
 
-        $routes->connect(
+    $routes->connect(
         '/supplier/get', ['controller' => 'Supplier', 'action' => 'ajaxGetSupplier']
     );
 
