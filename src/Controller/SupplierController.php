@@ -45,7 +45,26 @@ class SupplierController extends AppController
         return $this->response;
     }
 
+    public function ajaxGetSupplier(){
+        $this->layout = false;
+        $this->autoRender = false;
 
+        $result = [];
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
+        $keyword = !empty($data_post['keyword']) ? trim($data_post['keyword']) : '';
+        if ($this->request->is('post') || !empty($keyword)) {
+            $result = [
+                MESSAGE => 'Dữ liệu không hợp lệ'
+            ];
+        }
+
+        $http = new Client();
+        $response = $http->get(API_DOMAIN_URL . 'supplier/get?keyword='. $keyword);    
+        $result = $response->getJson();
+
+        $this->response->type('json');
+        $this->response->body(json_encode($result));
+    }
 
 
 

@@ -361,10 +361,15 @@ var ss_bill = {
 	supplier:{
 		modal: '#modal-add-supplier',
 		btn_add_supplier: '#btn-add-supplier',
-		input: 'supplier',
+		input_suggest: '#supplier-suggest',
+		input: '#supplier_id',
 		event: function(){
 			var self = this;			
 
+			$(document).on('change', self.input_suggest, function(e) {
+				$(self.input).val('');
+			});
+			
 			$(document).on('click', '#btn-quick-add-supplier', function(e) {
 				self.loadModal();				
 			});
@@ -411,11 +416,11 @@ var ss_bill = {
 				}).done(function(response) {
 					var success = typeof(response.success) != 'undefined' ? response.success : false;
 					var message = typeof(response.message) != 'undefined' ? response.message : '';
-					console.log(response);
+					var supplier_id = typeof(response.data) != 'undefined' ? response.data.id : null;
 					$(self.modal).closeModal();
-
 					if(success){
-
+						$(self.input_suggest).val(name);
+						$(self.input).val(supplier_id);
 					}else{
 						ss_page.notification({
 							type: 'error',
@@ -431,7 +436,7 @@ var ss_bill = {
 				});
 			});
 
-			$(self.input).autoComplete({
+			$(self.input_suggest).autoComplete({
 			    source: function(keyword, suggest){
 			    	ss_page.callAjax({
 						url: '/supplier/get',
@@ -482,8 +487,6 @@ var ss_bill = {
 		},
 		showSupplier: function(){
 
-		},
-		
-		
+		},		
 	}
 }

@@ -111,7 +111,7 @@
 
             <div class="card">    
                 <div class="card-content">
-                    <div class="row">
+                    <div class="row no-m">
                         <span class="page-title no-m lh-20">
                            Thanh toán
                         </span>           
@@ -172,23 +172,25 @@
                             <label for="shop_id">Chi nhánh</label>
                         </div>
 
-                        <div class="input-field col s12 m12 l12">
-                            <input id="supplier" name="supplier" type="text" length="255" maxlength="255" autocomplete="off" value="" class="" shortcut="115">
-                            <label for="supplier">
-                                Nhà cung cấp (F4)                                
+                        <div id="wrap-input-supplier" class="input-field col s12 m12 l12">
+                            <input id="supplier-suggest" type="text" autocomplete="off" value="" shortcut="115" placeholder="Nhà cung cấp (F4)">
+                            <label for="supplier" class="alway-active">
+                                Nhà cung cấp
+                                <small class="label-required text-red">*</small>
                             </label>
-                            <i id="btn-quick-add-supplier" class="material-icons green-text btn-input-field tooltipped" data-tooltip="Thêm nhà cung cấp">add</i>
+                            <i id="btn-quick-add-supplier" class="material-icons teal-text btn-input-field tooltipped" data-tooltip="Thêm nhà cung cấp">add</i>
+                            <input id="supplier_id" name="supplier_id" value="" type="hidden" />
                         </div>
-
+                        
                         <div class="input-field col s12 m12 l12">
-                            <input id="supplier" name="supplier" type="text" length="255" maxlength="255" autocomplete="off" value="" class="">
+                            <input id="supplier" name="supplier" type="text" autocomplete="off" value="" class="">
                             <label for="name">
                                 Người gửi
                             </label>
                         </div>
 
                         <div class="input-field col s12 m12 l12">
-                            <input id="supplier" name="supplier" type="text" length="255" maxlength="255" autocomplete="off" value="" class="">
+                            <input id="supplier" name="supplier" type="text" autocomplete="off" value="" class="">
                             <label for="name">
                                 Người nhận
                             </label>
