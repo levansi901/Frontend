@@ -32,12 +32,12 @@ var ss_bill = {
 	    		element.find('select#type_discount').val(type_discount);
         		element.find('select#type_discount').material_select();
 	    		
-	    		element.find('input#popover-bill-discount').val(ss_page.parseNumberToTextMoney(bill_discount));
+	    		element.find('input#popover-bill-discount').val(ss_page.utilities.parseNumberToTextMoney(bill_discount));
 	    		element.find('input#popover-bill-discount').autoNumeric('init', default_option_autonumric);
 		        element.find('input#popover-item-price').select();
 	    	},
 	    	onHide: function(element) {
-	    		var bill_discount = typeof(element.find('input#popover-bill-discount')) != 'undefined' ? ss_page.parseTextMoneyToNumber(element.find('input#popover-bill-discount').val()) : 0;
+	    		var bill_discount = typeof(element.find('input#popover-bill-discount')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-bill-discount').val()) : 0;
 	    		var type_discount = typeof(element.find('select#type_discount')) != 'undefined' ? element.find('select#type_discount').val() : 'MONEY';
 
 	    		$('#label-total-discount').attr('data-total-discount', bill_discount);
@@ -57,16 +57,16 @@ var ss_bill = {
 		});
 
 		$(self.table).on('keyup', 'tbody td[data-quantity] input#quantity', function(e) {
-			var quantity = ss_page.parseTextMoneyToNumber($(this).val());
+			var quantity = ss_page.utilities.parseTextMoneyToNumber($(this).val());
 
 			switch(e.which){
 				case 38:
 					quantity += 1;
-					$(this).val(ss_page.parseNumberToTextMoney(quantity));
+					$(this).val(ss_page.utilities.parseNumberToTextMoney(quantity));
 					break;
 				case 40:
 					quantity -= 1;
-					$(this).val(ss_page.parseNumberToTextMoney(quantity));
+					$(this).val(ss_page.utilities.parseNumberToTextMoney(quantity));
 					break;
 			}
 
@@ -104,16 +104,16 @@ var ss_bill = {
 
 			// show label row total 
 			$(this).find('td[data-row-total]').attr('data-row-total', row_total);
-			$(this).find('td[data-row-total]').html(ss_page.parseNumberToTextMoney(row_total));
+			$(this).find('td[data-row-total]').html(ss_page.utilities.parseNumberToTextMoney(row_total));
 		});
 
 		self.total_final = self.total;
 
-		$('#label-total-quantity').attr('data-total-quantity', self.total_quantity).text(ss_page.parseNumberToTextMoney(self.total_quantity));
-		$('#label-total').attr('data-total', self.total).text(ss_page.parseNumberToTextMoney(self.total));
-		$('#label-total-discount').attr('data-total-discount', self.total_discount).text(ss_page.parseNumberToTextMoney(self.total_discount));
-		$('#label-total-vat').attr('data-total-vat', self.total_vat).text(ss_page.parseNumberToTextMoney(self.total_vat));
-		$('#label-total-final').attr('data-total-final', self.total_final).text(ss_page.parseNumberToTextMoney(self.total_final));
+		$('#label-total-quantity').attr('data-total-quantity', self.total_quantity).text(ss_page.utilities.parseNumberToTextMoney(self.total_quantity));
+		$('#label-total').attr('data-total', self.total).text(ss_page.utilities.parseNumberToTextMoney(self.total));
+		$('#label-total-discount').attr('data-total-discount', self.total_discount).text(ss_page.utilities.parseNumberToTextMoney(self.total_discount));
+		$('#label-total-vat').attr('data-total-vat', self.total_vat).text(ss_page.utilities.parseNumberToTextMoney(self.total_vat));
+		$('#label-total-final').attr('data-total-final', self.total_final).text(ss_page.utilities.parseNumberToTextMoney(self.total_final));
 	},
 	toggleNoRecord: function(show = true){
 		var self = this;
@@ -152,7 +152,7 @@ var ss_bill = {
 					var td_quantity = $(this).find('td[data-quantity]');
 					var old_quantity = typeof(td_quantity.attr('data-quantity')) != 'undefined' ? parseInt(td_quantity.attr('data-quantity')) : 1;
 					td_quantity.attr('data-quantity', old_quantity + 1);
-					td_quantity.find('input#quantity').val(ss_page.parseNumberToTextMoney(old_quantity + 1));
+					td_quantity.find('input#quantity').val(ss_page.utilities.parseNumberToTextMoney(old_quantity + 1));
 					has_item = true;
 					return false;
 				}
@@ -186,7 +186,7 @@ var ss_bill = {
 		    if(typeof(data.price) != 'undefined'){
 		    	var td_price = tr.find('td[data-price]');
 		    	td_price.attr('data-price', data.price);
-		    	td_price.find('input#price').val(ss_page.parseNumberToTextMoney(data.price));		    			   
+		    	td_price.find('input#price').val(ss_page.utilities.parseNumberToTextMoney(data.price));		    			   
 		    }		   		  
 
 		    self.toggleNoRecord(false);
@@ -204,20 +204,20 @@ var ss_bill = {
 		    		var discount = typeof(tr.attr('data-discount')) != 'undefined' ? parseFloat(tr.attr('data-discount')) : '';
 		    		var vat = typeof(tr.attr('data-vat')) != 'undefined' ? parseFloat(tr.attr('data-vat')) : '';
 
-		    		element.find('input#popover-item-price').val(ss_page.parseNumberToTextMoney(price));
-		    		element.find('input#popover-item-discount').val(ss_page.parseNumberToTextMoney(discount));
-		    		element.find('input#popover-item-vat').val(ss_page.parseNumberToTextMoney(vat));
+		    		element.find('input#popover-item-price').val(ss_page.utilities.parseNumberToTextMoney(price));
+		    		element.find('input#popover-item-discount').val(ss_page.utilities.parseNumberToTextMoney(discount));
+		    		element.find('input#popover-item-vat').val(ss_page.utilities.parseNumberToTextMoney(vat));
 
 		    		element.find('.auto-numeric').autoNumeric('init', default_option_autonumric);
 			        element.find('input#popover-item-price').select();
 		    	},
 		    	onHide: function(element) {
-		    		var price = typeof(element.find('input#popover-item-price')) != 'undefined' ? ss_page.parseTextMoneyToNumber(element.find('input#popover-item-price').val()) : 0;
-		    		var discount = typeof(element.find('input#popover-item-discount')) != 'undefined' ? ss_page.parseTextMoneyToNumber(element.find('input#popover-item-discount').val()) : 0;
-		    		var vat = typeof(element.find('input#popover-item-vat')) != 'undefined' ? ss_page.parseTextMoneyToNumber(element.find('input#popover-item-vat').val()) : 0;
+		    		var price = typeof(element.find('input#popover-item-price')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-price').val()) : 0;
+		    		var discount = typeof(element.find('input#popover-item-discount')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-discount').val()) : 0;
+		    		var vat = typeof(element.find('input#popover-item-vat')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-vat').val()) : 0;
 	
 		    		tr.find('td[data-price]').attr('data-price', price);
-		    		tr.find('td[data-price] input#price').val(ss_page.parseNumberToTextMoney(price));
+		    		tr.find('td[data-price] input#price').val(ss_page.utilities.parseNumberToTextMoney(price));
 
 		    		self.calculateTotal();
 		    	}
@@ -245,8 +245,8 @@ var ss_bill = {
 		        var name = typeof(item.name) != 'undefined' ? item.name : '';
 		        var code = typeof(item.code) != 'undefined' ? item.code : '';
 		        var id = typeof(item.id) != 'undefined' ? item.id : '';
-		        var price = typeof(item.price) != 'undefined' ? ss_page.parseNumberToTextMoney(item.price) : 0;
-		        var quantity = typeof(item.quantity) != 'undefined' ? ss_page.parseNumberToTextMoney(item.quantity) : 0;
+		        var price = typeof(item.price) != 'undefined' ? ss_page.utilities.parseNumberToTextMoney(item.price) : 0;
+		        var quantity = typeof(item.quantity) != 'undefined' ? ss_page.utilities.parseNumberToTextMoney(item.quantity) : 0;
 
 		        return  '<div class="autocomplete-suggestion" data-id="' +  id + '">' +
 		        			'<div class="suggestion-content">' +
@@ -311,7 +311,7 @@ var ss_bill = {
 		addRow: function(data = {}){
 			var self = this;
 			var name = typeof(data.name) != 'undefined' ? data.name : '';
-			var fee = typeof(data.fee) != 'undefined' ? ss_page.parseNumberToTextMoney(data.fee) : '';
+			var fee = typeof(data.fee) != 'undefined' ? ss_page.utilities.parseNumberToTextMoney(data.fee) : '';
 
 			$(self.list).append(self.row_template);
 			$(self.list + ' .row:last-child').find('input.name-fee-other').val(name);
@@ -324,7 +324,7 @@ var ss_bill = {
 			self.data = [];
 			$(self.list).find('div.row').each(function(index, row) {
 				var name = typeof($(this).find('input.name-fee-other').val()) != 'undefined' ? $(this).find('input.name-fee-other').val() : '';
-				var fee = typeof($(this).find('input.fee-other').val()) != 'undefined' ? ss_page.parseTextMoneyToNumber($(this).find('input.fee-other').val()) : 0;
+				var fee = typeof($(this).find('input.fee-other').val()) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber($(this).find('input.fee-other').val()) : 0;
 				if(!fee > 0){
 					return;				
 				}
@@ -337,10 +337,10 @@ var ss_bill = {
 				});
 			});
 
-			$(self.modal + ' #label-total-fee-other').text(ss_page.parseNumberToTextMoney(self.total));
+			$(self.modal + ' #label-total-fee-other').text(ss_page.utilities.parseNumberToTextMoney(self.total));
 
 			if(apply_value){			
-				$('#label-total-other').text(ss_page.parseNumberToTextMoney(self.total));
+				$('#label-total-other').text(ss_page.utilities.parseNumberToTextMoney(self.total));
 				$('#label-total-other').attr('data-total-other', self.total);				
 				$('input#data_fee_other').val(JSON.stringify(self.data));
 			}			
@@ -364,7 +364,11 @@ var ss_bill = {
 		input_suggest: '#supplier-suggest',
 		input: '#supplier_id',
 		event: function(){
-			var self = this;			
+			var self = this;	
+
+			$(document).on('focus', self.input_suggest, function(e) {
+				$(this).select();
+			});
 
 			$(document).on('change', self.input_suggest, function(e) {
 				$(self.input).val('');
@@ -375,34 +379,55 @@ var ss_bill = {
 			});
 
 			$(self.modal).on('click', self.btn_add_supplier, function(e) {
-				ss_page.clearValidateError($(self.modal));
+				ss_page.validation.clearError($(self.modal));
 
 				var input_name_supplier = $(self.modal + ' input#name_supplier');
 				var input_address_supplier = $(self.modal + ' input#address_supplier');
+				var input_email_supplier = $(self.modal + ' input#email_supplier');
+				var input_phone_supplier = $(self.modal + ' input#phone_supplier');
 
 				var name = typeof(input_name_supplier.val()) != 'undefined' ? input_name_supplier.val() : '';
-				var address = typeof(input_address_supplier.val()) != 'undefined' ? input_address_supplier.val() : '';			
+				var address = typeof(input_address_supplier.val()) != 'undefined' ? input_address_supplier.val() : '';
+				var email = typeof(input_email_supplier.val()) != 'undefined' ? input_email_supplier.val() : '';
+				var phone = typeof(input_phone_supplier.val()) != 'undefined' ? input_phone_supplier.val() : '';
+
 				if(!$.trim(name).length > 0){
-					ss_page.showValidateError({
+					ss_page.validation.showError({
 						input_object: input_name_supplier,
 						error_message: 'Vui lòng nhập tên nhà cung cấp'
 					});
 					return false;
 				}
 
-				if(!$.trim(address).length > 0){
-					ss_page.showValidateError({
-						input_object: input_address_supplier,
-						error_message: 'Vui lòng nhập địa chỉ nhà cung cấp'
+				if($.trim(email).length > 0 && !ss_page.validation.isEmail($.trim(email))){
+					ss_page.validation.showError({
+						input_object: input_email_supplier,
+						error_message: 'Email chưa đúng định dạng'
 					});
 					return false;
 				}
 
+				if($.trim(phone).length > 0 && !ss_page.validation.isEmail($.trim(phone))){
+					ss_page.validation.showError({
+						input_object: input_phone_supplier,
+						error_message: 'Số điện thoại chưa đúng định dạng'
+					});
+					return false;
+				}
+
+				if(!$.trim(address).length > 0){
+					ss_page.validation.showError({
+						input_object: input_address_supplier,
+						error_message: 'Vui lòng nhập địa chỉ nhà cung cấp'
+					});
+					return false;
+				}				
+
 				var data = {
 					name: name,
 					address: address,
-					email: typeof($(self.modal + ' input#email_supplier').val()) != 'undefined' ? $(self.modal + ' input#email_supplier').val() : '',
-					phone: typeof($(self.modal + ' input#phone_supplier').val()) != 'undefined' ? $(self.modal + ' input#phone_supplier').val() : '',
+					email: email,
+					phone: phone,
 					group: typeof($(self.modal + ' input#group_supplier').val()) != 'undefined' ? $(self.modal + ' input#group_supplier').val() : '',
 					city_id: typeof($(self.modal + ' input#city_id_supplier').val()) != 'undefined' ? $(self.modal + ' input#city_id_supplier').val() : '',
 					district_id: typeof($(self.modal + ' input#district_id_supplier').val()) != 'undefined' ? $(self.modal + ' input#district_id_supplier').val() : '',
@@ -443,7 +468,8 @@ var ss_bill = {
 						url: '/supplier/get',
 						data:{
 							keyword: keyword,
-							get_info: 'simple'
+							get_info: 'simple',
+							limit: 10
 						}
 					}).done(function(response) {
 					    suggest(response);
@@ -454,8 +480,7 @@ var ss_bill = {
 			        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
 			        var id = typeof(item.id) != 'undefined' ? item.id : '';
 			        var name = typeof(item.name) != 'undefined' ? item.name : '';
-			        console.log(item);
-			        return '<div class="autocomplete-suggestion" data-name="' +  name + '" data-id="' + id + '">' + name.replace(re, "<b>$1</b>") + '</div>';
+			        return '<div class="autocomplete-suggestion single-suggestion" data-name="' +  name + '" data-id="' + id + '">' + name.replace(re, "<b>$1</b>") + '</div>';
 			    },
 			    onSelect: function(e, term, item){
 			    	$(self.input_suggest).val(item.data('name'));
@@ -472,6 +497,7 @@ var ss_bill = {
 				}).done(function(response) {
 					$(self.modal + ' .modal-content').html(response);
 					$(self.modal + ' select.select2').select2();
+					ss_page.validation.phoneInput();
 					$(self.modal).openModal({
 						dismissible: false
 					});
@@ -485,13 +511,10 @@ var ss_bill = {
 		},
 		clearModal: function(){
 			var self = this;
-			ss_page.clearValidateError($(self.modal));
+			ss_page.validation.clearError($(self.modal));
 
 			$(self.modal).find('input').val('');
 			$(self.modal).find('select').val('').trigger('change');
-		},
-		showSupplier: function(){
-
-		},		
+		},	
 	}
 }

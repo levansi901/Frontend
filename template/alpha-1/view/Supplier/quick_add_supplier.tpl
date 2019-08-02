@@ -1,4 +1,4 @@
-<div class="row no-m">            
+<div class="row no-m">
     <div class="input-field col s12 m6 l6">
         <input id="name_supplier" type="text" autocomplete="off" value="">
         <label for="name_supplier">
@@ -13,9 +13,11 @@
             Email
         </label>
     </div>
+</div>
 
+<div class="row no-m">
     <div class="input-field col s12 m6 l6">
-        <input id="phone_supplier" type="text" autocomplete="off" value="">
+        <input id="phone_supplier" type="text" autocomplete="off" value="" class="phone-input">
         <label for="phone_supplier">
             Số điện thoại
         </label>
@@ -28,7 +30,9 @@
         </label>
         <input id="group_supplier" type="hidden" value="" />
     </div>
+</div>
 
+<div class="row no-m">
     <div class="input-field col s12 m6 l6">
         <input id="address_supplier" type="text" autocomplete="off" value="">
         <label for="address_supplier">
@@ -53,4 +57,4 @@
         <input id="city_id_supplier" type="hidden" value="" />
         <input id="district_id_supplier" type="hidden" value="" />
     </div>
-</div>  
+</div>

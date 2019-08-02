@@ -268,7 +268,7 @@ margin-top: 0;}
   box-shadow: none; }
 
 .select2-container--default .select2-results > .select2-results__options {
-  max-height: 200px;
+  max-height: 190px;
   overflow-y: auto; }
 
 .select2-container--default .select2-results__option[role=group] {

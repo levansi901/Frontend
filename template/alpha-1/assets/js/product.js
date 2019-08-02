@@ -120,7 +120,7 @@ var ss_product = {
 				});
 				
 				if(code.length == 0){
-					ss_page.showValidateError({
+					ss_page.validation.showError({
 						input_object: input_code,
 						error_message: 'Mã sản phẩm không được để trống'
 					});					
@@ -130,7 +130,7 @@ var ss_product = {
 				}
 
 				if(price_discount > price){
-					ss_page.showValidateError({
+					ss_page.validation.showError({
 						input_object: input_price_discount,
 						error_message: 'Giá khuyến mãi không thể lớn hơn giá bán'
 					});

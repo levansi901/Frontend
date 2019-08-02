@@ -12,10 +12,9 @@ var ss_page = {
 
     	self.activeMenu();
 
-    	$(document).on('focus', '.auto-numeric', function(e) {
+    	$(document).on('focus', '.auto-numeric, .phone-input', function(e) {
     		$(this).select();
-    	});
-    	
+    	});    
 	},
 	activeMenu: function(){
 		var href = window.location.href.split(document.domain);
@@ -98,26 +97,6 @@ var ss_page = {
 		}
 
 	    Materialize.toast(icon + title, time, wrap_class, callback);
-	},
-	showValidateError: function(params = {}, callback){
-		var input = typeof(params.input_object) != 'undefined' ? params.input_object : null;
-		var error_message = typeof(params.error_message) != 'undefined' ? params.error_message : null;	
-
-		if(input.length > 0 && error_message.length > 0){
-			input.next('label.error').remove();
-			if (typeof(callback) != 'function') {
-		        callback = function () {};
-		    }
-			var id = typeof(input.attr('id')) != 'undefined' ? input.attr('id') + '-error' : '';
-			var error = '<label id="' + id + '" class="error" for="' + id + '">' + error_message + '</label>';
-			input.after(error).focus();
-			callback();
-		}		
-	},
-	clearValidateError: function(wrap_object = null){
-		if(wrap_object.length > 0){
-			wrap_object.find('label.error').remove();
-		}
 	},
 	ajaxSubmitForm: function(params = {}){
 		var self = this;
@@ -202,21 +181,7 @@ var ss_page = {
 	    	}			
 		});
 	    return ajax;
-	},
-	parseNumberToTextMoney: function(number){
-		if (typeof(number) != 'number' || isNaN(number) || typeof(number) == 'undefined') {
-	        return 0;
-	    }	    
-    	return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-	},
-	parseTextMoneyToNumber: function(text_number){
-		if (typeof(text_number) == 'undefined') {
-	        return 0;
-	    }
-
-		var number = parseFloat(text_number.toString().replace(/,/g, ''));
-		return number;
-	},
+	},	
 	shortcut: function(){
 		$(document).on('keydown', function (e) {
 		    var shortcut = e.keyCode;
@@ -230,6 +195,63 @@ var ss_page = {
 		        e.preventDefault();
 		    }
 		});
+	},
+	validation: {
+		isEmail: function(email = null){
+			var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	  		return regex.test(email);
+		},
+		isPhone: function(phone = null){
+			var regex = /[0-9]{10,11}/;
+	  		return regex.test(phone);
+		},
+		phoneInput: function(){
+			$(document).on('keypress', '.phone-input', function(e) {			
+				if(!$.isNumeric(e.key)){
+					return false;
+				}
+
+				if($(this).val().length > 11){
+					return false;
+				}
+			});
+		},
+		showError: function(params = {}, callback){
+			var input = typeof(params.input_object) != 'undefined' ? params.input_object : null;
+			var error_message = typeof(params.error_message) != 'undefined' ? params.error_message : null;	
+
+			if(input.length > 0 && error_message.length > 0){
+				input.next('label.error').remove();
+				if (typeof(callback) != 'function') {
+			        callback = function () {};
+			    }
+				var id = typeof(input.attr('id')) != 'undefined' ? input.attr('id') + '-error' : '';
+				var error = '<label id="' + id + '" class="error" for="' + id + '">' + error_message + '</label>';
+				input.after(error).focus();
+				callback();
+			}		
+		},
+		clearError: function(wrap_object = null){
+			if(wrap_object.length > 0){
+				wrap_object.find('label.error').remove();
+			}
+		}
+	},
+	utilities: {
+		parseNumberToTextMoney: function(number = null){
+			if (typeof(number) != 'number' || isNaN(number) || typeof(number) == 'undefined') {
+		        return 0;
+		    }	    
+	    	return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+		},
+		parseTextMoneyToNumber: function(text_number = null){
+			if (typeof(text_number) == 'undefined') {
+		        return 0;
+		    }
+
+			var number = parseFloat(text_number.toString().replace(/,/g, ''));
+			return number;
+		},
 	}
 }
 

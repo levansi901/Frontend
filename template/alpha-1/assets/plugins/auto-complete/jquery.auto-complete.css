@@ -27,6 +27,11 @@
     border-bottom: 1px solid #ddd;
     cursor: pointer;
 }
+
+.autocomplete-suggestion.single-suggestion{
+    line-height: 40px;
+}
+
 .autocomplete-suggestion b { 
 	font-weight: normal; 
 	color: #26a69a; 
