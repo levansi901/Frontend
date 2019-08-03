@@ -135,7 +135,7 @@ var ss_bill = {
 			data:{
 				product_item_id: product_item_id
 			}
-		}).done(function(item) {			
+		}).done(function(item) {	
 			var data = typeof(item[0]) != 'undefined' ? item[0] : [];
 			if($.isEmptyObject(data)){	
 				ss_page.notification({
@@ -407,7 +407,7 @@ var ss_bill = {
 					return false;
 				}
 
-				if($.trim(phone).length > 0 && !ss_page.validation.isEmail($.trim(phone))){
+				if($.trim(phone).length > 0 && !ss_page.validation.isPhone($.trim(phone))){
 					ss_page.validation.showError({
 						input_object: input_phone_supplier,
 						error_message: 'Số điện thoại chưa đúng định dạng'
@@ -422,13 +422,13 @@ var ss_bill = {
 					});
 					return false;
 				}				
-
+	
 				var data = {
 					name: name,
 					address: address,
 					email: email,
 					phone: phone,
-					group: typeof($(self.modal + ' input#group_supplier').val()) != 'undefined' ? $(self.modal + ' input#group_supplier').val() : '',
+					group_id: typeof($(self.modal + ' select#group_supplier option:selected').val()) != 'undefined' ? $(self.modal + ' select#group_supplier option:selected').val() : '',
 					city_id: typeof($(self.modal + ' input#city_id_supplier').val()) != 'undefined' ? $(self.modal + ' input#city_id_supplier').val() : '',
 					district_id: typeof($(self.modal + ' input#district_id_supplier').val()) != 'undefined' ? $(self.modal + ' input#district_id_supplier').val() : '',
 					city_name: typeof($(self.modal + ' input#city_name_supplier').val()) != 'undefined' ? $(self.modal + ' input#city_name_supplier').val() : '',
@@ -439,10 +439,11 @@ var ss_bill = {
 					url: '/supplier/quick-add-supplier',
 					data: data
 				}).done(function(response) {
-					var success = typeof(response.success) != 'undefined' ? response.success : false;
-					var message = typeof(response.message) != 'undefined' ? response.message : '';
-					var supplier_id = typeof(response.data) != 'undefined' ? response.data.id : null;
 					$(self.modal).closeModal();
+
+					var success = typeof(response.success) != 'undefined' ? response.success : false;
+					var message = typeof(response.message) != 'undefined' ? response.message : 'Dữ liệu trả về không hợp lệ';
+					var supplier_id = typeof(response.data) != 'undefined' ? response.data.id : null;
 					if(success){
 						$(self.input_suggest).val(name);
 						$(self.input).val(supplier_id);
@@ -497,7 +498,10 @@ var ss_bill = {
 				}).done(function(response) {
 					$(self.modal + ' .modal-content').html(response);
 					$(self.modal + ' select.select2').select2();
+					$(self.modal + ' select:not(.select2)').material_select();
 					ss_page.validation.phoneInput();
+					ss_page.location.city_district_select.event();
+
 					$(self.modal).openModal({
 						dismissible: false
 					});

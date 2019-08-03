@@ -8,9 +8,9 @@
     </div>
 
     <div class="input-field col s12 m6 l6">
-        <input id="email_supplier" type="text" autocomplete="off" value="">
-        <label for="email_supplier">
-            Email
+        {$this->Form->select('group_supplier', $groups , ['id' => 'group_supplier','empty' => '-- Chọn --', 'default' => '' , 'class' => ''])}
+        <label for="group_supplier" class="alway-active">
+            Nhóm nhà cung cấp
         </label>
     </div>
 </div>
@@ -24,25 +24,16 @@
     </div>
 
     <div class="input-field col s12 m6 l6">
-        <input id="group_supplier_suggest" type="text" autocomplete="off" value="">
-        <label for="group_supplier_suggest">
-            Nhóm nhà cung cấp
+        <input id="email_supplier" type="text" autocomplete="off" value="">
+        <label for="email_supplier">
+            Email
         </label>
-        <input id="group_supplier" type="hidden" value="" />
-    </div>
+    </div>    
 </div>
 
-<div class="row no-m">
+<div class="row no-m">    
     <div class="input-field col s12 m6 l6">
-        <input id="address_supplier" type="text" autocomplete="off" value="">
-        <label for="address_supplier">
-            Địa chỉ
-            <small class="label-required text-red">*</small>
-        </label>
-    </div>
-
-    <div class="input-field col s12 m6 l6">
-        <select id="city_distrct_supplier" class="select2" style="width: 100%;">
+        <select id="city_distrct_supplier" class="select2 city-district" style="width: 100%;">
             <option value="">Tỉnh/Thành phố - Quận/Huyện</option>
             {if !empty($cities_districts)}
                 {foreach from = $cities_districts key=key item=city_district}
@@ -54,7 +45,17 @@
             Khu vực
         </label>
 
-        <input id="city_id_supplier" type="hidden" value="" />
-        <input id="district_id_supplier" type="hidden" value="" />
+        <input id="city_id_supplier" type="hidden" value="" class="city" />
+        <input id="city_name_supplier" type="hidden" value="" class="city-name" />
+        <input id="district_id_supplier" type="hidden" value="" class="district" />        
+        <input id="district_name_supplier" type="hidden" value="" class="district-name" />
+    </div>
+
+    <div class="input-field col s12 m6 l6">
+        <input id="address_supplier" type="text" autocomplete="off" value="">
+        <label for="address_supplier">
+            Địa chỉ
+            <small class="label-required text-red">*</small>
+        </label>
     </div>
 </div>

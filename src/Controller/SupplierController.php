@@ -27,8 +27,10 @@ class SupplierController extends AppController
         $data = !empty($result[DATA]) ? $result[DATA] : [];
 
         $cities_districts = !empty($data['cities_districts']) ? $data['cities_districts'] : [];
+        $groups = !empty($data['groups']) ? $data['groups'] : [];
 
         $this->set('cities_districts', $cities_districts);
+        $this->set('groups', $groups);
         $this->render('quick_add_supplier');
     }
 
@@ -37,11 +39,11 @@ class SupplierController extends AppController
         $this->autoRender = false;
 
         $result = [];
-        $data_post = !empty($this->request->data) ? $this->request->data : [];    
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
         if ($this->request->is('post') && !empty($data_post)) {
             $http = new Client();
-            $response = $http->post(API_DOMAIN_URL . 'supplier/save', json_encode($data_post), ['type' => 'json']);      
-            $result = $response->getJson();
+            $response = $http->post(API_DOMAIN_URL . 'supplier/save', json_encode($data_post), ['type' => 'json']);
+            $result = !empty($response->getJson()) ? $response->getJson() : [];
         }
 
         $this->response->type('json');

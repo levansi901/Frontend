@@ -211,7 +211,7 @@ var ss_page = {
 					return false;
 				}
 
-				if($(this).val().length > 11){
+				if($(this).val().length > 10){
 					return false;
 				}
 			});
@@ -252,6 +252,27 @@ var ss_page = {
 			var number = parseFloat(text_number.toString().replace(/,/g, ''));
 			return number;
 		},
+	},
+	location: {
+		city_district_select:{
+			select: '.city-district',
+			event: function(){
+				var self = this;
+
+				$(document).on('change', self.select, function(e) {
+		    		var wrap = $(this).closest('.input-field');
+		    		var city_id = typeof($(this).find(":selected").data('city-id')) ? $(this).find(":selected").data('city-id') : '';
+		    		var city_name = typeof($(this).find(":selected").data('city-name')) ? $(this).find(":selected").data('city-name') : '';
+		    		var district_id = typeof($(this).find(":selected").data('district-id')) ? $(this).find(":selected").data('district-id') : '';
+		    		var district_name = typeof($(this).find(":selected").data('district-name')) ? $(this).find(":selected").data('district-name') : '';
+
+		    		wrap.find('input.city').val(city_id);
+		    		wrap.find('input.city-name').val(city_name);
+		    		wrap.find('input.district').val(district_id);
+		    		wrap.find('input.district-name').val(district_name);
+		    	}); 
+			}
+		}		
 	}
 }
 

@@ -28,16 +28,16 @@ aside::-webkit-scrollbar-thumb{
 }
 
 input::placeholder { 
-    color: #9c9999;
+    color: #555555;
     opacity: 1; 
 }
 
 input:-ms-input-placeholder { 
-    color: #9c9999;
+    color: #555555;
 }
 
 input::-ms-input-placeholder { 
-    color: #9c9999;
+    color: #555555;
 }
 
 .input-field > label.active ,

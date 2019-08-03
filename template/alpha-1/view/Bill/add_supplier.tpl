@@ -178,7 +178,7 @@
                                 Nhà cung cấp
                                 <small class="label-required text-red">*</small>
                             </label>
-                            <i id="btn-quick-add-supplier" class="material-icons teal-text btn-input-field tooltipped" data-tooltip="Thêm nhà cung cấp">add</i>
+                            <i id="btn-quick-add-supplier" class="material-icons teal-text btn-input-field" title="Thêm nhà cung cấp">add</i>
                             <input id="supplier_id" name="supplier_id" value="" type="hidden" />
                         </div>
                         
