@@ -210,17 +210,33 @@
 
         <div class="mn-header navbar-fixed">
             <nav class="white nav-action">
-                <div class="row right-align">                        
-                    <span class="waves-effect waves-light btn s6 blue-grey darken-4">
-                        <i class="material-icons left lh-36">close</i>
-                        Hủy
+                <div class="row right-align">                   
+                    <div class="process-bar-step">
+                        <div class="step-item">
+                            Đặt hàng
+                        </div>
+
+                        <div class="step-item">
+                            Duyệt
+                        </div>
+
+                        <div class="step-item">
+                            Nhập kho
+                        </div>
+
+                        <div class="step-item">
+                            Hoàn thành
+                        </div>
+                    </div>
+                    <span class="waves-effect waves-light btn s6 m-r-xs m-l-lg btn-submit-form">
+                        <i class="material-icons left lh-36">check</i>
+                        Đặt hàng và duyệt (F1)
                     </span>
 
-                    <span class="waves-effect waves-light btn s6 m-l-lg m-r-xs btn-submit-form">
-                        <i class="material-icons left lh-36">check</i>
-                        Lưu
-                    </span>                
-                </div>    
+                    <span class="waves-effect waves-light btn s6 m-r-xs btn-submit-form">
+                        Đặt hàng
+                    </span>
+                </div>
             </nav>
         </div>
 
