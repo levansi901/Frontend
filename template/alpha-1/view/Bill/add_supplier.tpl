@@ -210,32 +210,45 @@
 
         <div class="mn-header navbar-fixed">
             <nav class="white nav-action">
-                <div class="row right-align">                   
-                    <div class="process-bar-step">
-                        <div class="step-item">
+                <div class="row">
+                    <div class="col s12 m12 l8">
+                        <div class="process-bar-step">
+                            <div class="step-item">
+                                <span>
+                                    Đặt hàng
+                                </span>                            
+                            </div>
+
+                            <div class="step-item">
+                                <span>
+                                    Duyệt
+                                </span>
+                            </div>
+
+                            <div class="step-item">
+                                <span>
+                                    Nhập kho
+                                </span>
+                            </div>
+
+                            <div class="step-item">
+                                <span>
+                                    Hoàn thành
+                                </span>
+                            </div>
+                        </div>
+                    </div>  
+
+                    <div class="col s12 m12 l4 center">
+                        <span class="waves-effect waves-light btn s6 m-r-xs m-l-lg btn-submit-form">
+                            <i class="material-icons left lh-36">check</i>
+                            Đặt hàng và duyệt (F1)
+                        </span>
+
+                        <span class="waves-effect waves-light btn s6 m-r-xs btn-submit-form">
                             Đặt hàng
-                        </div>
-
-                        <div class="step-item">
-                            Duyệt
-                        </div>
-
-                        <div class="step-item">
-                            Nhập kho
-                        </div>
-
-                        <div class="step-item">
-                            Hoàn thành
-                        </div>
+                        </span>
                     </div>
-                    <span class="waves-effect waves-light btn s6 m-r-xs m-l-lg btn-submit-form">
-                        <i class="material-icons left lh-36">check</i>
-                        Đặt hàng và duyệt (F1)
-                    </span>
-
-                    <span class="waves-effect waves-light btn s6 m-r-xs btn-submit-form">
-                        Đặt hàng
-                    </span>
                 </div>
             </nav>
         </div>
