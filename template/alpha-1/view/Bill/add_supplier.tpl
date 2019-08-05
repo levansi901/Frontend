@@ -6,6 +6,61 @@
     </div>
 </div>
 
+<div class="progress-bar-step">
+    <div class="progress-bar-item">
+        <div class="progress-bar-item-title">
+            Đặt hàng
+        </div>
+        <div class="progress-bar-item-line"></div>
+        <div class="progress-bar-item-ico">
+            <div class="progress-bar-item-ico-in active">
+                <i class="material-icons">check</i>
+            </div>
+        </div>
+        <div class="progress-bar-item-line"></div>
+        <div class="progress-bar-item-date">29/07/2019 21:53</div>
+    </div>
+    <div class="progress-bar-item">
+        <div class="progress-bar-item-title">
+            Duyệt
+        </div>
+        <div class="progress-bar-item-line "></div>
+        <div class="progress-bar-item-ico">
+            <div class="progress-bar-item-ico-in">
+                <i class="material-icons">check</i>
+            </div>
+        </div>
+        <div class="progress-bar-item-line"></div>
+        <div class="progress-bar-item-date"></div>
+    </div>
+    <div class="progress-bar-item">
+        <div class="progress-bar-item-title">
+            Nhập kho
+        </div>
+        <div class="progress-bar-item-line "></div>
+        <div class="progress-bar-item-ico">
+            <div class="progress-bar-item-ico-in">
+                <i class="material-icons">check</i>
+            </div>
+        </div>
+        <div class="progress-bar-item-line"></div>
+        <div class="progress-bar-item-date"></div>
+    </div>
+    <div class="progress-bar-item">
+        <div class="progress-bar-item-title">
+            Hoàn thành
+        </div>
+        <div class="progress-bar-item-date"></div>
+
+        <div class="progress-bar-item-line"></div>
+        <div class="progress-bar-item-ico">
+            <div class="progress-bar-item-ico-in">
+                <i class="material-icons">check</i>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <form id="bill-form" role="form" action="" method="POST" enctype="multipart/form-data">
         <div class="col s12 m9 l9">
@@ -212,31 +267,7 @@
             <nav class="white nav-action">
                 <div class="row">
                     <div class="col s12 m12 l8">
-                        <div class="process-bar-step">
-                            <div class="step-item">
-                                <span>
-                                    Đặt hàng
-                                </span>                            
-                            </div>
 
-                            <div class="step-item">
-                                <span>
-                                    Duyệt
-                                </span>
-                            </div>
-
-                            <div class="step-item">
-                                <span>
-                                    Nhập kho
-                                </span>
-                            </div>
-
-                            <div class="step-item">
-                                <span>
-                                    Hoàn thành
-                                </span>
-                            </div>
-                        </div>
                     </div>  
 
                     <div class="col s12 m12 l4 center">
