@@ -271,12 +271,12 @@
                     </div>  
 
                     <div class="col s12 m12 l4 center">
-                        <span class="waves-effect waves-light btn s6 m-r-xs m-l-lg btn-submit-form">
+                        <span class="waves-effect waves-light btn s6 m-r-xs m-l-lg btn-submit-form" data-step="2">
                             <i class="material-icons left lh-36">check</i>
                             Đặt hàng và duyệt (F1)
                         </span>
 
-                        <span class="waves-effect waves-light btn s6 m-r-xs btn-submit-form">
+                        <span class="waves-effect waves-light btn s6 m-r-xs btn-submit-form" data-step="1">
                             Đặt hàng
                         </span>
                     </div>
@@ -286,6 +286,7 @@
 
         <div class="hide">
             <input id="data_fee_other" name="data_fee_other" type="hidden" value="" />
+            <input id="submit_step" name="submit_step" type="hidden" value="" />
         </div>
     </form>
 </div>
