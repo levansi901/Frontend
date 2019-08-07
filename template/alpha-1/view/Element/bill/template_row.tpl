@@ -1,11 +1,11 @@
 <table id="template-row" class="hide">
     <tbody>
-        <tr data-id="" data-discount="" data-vat="">
+        <tr data-id="">
             <td data-code="" class="left-align"></td>
 
             <td data-name="" class="left-align"></td>
 
-            <td data-price="" data-discount="" data-vat="" class="left-align">
+            <td data-price="" data-price-before="" data-discount="" data-discount-type="" data-discount-value="" data-vat="" class="left-align">
                 <input id="price" type="text" maxlength="12" autocomplete="off" value="" class="auto-numeric f-s-12 right-align" readonly="true">
             </td>
 

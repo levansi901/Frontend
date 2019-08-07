@@ -68,8 +68,8 @@
                 <div class="card-content p-b-0">
                     <div class="row">
                         <div class="input-field col s12 m12 l12">
-                            <input id="filter_product" type="text" maxlength="255" autocomplete="off" value="" shortcut="114">
-                            <label for="filter_product">
+                            <input id="auto_suggest_product" type="text" maxlength="255" autocomplete="off" value="" shortcut="114">
+                            <label for="auto_suggest_product">
                                 Tìm kiếm sản phẩm (F3)
                             </label>
                         </div>
@@ -285,6 +285,7 @@
         </div>
 
         <div class="hide">
+            <input id="data_items" name="data_items" type="hidden" value="" />
             <input id="data_fee_other" name="data_fee_other" type="hidden" value="" />
             <input id="submit_step" name="submit_step" type="hidden" value="" />
         </div>

@@ -5,7 +5,7 @@ use Cake\Core\Configure;
 use Cake\Http\Client;
 
 
-class BillController extends AppController
+class InventoryController extends AppController
 {
 
     public function initialize() {
@@ -165,7 +165,8 @@ class BillController extends AppController
 
         $result = [];
         $data_post = !empty($this->request->data) ? $this->request->data : [];
-
+        debug($data_post);
+        exit;
         if ($this->request->is('post') && !empty($data_post)) {
             $data_post['id'] = $id;
             $items = [];
@@ -206,18 +207,16 @@ class BillController extends AppController
     public function addSupplier(){
         static::$css_layout[] = 'assets/plugins/select2/css/select2.css';
         static::$css_layout[] = 'assets/plugins/auto-complete/jquery.auto-complete.css';
-        static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
         static::$css_layout[] = 'assets/plugins/popover/jquery.webui-popover.css';
 
         static::$js_files[] = 'assets/plugins/select2/js/select2.full.js';
         static::$js_files[] = 'assets/plugins/auto-complete/jquery.auto-complete.min.js';
-        static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
         static::$js_files[] = 'assets/plugins/popover/jquery.webui-popover.js';        
         static::$js_files[] = 'assets/js/bill.js';
         static::$js_files[] = 'assets/js/bill_add_supplier.js';
 
         $list_shop = [];
-        // get data
+        
         $http = new Client();
         $response = $http->get(API_DOMAIN_URL . 'bill/inital-data-form');  
         $result = $response->json;

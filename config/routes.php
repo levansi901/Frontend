@@ -84,49 +84,49 @@ Router::scope('/', function (RouteBuilder $routes) {
         '/order/index', ['controller' => 'Order', 'action' => 'index']
     );
 
-    // bill
+    // inventory
     $routes->connect(
-        '/inventory', ['controller' => 'Bill', 'action' => 'index']
+        '/inventory', ['controller' => 'Inventory', 'action' => 'index']
     );
 
     $routes->connect(
-        '/inventory/bill', ['controller' => 'Bill', 'action' => 'index']
+        '/inventory/bill', ['controller' => 'Inventory', 'action' => 'index']
     );
 
     $routes->connect(
-        '/inventory/bill/index', ['controller' => 'Bill', 'action' => 'index']
+        '/inventory/bill/index', ['controller' => 'Inventory', 'action' => 'index']
     );
 
     $routes->connect(
-        '/inventory/bill/list', ['controller' => 'Bill', 'action' => 'listBill']
+        '/inventory/bill/list', ['controller' => 'Inventory', 'action' => 'listBill']
     );
 
     $routes->connect(
-        '/inventory/save', ['controller' => 'Bill', 'action' => 'ajaxSaveBill']
+        '/inventory/save', ['controller' => 'Inventory', 'action' => 'ajaxSaveBill']
     );
 
     $routes->connect(
-        '/inventory/save/:id', ['controller' => 'Bill', 'action' => 'ajaxSaveBill'], ['pass' => array('id'), "id" => "[0-9]+"]
+        '/inventory/save/:id', ['controller' => 'Inventory', 'action' => 'ajaxSaveBill'], ['pass' => array('id'), "id" => "[0-9]+"]
     );
 
     $routes->connect(
-        '/inventory/edit/:id', ['controller' => 'Bill', 'action' => 'saveBill'], ['pass' => array('id'), "id" => "[0-9]+"]
+        '/inventory/edit/:id', ['controller' => 'Inventory', 'action' => 'saveBill'], ['pass' => array('id'), "id" => "[0-9]+"]
     );
 
     $routes->connect(
-        '/inventory/add-supplier', ['controller' => 'Bill', 'action' => 'addSupplier']
+        '/inventory/add-supplier', ['controller' => 'Inventory', 'action' => 'addSupplier']
     );
 
     $routes->connect(
-        '/inventory/transfer', ['controller' => 'Bill', 'action' => 'addTransfer']
+        '/inventory/transfer', ['controller' => 'Inventory', 'action' => 'addTransfer']
     );
 
     $routes->connect(
-        '/inventory/another', ['controller' => 'Bill', 'action' => 'addAnother']
+        '/inventory/another', ['controller' => 'Inventory', 'action' => 'addAnother']
     );
 
     $routes->connect(
-        '/inventory/check', ['controller' => 'Bill', 'action' => 'addCheck']
+        '/inventory/check', ['controller' => 'Inventory', 'action' => 'addCheck']
     );
 
     // supplier

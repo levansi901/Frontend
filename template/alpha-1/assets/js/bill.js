@@ -20,8 +20,9 @@ var ss_bill = {
 		}
 		self.popover_item_content = $(self.popover_item).html();
 		self.popover_discount_content = $(self.popover_discount).html();
-		
+
 		// event
+		self.items.event();
 		$('#btn-bill-discount').webuiPopover({
 			animation: 'pop',
 	    	content: self.popover_discount_content,
@@ -46,42 +47,7 @@ var ss_bill = {
 	    		self.calculateTotal();
 	    	}
 	    });
-
-		$(self.table).on('click', '.remove-item', function(e) {
-			$(this).closest('tr').remove();
-        	if($(self.table + 'tbody tr[data-id]').length == 0){
-        		self.toggleNoRecord(true);
-        	}
-
-        	self.calculateTotal();
-		});
-
-		$(self.table).on('keyup', 'tbody td[data-quantity] input#quantity', function(e) {
-			var quantity = ss_page.utilities.parseTextMoneyToNumber($(this).val());
-
-			switch(e.which){
-				case 38:
-					quantity += 1;
-					$(this).val(ss_page.utilities.parseNumberToTextMoney(quantity));
-					break;
-				case 40:
-					quantity -= 1;
-					$(this).val(ss_page.utilities.parseNumberToTextMoney(quantity));
-					break;
-			}
-
-			if(!parseInt($(this).val()) > 0){
-				quantity = 1;
-				$(this).val(quantity);				
-			}
-
-			$(this).closest('td[data-quantity]').attr('data-quantity', quantity);
-			self.calculateTotal();
-		});
-
-		$(document).on('change', '#payment-confirm', function(e) {
-			$('#wrap-payment').toggleClass('hide', !$(this).is(':checked'));		
-		});
+			
 	},
 	calculateTotal: function(){
 		var self = this;
@@ -119,114 +85,9 @@ var ss_bill = {
 		var self = this;
 		$(self.table).find('tr.no-record').toggleClass('hide', show ? false : true);
 	},	
-	loadDataToList: function(params = {}){
-		var self = this;
-		var product_item_id = typeof(params.product_item_id) != 'undefined' ? parseInt(params.product_item_id) : null;
-		if(!product_item_id > 0){
-			ss_page.notification({
-				type: 'error',
-				title: 'ID sản phẩm không hợp lệ'
-			});
-			return false;
-		}
-		
-		ss_page.callAjax({			
-			url: '/product/item/get',
-			data:{
-				product_item_id: product_item_id
-			}
-		}).done(function(item) {	
-			var data = typeof(item[0]) != 'undefined' ? item[0] : [];
-			if($.isEmptyObject(data)){	
-				ss_page.notification({
-					type: 'error',
-					title: 'Không lấy được thông tin sản phẩm'
-				});
-				return false;
-			}
-
-			// check this item has exist in list
-			var has_item = false;
-			$(self.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
-				if($(this).data('id') == data.id){
-					var td_quantity = $(this).find('td[data-quantity]');
-					var old_quantity = typeof(td_quantity.attr('data-quantity')) != 'undefined' ? parseInt(td_quantity.attr('data-quantity')) : 1;
-					td_quantity.attr('data-quantity', old_quantity + 1);
-					td_quantity.find('input#quantity').val(ss_page.utilities.parseNumberToTextMoney(old_quantity + 1));
-					has_item = true;
-					return false;
-				}
-			});
-
-			if(has_item){
-				return false;
-			}
-			
-			// add item to table
-		    $(self.table + ' > tbody').prepend(self.row_template);
-		    
-		    // fill data to row
-		    var tr = $(self.table + ' tbody > tr:first-child');
-		    if(typeof(data.id) != 'undefined'){
-		    	tr.attr('data-id', data.id);			    	
-		    }
-
-		    if(typeof(data.code) != 'undefined'){
-		    	var td_code = tr.find('td[data-code]');
-		    	td_code.attr('data-code', data.code);
-		    	td_code.html(data.code);
-		    }
-
-		    if(typeof(data.name) != 'undefined'){
-		    	var td_name = tr.find('td[data-name]');
-		    	td_name.attr('data-name', data.name);
-		    	td_name.html(data.name);
-		    }
-
-		    if(typeof(data.price) != 'undefined'){
-		    	var td_price = tr.find('td[data-price]');
-		    	td_price.attr('data-price', data.price);
-		    	td_price.find('input#price').val(ss_page.utilities.parseNumberToTextMoney(data.price));		    			   
-		    }		   		  
-
-		    self.toggleNoRecord(false);
-		    self.calculateTotal();					   		  
-
-		    // focus input quantity
-		    tr.find('td[data-quantity] input#quantity').focus().select();
-
-		    // popover 	
-		    tr.find('input#price').webuiPopover({
-		    	animation: 'pop',
-		    	content: self.popover_item_content,
-		    	onShow: function(element) {		    		
-		    		var price = typeof(tr.find('td[data-price]').attr('data-price')) != 'undefined' ? parseFloat(tr.find('td[data-price]').attr('data-price')) : 0;
-		    		var discount = typeof(tr.attr('data-discount')) != 'undefined' ? parseFloat(tr.attr('data-discount')) : '';
-		    		var vat = typeof(tr.attr('data-vat')) != 'undefined' ? parseFloat(tr.attr('data-vat')) : '';
-
-		    		element.find('input#popover-item-price').val(ss_page.utilities.parseNumberToTextMoney(price));
-		    		element.find('input#popover-item-discount').val(ss_page.utilities.parseNumberToTextMoney(discount));
-		    		element.find('input#popover-item-vat').val(ss_page.utilities.parseNumberToTextMoney(vat));
-
-		    		element.find('.auto-numeric').autoNumeric('init', default_option_autonumric);
-			        element.find('input#popover-item-price').select();
-		    	},
-		    	onHide: function(element) {
-		    		var price = typeof(element.find('input#popover-item-price')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-price').val()) : 0;
-		    		var discount = typeof(element.find('input#popover-item-discount')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-discount').val()) : 0;
-		    		var vat = typeof(element.find('input#popover-item-vat')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-vat').val()) : 0;
-	
-		    		tr.find('td[data-price]').attr('data-price', price);
-		    		tr.find('td[data-price] input#price').val(ss_page.utilities.parseNumberToTextMoney(price));
-
-		    		self.calculateTotal();
-		    	}
-		    });
-		});
-	},
 	autoSuggestProduct: function(){
 		var self = this;
-		$('#filter_product').autoComplete({
+		$('#auto_suggest_product').autoComplete({
 			minChars: 1,
 			delay: 300,
 		    source: function(keyword, suggest){
@@ -240,8 +101,6 @@ var ss_bill = {
 				});
 		    },
 		    renderItem: function (item, search){
-		        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-		        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
 		        var name = typeof(item.name) != 'undefined' ? item.name : '';
 		        var code = typeof(item.code) != 'undefined' ? item.code : '';
 		        var id = typeof(item.id) != 'undefined' ? item.id : '';
@@ -250,7 +109,7 @@ var ss_bill = {
 
 		        return  '<div class="autocomplete-suggestion" data-id="' +  id + '">' +
 		        			'<div class="suggestion-content">' +
-		        				'<div class="suggestion-content-name">' + name.replace(re, "<b>$1</b>") + '</div>' +
+		        				'<div class="suggestion-content-name">' + name + '</div>' +
 		        				'<div class="suggestion-content-code">' + code + '</div>' +
 		        			'</div>' +
 		        			'<div class="suggestion-price">' +
@@ -260,7 +119,7 @@ var ss_bill = {
 		        		'</div>';
 		    },
 		    onSelect: function(e, term, item){
-		    	self.loadDataToList({
+		    	self.items.loadItemToList({
 		    		product_item_id: item.data('id')
 		    	});
 		    }
@@ -520,5 +379,186 @@ var ss_bill = {
 			$(self.modal).find('input').val('');
 			$(self.modal).find('select').val('').trigger('change');
 		},	
+	},
+	items:{
+		event: function(){
+			var self = this;
+
+			$(ss_bill.table).on('click', '.remove-item', function(e) {
+				$(this).closest('tr').remove();
+	        	if($(ss_bill.table + 'tbody tr[data-id]').length == 0){
+	        		ss_bill.toggleNoRecord(true);
+	        	}
+
+	        	ss_bill.calculateTotal();
+			});
+
+			$(ss_bill.table).on('keyup', 'tbody td[data-quantity] input#quantity', function(e) {
+				var quantity = ss_page.utilities.parseTextMoneyToNumber($(this).val());
+
+				switch(e.which){
+					case 38:
+						quantity += 1;
+						$(this).val(ss_page.utilities.parseNumberToTextMoney(quantity));
+						break;
+					case 40:
+						quantity -= 1;
+						$(this).val(ss_page.utilities.parseNumberToTextMoney(quantity));
+						break;
+				}
+
+				if(!parseInt($(this).val()) > 0){
+					quantity = 1;
+					$(this).val(quantity);				
+				}
+
+				$(this).closest('td[data-quantity]').attr('data-quantity', quantity);
+				ss_bill.calculateTotal();
+			});	
+		},
+		loadItemToList: function(params = {}){
+			var self = this;
+			var product_item_id = typeof(params.product_item_id) != 'undefined' ? parseInt(params.product_item_id) : null;
+			if(!product_item_id > 0){
+				ss_page.notification({
+					type: 'error',
+					title: 'ID sản phẩm không hợp lệ'
+				});
+				return false;
+			}
+			
+			ss_page.callAjax({			
+				url: '/product/item/get',
+				data:{
+					product_item_id: product_item_id
+				}
+			}).done(function(item) {	
+				var data = typeof(item[0]) != 'undefined' ? item[0] : [];
+				if($.isEmptyObject(data)){	
+					ss_page.notification({
+						type: 'error',
+						title: 'Không lấy được thông tin sản phẩm'
+					});
+					return false;
+				}
+
+				// check this item has exist in list
+				var has_item = false;
+				$(ss_bill.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
+					if($(this).data('id') == data.id){
+						var td_quantity = $(this).find('td[data-quantity]');
+						var old_quantity = typeof(td_quantity.attr('data-quantity')) != 'undefined' ? parseInt(td_quantity.attr('data-quantity')) : 1;
+						td_quantity.attr('data-quantity', old_quantity + 1);
+						td_quantity.find('input#quantity').val(ss_page.utilities.parseNumberToTextMoney(old_quantity + 1));
+						has_item = true;
+						return false;
+					}
+				});
+
+				if(has_item){
+					return false;
+				}
+				
+				// add item to table
+			    $(ss_bill.table + ' > tbody').prepend(ss_bill.row_template);
+			    
+			    // fill data to row
+			    var tr = $(ss_bill.table + ' tbody > tr:first-child');
+			    if(typeof(data.id) != 'undefined'){
+			    	tr.attr('data-id', data.id);			    	
+			    }
+
+			    if(typeof(data.code) != 'undefined'){
+			    	var td_code = tr.find('td[data-code]');
+			    	td_code.attr('data-code', data.code);
+			    	td_code.html(data.code);
+			    }
+
+			    if(typeof(data.name) != 'undefined'){
+			    	var td_name = tr.find('td[data-name]');
+			    	td_name.attr('data-name', data.name);
+			    	td_name.html(data.name);
+			    }
+
+			    if(typeof(data.price) != 'undefined'){
+			    	var td_price = tr.find('td[data-price]');
+			    	td_price.attr('data-price', data.price);
+			    	td_price.find('input#price').val(ss_page.utilities.parseNumberToTextMoney(data.price));		    			   
+			    }		   		  
+
+			    ss_bill.toggleNoRecord(false);
+			    ss_bill.calculateTotal();					   		  
+
+			    // focus input quantity
+			    tr.find('td[data-quantity] input#quantity').focus().select();
+
+			    // popover 	
+			    tr.find('input#price').webuiPopover({
+			    	animation: 'pop',
+			    	content: ss_bill.popover_item_content,
+			    	onShow: function(element) {		    		
+			    		var price_before = typeof(tr.find('td[data-price-before]').attr('data-price-before')) != 'undefined' ? parseFloat(tr.find('td[data-price-before]').attr('data-price-before')) : 0;
+			    		var discount = typeof(tr.attr('data-discount')) != 'undefined' ? parseFloat(tr.attr('data-discount')) : 0;
+			    		var type_discount = typeof(tr.attr('data-type-discount')) != 'undefined' ? tr.attr('data-type-discount') : '';
+			    		var discount_value = typeof(tr.attr('data-discount-value')) != 'undefined' ? parseFloat(tr.attr('data-discount-value')) : 0;
+			    		var vat = typeof(tr.attr('data-vat')) != 'undefined' ? parseFloat(tr.attr('data-vat')) : 0;
+
+			    		element.find('input#popover-item-price').val(ss_page.utilities.parseNumberToTextMoney(price_before));
+
+			    		element.find('input#popover-item-discount').val(ss_page.utilities.parseNumberToTextMoney(discount_value));			    		
+			    		element.find('input#popover-item-discount').val(ss_page.utilities.parseNumberToTextMoney(discount_value));
+			    		element.find('select#popover-item-type-discount').val(type_discount);
+
+			    		element.find('input#popover-item-vat').val(ss_page.utilities.parseNumberToTextMoney(vat));
+
+			    		element.find('.auto-numeric').autoNumeric('init', default_option_autonumric);
+				        element.find('input#popover-item-price').select();
+				        element.find('select:not(.select2)').material_select();
+			    	},
+			    	onHide: function(element) {
+			    		var price = typeof(element.find('input#popover-item-price')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-price').val()) : 0;
+			    		var vat = typeof(element.find('input#popover-item-vat')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-vat').val()) : 0;
+			    		var discount_value = typeof(element.find('input#popover-item-discount')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-discount').val()) : 0;			    		
+			    		var type_discount = typeof(element.find('select#popover-item-type-discount').val()) != 'undefined' ? element.find('select#popover-item-type-discount').val() : '';
+						var discount = 0;
+						var price_before = price;
+						if(discount_type == 'PERCENT'){
+							discount = parseFloat((discount_value * price) / 100);
+						}else{
+							discount = discount_value;
+						}
+						price -= discount;
+						price = price >=0 ? price : 0;
+
+			    		tr.find('td[data-price]').attr('data-price', price);
+			    		tr.find('td[data-price-before]').attr('data-price-before', price_before);
+			    		tr.find('td[data-price] input#price').val(ss_page.utilities.parseNumberToTextMoney(price));
+
+			    		tr.find('td[data-discount]').attr('data-discount', discount);
+			    		tr.find('td[data-discount-value]').attr('data-discount-value', discount_value);
+			    		tr.find('td[data-discount-type]').attr('data-discount-type', discount_type);
+
+			    		tr.find('td[data-vat]').attr('data-vat', vat);
+
+			    		ss_bill.calculateTotal();
+			    	}
+			    });
+			});
+		},
+		getDataItems: function(){
+			var data =[];
+			$(ss_bill.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
+				var item = {
+					id: typeof($(this).data('id')) != 'undefined' ? parseInt($(this).data('id')) : null,
+					price: typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? parseFloat($(this).find('td[data-price]').attr('data-price')) : 0,					
+					vat: typeof($(this).find('td[data-vat]').attr('data-vat')) ? parseInt($(this).find('td[data-vat]').attr('data-vat')) : 0,
+					discount: typeof($(this).find('td[data-discount]').attr('data-discount')) ? parseInt($(this).find('td[data-discount]').attr('data-discount')) : 0,
+					quantity: typeof($(this).find('td[data-quantity]').attr('data-quantity')) ? parseInt($(this).find('td[data-quantity]').attr('data-quantity')) : 1
+				};
+				data.push(item);
+			});
+
+			return data;
+		}
 	}
 }
