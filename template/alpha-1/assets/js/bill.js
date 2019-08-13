@@ -483,6 +483,7 @@ var ss_bill = {
 			    if(typeof(data.price) != 'undefined'){
 			    	var td_price = tr.find('td[data-price]');
 			    	td_price.attr('data-price', data.price);
+			    	td_price.attr('data-price-before', data.price);
 			    	td_price.find('input#price').val(ss_page.utilities.parseNumberToTextMoney(data.price));		    			   
 			    }		   		  
 
@@ -522,7 +523,7 @@ var ss_bill = {
 			    		var type_discount = typeof(element.find('select#popover-item-type-discount').val()) != 'undefined' ? element.find('select#popover-item-type-discount').val() : '';
 						var discount = 0;
 						var price_before = price;
-						if(discount_type == 'PERCENT'){
+						if(type_discount == 'PERCENT'){
 							discount = parseFloat((discount_value * price) / 100);
 						}else{
 							discount = discount_value;
@@ -536,7 +537,7 @@ var ss_bill = {
 
 			    		tr.find('td[data-discount]').attr('data-discount', discount);
 			    		tr.find('td[data-discount-value]').attr('data-discount-value', discount_value);
-			    		tr.find('td[data-discount-type]').attr('data-discount-type', discount_type);
+			    		tr.find('td[data-discount-type]').attr('data-discount-type', type_discount);
 
 			    		tr.find('td[data-vat]').attr('data-vat', vat);
 
