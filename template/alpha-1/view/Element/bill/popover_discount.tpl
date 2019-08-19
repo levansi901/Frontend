@@ -1,7 +1,7 @@
 <div id="popover-discount" style="display: none;">
     <div class="row popover-xs">
     	<div class="input-field col s12 m12 l12">
-            {$this->Form->select('type_discount', $type_discount , ['id'=>'type_discount', 'empty' => null, 'default' => '' , 'class' => ''])}
+            {$this->Form->select('popover-bill-type-discount', $type_discount , ['id'=>'popover-bill-type-discount', 'empty' => null, 'default' => '' , 'class' => ''])}
             <label>
                 Loại chiết khấu
             </label>

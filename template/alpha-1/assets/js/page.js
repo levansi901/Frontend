@@ -252,6 +252,28 @@ var ss_page = {
 			var number = parseFloat(text_number.toString().replace(/,/g, ''));
 			return number;
 		},
+		parseFloat: function(number = null){
+			if (isNaN(number) || typeof(number) == 'undefined' || number == null) {
+		        return 0;
+		    }	
+
+			number = parseFloat(number);
+			if (isNaN(number)) {
+		        return 0;
+		    }
+		    return number;
+		},
+		parseInt: function(number = null){
+			if (isNaN(number) || typeof(number) == 'undefined' || number == null) {
+		        return 0;
+		    }	
+
+			number = parseInt(number);
+			if (isNaN(number)) {
+		        return 0;
+		    }
+		    return number;
+		}
 	},
 	location: {
 		city_district_select:{

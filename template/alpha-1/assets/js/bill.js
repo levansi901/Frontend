@@ -4,13 +4,18 @@ var ss_bill = {
 	popover_item_content: '',
 	popover_discount: '#popover-discount',
 	popover_discount_content: '',
-	row_template: null,
-	total: 0,
-	total_quantity: 0,
-	total_discount: 0,
-	total_other: 0,
-	total_vat: 0,
-	total_final: 0,	
+	row_template: '',
+	type_discount_default: 'MONEY',
+	general:{
+		total: 0,
+		total_quantity: 0,
+		discount: 0,
+		type_discount: '',
+		total_discount: 0,		
+		total_other: 0,
+		total_vat: 0,
+		total_final: 0
+	},		
 	init: function(params = {}){
 		var self = this;
 
@@ -23,63 +28,62 @@ var ss_bill = {
 
 		// event
 		self.items.event();
-		$('#btn-bill-discount').webuiPopover({
-			animation: 'pop',
-	    	content: self.popover_discount_content,
-	    	onShow: function(element) {
-	    		var bill_discount = typeof($('#label-total-discount').attr('data-discount')) != 'undefined' ? parseFloat($('#label-total-discount').attr('data-discount')) : 0;
-	    		var type_discount = typeof($('#label-total-discount').attr('data-type-discount')) != 'undefined' ? $('#label-total-discount').attr('data-type-discount') : 'MONEY';
-
-	    		element.find('select#type_discount').val(type_discount);
-        		element.find('select#type_discount').material_select();
-	    		
-	    		element.find('input#popover-bill-discount').val(ss_page.utilities.parseNumberToTextMoney(bill_discount));
-	    		element.find('input#popover-bill-discount').autoNumeric('init', default_option_autonumric);
-		        element.find('input#popover-item-price').select();
-	    	},
-	    	onHide: function(element) {
-	    		var bill_discount = typeof(element.find('input#popover-bill-discount')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-bill-discount').val()) : 0;
-	    		var type_discount = typeof(element.find('select#type_discount')) != 'undefined' ? element.find('select#type_discount').val() : 'MONEY';
-
-	    		$('#label-total-discount').attr('data-total-discount', bill_discount);
-	    		$('#label-total-discount').attr('data-discount', bill_discount);
-	    		$('#label-total-discount').attr('data-type-discount', type_discount);
-	    		self.calculateTotal();
-	    	}
-	    });
+		self.discount.event();
 			
 	},
 	calculateTotal: function(){
 		var self = this;
 
-		self.total = 0;
-		self.total_quantity = 0;
-		self.total_discount = 0;
-		self.total_other = 0;
-		self.total_vat = 0;
-		self.total_final = 0;
-
+		self.general.total = 0;
+		self.general.total_quantity = 0;
+		self.general.total_discount = 0;		
+		self.general.total_other = 0;
+		self.general.total_vat = 0;
+		self.general.total_final = 0;
+		
+		// total
 		$(self.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
-			var id = typeof($(this).data('id')) != 'undefined' ? parseInt($(this).data('id')) : null;
-			var price = typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? parseFloat($(this).find('td[data-price]').attr('data-price')) : 0;
-			var quantity = typeof($(this).find('td[data-quantity]').attr('data-quantity')) ? parseInt($(this).find('td[data-quantity]').attr('data-quantity')) : 1;
-			var row_total = parseInt(price) * parseInt(quantity);
+			var price = typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? ss_page.utilities.parseFloat($(this).find('td[data-price]').attr('data-price')) : 0;
+			var quantity = typeof($(this).find('td[data-quantity]').attr('data-quantity')) ? ss_page.utilities.parseInt($(this).find('td[data-quantity]').attr('data-quantity')) : 1;
+			quantity = quantity >= 1 ? quantity : 1;
+			var row_total = price * quantity;
 			
-			self.total_quantity += quantity;		
-			self.total += row_total;
+			self.general.total_quantity += quantity;		
+			self.general.total += row_total;
 
 			// show label row total 
 			$(this).find('td[data-row-total]').attr('data-row-total', row_total);
 			$(this).find('td[data-row-total]').html(ss_page.utilities.parseNumberToTextMoney(row_total));
 		});
 
-		self.total_final = self.total;
+		// discount
+		self.general.discount = typeof($('#label-total-discount').attr('data-discount')) != 'undefined' ? ss_page.utilities.parseFloat($('#label-total-discount').attr('data-discount')) : 0;
+		self.general.type_discount = typeof($('#label-total-discount').attr('data-type-discount')) != 'undefined' ? $('#label-total-discount').attr('data-type-discount') : self.type_discount_default;
 
-		$('#label-total-quantity').attr('data-total-quantity', self.total_quantity).text(ss_page.utilities.parseNumberToTextMoney(self.total_quantity));
-		$('#label-total').attr('data-total', self.total).text(ss_page.utilities.parseNumberToTextMoney(self.total));
-		$('#label-total-discount').attr('data-total-discount', self.total_discount).text(ss_page.utilities.parseNumberToTextMoney(self.total_discount));
-		$('#label-total-vat').attr('data-total-vat', self.total_vat).text(ss_page.utilities.parseNumberToTextMoney(self.total_vat));
-		$('#label-total-final').attr('data-total-final', self.total_final).text(ss_page.utilities.parseNumberToTextMoney(self.total_final));
+		if(self.general.type_discount == 'PERCENT'){
+			if(self.general.discount > 100){
+				self.general.discount = 0;
+				$('#label-total-discount').attr('data-discount', 0);
+			}
+			self.general.total_discount = parseFloat((self.general.discount * self.general.total) / 100);
+		}else{
+			self.general.total_discount = self.general.discount;
+		}
+		
+		// other fee
+		self.general.total_other = typeof($('#label-total-other').attr('data-total-other')) != 'undefined' ? ss_page.utilities.parseFloat($('#label-total-other').attr('data-total-other')) : 0;
+
+		// calculate final total
+		self.general.total_final = self.general.total - self.general.total_discount + self.general.total_other;
+
+		self.general.total_final = self.general.total_final >=0 ? self.general.total_final : 0;
+
+		// set value to label total
+		$('#label-total-quantity').attr('data-total-quantity', self.general.total_quantity).text(ss_page.utilities.parseNumberToTextMoney(self.general.total_quantity));
+		$('#label-total').attr('data-total', self.general.total).text(ss_page.utilities.parseNumberToTextMoney(self.general.total));
+		$('#label-total-discount').attr('data-total-discount', self.general.total_discount).text(ss_page.utilities.parseNumberToTextMoney(self.general.total_discount));
+		$('#label-total-vat').attr('data-total-vat', self.general.total_vat).text(ss_page.utilities.parseNumberToTextMoney(self.general.total_vat));
+		$('#label-total-final').attr('data-total-final', self.general.total_final).text(ss_page.utilities.parseNumberToTextMoney(self.general.total_final));
 	},
 	toggleNoRecord: function(show = true){
 		var self = this;
@@ -165,6 +169,7 @@ var ss_bill = {
 			$(self.modal).on('click', self.btn_save, function(e) {
 				self.calculateFeeOther(true);
 				$(self.modal).closeModal();
+				ss_bill.calculateTotal();
 			});
 		},
 		addRow: function(data = {}){
@@ -380,6 +385,47 @@ var ss_bill = {
 			$(self.modal).find('select').val('').trigger('change');
 		},	
 	},
+	discount: {
+		event: function(){
+			var self = this;
+			$('#btn-bill-discount').webuiPopover({
+				animation: 'pop',
+		    	content: ss_bill.popover_discount_content,
+		    	onShow: function(element) {
+		    		self.onShowPopoverDiscount(element);
+		    	},
+		    	onHide: function(element) {
+		    		self.onHidePopoverDiscount(element);
+		    	}
+		    });
+		},
+		onShowPopoverDiscount: function(element = null){
+			var self = this;
+			var bill_discount = typeof($('#label-total-discount').attr('data-discount')) != 'undefined' ? parseFloat($('#label-total-discount').attr('data-discount')) : 0;
+    		var type_discount = typeof($('#label-total-discount').attr('data-type-discount')) != 'undefined' ? $('#label-total-discount').attr('data-type-discount') : ss_bill.type_discount_default;
+
+    		element.find('select#popover-bill-type-discount').val(type_discount);
+    		element.find('select#popover-bill-type-discount').material_select();
+    		
+    		element.find('input#popover-bill-discount').val(ss_page.utilities.parseNumberToTextMoney(bill_discount));
+    		element.find('input#popover-bill-discount').autoNumeric('init', default_option_autonumric);
+	        element.find('input#popover-item-price').select();
+
+	        element.on('change', 'input#popover-bill-discount, select#popover-bill-type-discount', function(e) {
+	        	self.onHidePopoverDiscount(element);
+	        });
+		},
+		onHidePopoverDiscount: function(element = null){
+			var bill_discount = typeof(element.find('input#popover-bill-discount')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-bill-discount').val()) : 0;
+    		var type_discount = typeof(element.find('select#popover-bill-type-discount')) != 'undefined' ? element.find('select#popover-bill-type-discount').val() : ss_bill.type_discount_default;
+
+    		$('#label-total-discount').attr('data-total-discount', 0);
+    		$('#label-total-discount').attr('data-discount', bill_discount);
+    		$('#label-total-discount').attr('data-type-discount', type_discount);
+    		$('#label-total-discount').text('');
+    		ss_bill.calculateTotal();
+		}
+	},
 	items:{
 		event: function(){
 			var self = this;
@@ -415,6 +461,12 @@ var ss_bill = {
 				$(this).closest('td[data-quantity]').attr('data-quantity', quantity);
 				ss_bill.calculateTotal();
 			});	
+
+
+			$(ss_bill.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
+				self.initPopoverPrice($(this));
+
+			});
 		},
 		loadItemToList: function(params = {}){
 			var self = this;
@@ -485,65 +537,17 @@ var ss_bill = {
 			    	td_price.attr('data-price', data.price);
 			    	td_price.attr('data-price-before', data.price);
 			    	td_price.find('input#price').val(ss_page.utilities.parseNumberToTextMoney(data.price));		    			   
-			    }		   		  
+			    }  
 
 			    ss_bill.toggleNoRecord(false);
 			    ss_bill.calculateTotal();					   		  
 
+			    self.initPopoverPrice(tr);
+
 			    // focus input quantity
 			    tr.find('td[data-quantity] input#quantity').focus().select();
 
-			    // popover 	
-			    tr.find('input#price').webuiPopover({
-			    	animation: 'pop',
-			    	content: ss_bill.popover_item_content,
-			    	onShow: function(element) {		    		
-			    		var price_before = typeof(tr.find('td[data-price-before]').attr('data-price-before')) != 'undefined' ? parseFloat(tr.find('td[data-price-before]').attr('data-price-before')) : 0;
-			    		var discount = typeof(tr.attr('data-discount')) != 'undefined' ? parseFloat(tr.attr('data-discount')) : 0;
-			    		var type_discount = typeof(tr.attr('data-type-discount')) != 'undefined' ? tr.attr('data-type-discount') : '';
-			    		var discount_value = typeof(tr.attr('data-discount-value')) != 'undefined' ? parseFloat(tr.attr('data-discount-value')) : 0;
-			    		var vat = typeof(tr.attr('data-vat')) != 'undefined' ? parseFloat(tr.attr('data-vat')) : 0;
-
-			    		element.find('input#popover-item-price').val(ss_page.utilities.parseNumberToTextMoney(price_before));
-
-			    		element.find('input#popover-item-discount').val(ss_page.utilities.parseNumberToTextMoney(discount_value));			    		
-			    		element.find('input#popover-item-discount').val(ss_page.utilities.parseNumberToTextMoney(discount_value));
-			    		element.find('select#popover-item-type-discount').val(type_discount);
-
-			    		element.find('input#popover-item-vat').val(ss_page.utilities.parseNumberToTextMoney(vat));
-
-			    		element.find('.auto-numeric').autoNumeric('init', default_option_autonumric);
-				        element.find('input#popover-item-price').select();
-				        element.find('select:not(.select2)').material_select();
-			    	},
-			    	onHide: function(element) {
-			    		var price = typeof(element.find('input#popover-item-price')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-price').val()) : 0;
-			    		var vat = typeof(element.find('input#popover-item-vat')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-vat').val()) : 0;
-			    		var discount_value = typeof(element.find('input#popover-item-discount')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-discount').val()) : 0;			    		
-			    		var type_discount = typeof(element.find('select#popover-item-type-discount').val()) != 'undefined' ? element.find('select#popover-item-type-discount').val() : '';
-						var discount = 0;
-						var price_before = price;
-						if(type_discount == 'PERCENT'){
-							discount = parseFloat((discount_value * price) / 100);
-						}else{
-							discount = discount_value;
-						}
-						price -= discount;
-						price = price >=0 ? price : 0;
-
-			    		tr.find('td[data-price]').attr('data-price', price);
-			    		tr.find('td[data-price-before]').attr('data-price-before', price_before);
-			    		tr.find('td[data-price] input#price').val(ss_page.utilities.parseNumberToTextMoney(price));
-
-			    		tr.find('td[data-discount]').attr('data-discount', discount);
-			    		tr.find('td[data-discount-value]').attr('data-discount-value', discount_value);
-			    		tr.find('td[data-discount-type]').attr('data-discount-type', type_discount);
-
-			    		tr.find('td[data-vat]').attr('data-vat', vat);
-
-			    		ss_bill.calculateTotal();
-			    	}
-			    });
+			    
 			});
 		},
 		getDataItems: function(){
@@ -560,6 +564,73 @@ var ss_bill = {
 			});
 
 			return data;
+		},
+		initPopoverPrice: function(tr = null){
+			var self = this;
+			if(tr.length > 0){
+				tr.find('input#price').webuiPopover({
+			    	animation: 'pop',
+			    	content: ss_bill.popover_item_content,
+			    	onShow: function(element) {		    		
+			    		self.onShowPopoverPrice(tr, element);
+			    	},
+			    	onHide: function(element) {
+			    		self.onHidePopoverPrice(tr, element);
+			    	}
+			    });
+			}
+		},
+		onShowPopoverPrice: function(tr = null, element = null){
+			var self = this;
+			var price_before = typeof(tr.find('td[data-price-before]').attr('data-price-before')) != 'undefined' ? parseFloat(tr.find('td[data-price-before]').attr('data-price-before')) : 0;
+    		var type_discount = typeof(tr.find('td[data-discount-type]')) != 'undefined' ? tr.find('td[data-discount-type]').attr('data-discount-type') : ss_bill.type_discount_default;
+    		var discount_value = typeof(tr.find('td[data-discount-value]')) != 'undefined' ? parseFloat(tr.find('td[data-discount-value]').attr('data-discount-value')) : 0;
+    		var vat = typeof(tr.find('td[data-vat]')) != 'undefined' ? parseFloat(tr.find('td[data-vat]').attr('data-vat')) : 0;
+    		element.find('input#popover-item-price').val(ss_page.utilities.parseNumberToTextMoney(price_before));
+	
+    		element.find('input#popover-item-discount').val(ss_page.utilities.parseNumberToTextMoney(discount_value));
+    		element.find('select#popover-item-type-discount').val(type_discount);
+
+    		element.find('input#popover-item-vat').val(ss_page.utilities.parseNumberToTextMoney(vat));
+
+    		element.find('.auto-numeric').autoNumeric('init', default_option_autonumric);
+	        element.find('input#popover-item-price').select();
+	        element.find('select:not(.select2)').material_select();
+
+	        element.on('change', 'input#popover-item-price, input#popover-item-discount, input#popover-item-vat, select#popover-item-type-discount', function(e) {
+	        	self.onHidePopoverPrice(tr, element);
+	        });
+		},
+		onHidePopoverPrice: function(tr = null, element = null){
+			var price = typeof(element.find('input#popover-item-price')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-price').val()) : 0;
+    		var vat = typeof(element.find('input#popover-item-vat')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-vat').val()) : 0;
+    		var discount_value = typeof(element.find('input#popover-item-discount')) != 'undefined' ? ss_page.utilities.parseTextMoneyToNumber(element.find('input#popover-item-discount').val()) : 0;			    		
+    		var type_discount = typeof(element.find('select#popover-item-type-discount').val()) != 'undefined' ? element.find('select#popover-item-type-discount').val() : ss_bill.type_discount_default;
+			var discount = 0;
+			var price_before = price;
+			if(type_discount == 'PERCENT'){
+				if(discount_value > 100){
+					discount_value = 0;
+					element.find('input#popover-item-discount').val(0);
+				}
+				discount = parseFloat((discount_value * price) / 100);
+			}else{
+				discount = discount_value;
+			}
+			price -= discount;
+			price = price >=0 ? price : 0;
+			
+    		tr.find('td[data-price]').attr('data-price', price);
+    		tr.find('td[data-price-before]').attr('data-price-before', price_before);
+    		tr.find('td[data-price] input#price').val(ss_page.utilities.parseNumberToTextMoney(price));
+
+    		tr.find('td[data-discount]').attr('data-discount', discount);
+    		tr.find('td[data-discount-value]').attr('data-discount-value', discount_value);
+    		tr.find('td[data-discount-type]').attr('data-discount-type', type_discount);
+
+    		tr.find('td[data-vat]').attr('data-vat', vat);
+
+    		ss_bill.calculateTotal();
 		}
 	}
 }

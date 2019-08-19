@@ -287,6 +287,8 @@
         <div class="hide">
             <input id="data_items" name="data_items" type="hidden" value="" />
             <input id="data_fee_other" name="data_fee_other" type="hidden" value="" />
+            <input id="type_discount" name="type_discount" type="hidden" value="" />
+            <input id="discount" name="discount" type="hidden" value="" />
             <input id="submit_step" name="submit_step" type="hidden" value="" />
         </div>
     </form>

@@ -9,7 +9,7 @@
         </div>
 
         <div class="input-field col s12 m12 l12">
-            {$this->Form->select('type_discount', $type_discount , ['id'=>'popover-item-type-discount', 'empty' => null, 'default' => '' , 'class' => ''])}
+            {$this->Form->select('popover_item_type_discount[]', $type_discount , ['id'=>'popover-item-type-discount', 'empty' => null, 'default' => '' , 'class' => ''])}
             <label>
                 Loại chiết khấu
             </label>
