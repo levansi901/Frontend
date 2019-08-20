@@ -31,8 +31,7 @@ class AppController extends Controller
     public static $css_files = [];
     public static $js_files = [];    
 
-    public function initialize()
-    {
+    public function initialize(){
         parent::initialize();
         $this->loadComponent(
             'RequestHandler', ['enableBeforeRedirect' => false]
@@ -62,5 +61,11 @@ class AppController extends Controller
 
         // set view smarty
         $this->viewBuilder()->setClassName('Smarty');
+    }
+
+    public function responseJson($result = []){
+        $this->response->type('json');
+        $this->response->body(json_encode($result));
+        return $this->response;
     }
 }

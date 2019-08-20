@@ -775,10 +775,15 @@ label.active > .label-required{
     position: relative;
 }
 
+.progress-bar-step .progress-bar-item:last-child{
+    width: 120px;
+}
+
 .progress-bar-step .progress-bar-item .progress-bar-item-title {
     text-align: center;
-    margin-bottom: 15px;
     color: #637381;
+    font-size: 12px;
+    line-height: 30px;
 }
 
 .progress-bar-step .progress-bar-item:first-child .progress-bar-item-line:nth-child(2) {

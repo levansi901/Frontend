@@ -423,7 +423,10 @@ var ss_bill = {
     		$('#label-total-discount').attr('data-discount', bill_discount);
     		$('#label-total-discount').attr('data-type-discount', type_discount);
     		$('#label-total-discount').text('');
+    		$('form input#discount').val(bill_discount);
+    		$('form input#type_discount').val(type_discount);
     		ss_bill.calculateTotal();
+
 		}
 	},
 	items:{
@@ -554,11 +557,12 @@ var ss_bill = {
 			var data =[];
 			$(ss_bill.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
 				var item = {
-					id: typeof($(this).data('id')) != 'undefined' ? parseInt($(this).data('id')) : null,
-					price: typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? parseFloat($(this).find('td[data-price]').attr('data-price')) : 0,					
-					vat: typeof($(this).find('td[data-vat]').attr('data-vat')) ? parseInt($(this).find('td[data-vat]').attr('data-vat')) : 0,
-					discount: typeof($(this).find('td[data-discount]').attr('data-discount')) ? parseInt($(this).find('td[data-discount]').attr('data-discount')) : 0,
-					quantity: typeof($(this).find('td[data-quantity]').attr('data-quantity')) ? parseInt($(this).find('td[data-quantity]').attr('data-quantity')) : 1
+					id: typeof($(this).data('id')) != 'undefined' ? ss_page.utilities.parseInt($(this).data('id')) : null,
+					price: typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? ss_page.utilities.parseFloat($(this).find('td[data-price]').attr('data-price')) : 0,					
+					vat: typeof($(this).find('td[data-vat]').attr('data-vat')) != 'undefined' ? ss_page.utilities.parseInt($(this).find('td[data-vat]').attr('data-vat')) : 0,
+					type_discount: typeof($(this).find('td[data-discount-type]').attr('data-discount-type')) != 'undefined' ? $(this).find('td[data-discount-type]').attr('data-discount-type') : ss_bill.type_discount_default,
+					discount: typeof($(this).find('td[data-discount]').attr('data-discount')) != 'undefined' ? ss_page.utilities.parseInt($(this).find('td[data-discount]').attr('data-discount')) : 0,
+					quantity: typeof($(this).find('td[data-quantity]').attr('data-quantity')) != 'undefined' ? ss_page.utilities.parseInt($(this).find('td[data-quantity]').attr('data-quantity')) : 1
 				};
 				data.push(item);
 			});

@@ -163,27 +163,32 @@ class InventoryController extends AppController
         $this->layout = false;
         $this->autoRender = false;
 
-        $result = [];
+        $result = [
+            STATUS => STATUS_ERROR,
+            MESSAGE => ''
+        ];
         $data_post = !empty($this->request->data) ? $this->request->data : [];
-        debug($data_post);
-        exit;
-        if ($this->request->is('post') && !empty($data_post)) {
-            $data_post['id'] = $id;
-            $items = [];
-            if(!empty($data_post['items'])){
-                foreach ($data_post['items'] as $k => $item) {
-                    
-                }
-            }
-
-            $http = new Client();
-            $response = $http->post(API_DOMAIN_URL . 'product/save', json_encode($data_post), ['type' => 'json']);      
-            $result = $response->getJson();
-            $data = !empty($result[DATA]) ? $result[DATA] : [];
+        if (!$this->request->is('post') || empty($data_post)) {
+            $result[MESSAGE] = 'Dữ liệu không hợp lệ';
+            return $this->responseJson($result);
         }
-        $this->response->type('json');
-        $this->response->body(json_encode($result));
-        return $this->response;
+        
+        $data_post['id'] = $id;
+
+        // parse data items
+        $items = !empty($data_post['data_items'])  ? json_decode($data_post['data_items'], true) : [];
+        if(empty($items)){
+            $result[MESSAGE] = 'Không lấy được thông tin sản phẩm';
+            return $this->responseJson($result);
+        }
+        $data_post['items'] = $items;
+        unset($data_post['data_items']);
+
+        $http = new Client();
+        $response = $http->post(API_DOMAIN_URL . 'bill/save', json_encode($data_post), ['type' => 'json']);      
+        $result = $response->getJson();
+        $data = !empty($result[DATA]) ? $result[DATA] : [];        
+        return $this->responseJson($result);
     }
 
     public function deleteBill(){

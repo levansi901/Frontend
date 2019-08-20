@@ -39,11 +39,18 @@ var ss_add_supplier = {
 	},
 	submitForm: function(){
 		var self = this;
+		
+		// parse data items
+		var data_items = ss_bill.items.getDataItems();
+		if(!$.isEmptyObject(data_items)){
+			$(self.form).find('#data_items').val(JSON.stringify(data_items));
+		}
+
 		ss_page.callAjax({
         	url: '/inventory/save',
         	data: $(self.form).serializeArray()
         }).done(function(response) {
-
+        	
         });
 	}
 }
