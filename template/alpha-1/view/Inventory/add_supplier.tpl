@@ -12,6 +12,64 @@
             <div class="card">    
                 <div class="card-content p-b-0">
                     <div class="row">
+                        <div class="progress-bar-step">
+                            <div class="progress-bar-item">
+                                <div class="progress-bar-item-title">
+                                    Đặt hàng
+                                </div>
+                                <div class="progress-bar-item-line"></div>
+                                <div class="progress-bar-item-ico">
+                                    <div class="progress-bar-item-ico-in active">
+                                        <i class="material-icons">check</i>
+                                    </div>
+                                </div>
+                                <div class="progress-bar-item-line"></div>        
+                            </div>
+                            <div class="progress-bar-item">
+                                <div class="progress-bar-item-title">
+                                    Duyệt
+                                </div>
+                                <div class="progress-bar-item-line "></div>
+                                <div class="progress-bar-item-ico">
+                                    <div class="progress-bar-item-ico-in">
+                                        <i class="material-icons">check</i>
+                                    </div>
+                                </div>
+                                <div class="progress-bar-item-line"></div>
+                            </div>
+                            <div class="progress-bar-item">
+                                <div class="progress-bar-item-title">
+                                    Nhập kho
+                                </div>
+                                <div class="progress-bar-item-line "></div>
+                                <div class="progress-bar-item-ico">
+                                    <div class="progress-bar-item-ico-in">
+                                        <i class="material-icons">check</i>
+                                    </div>
+                                </div>
+                                <div class="progress-bar-item-line"></div>
+                            </div>
+                            <div class="progress-bar-item">
+                                <div class="progress-bar-item-title">
+                                    Hoàn thành
+                                </div>
+                                <div class="progress-bar-item-date"></div>
+
+                                <div class="progress-bar-item-line"></div>
+                                <div class="progress-bar-item-ico">
+                                    <div class="progress-bar-item-ico-in">
+                                        <i class="material-icons">check</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="card">    
+                <div class="card-content p-b-0">
+                    <div class="row">
                         <div class="input-field col s12 m12 l12">
                             <input id="auto_suggest_product" type="text" maxlength="255" autocomplete="off" value="" shortcut="114">
                             <label for="auto_suggest_product">
@@ -173,7 +231,7 @@
                         </div>
 
                         <div id="wrap-input-supplier" class="input-field col s12 m12 l12">
-                            <input id="supplier-suggest" type="text" autocomplete="off" value="" shortcut="115" placeholder="Tìm nhà cung cấp (F4)">
+                            <input id="supplier-suggest" type="text" autocomplete="off" value="" shortcut="115" placeholder="Tìm nhà cung cấp (F4)" class="f-s-12">
                             <label for="supplier" class="alway-active">
                                 Nhà cung cấp
                                 <small class="label-required text-red">*</small>
@@ -183,22 +241,22 @@
                         </div>
                         
                         <div class="input-field col s12 m12 l12">
-                            <input id="supplier" name="supplier" type="text" autocomplete="off" value="" class="">
-                            <label for="name">
+                            <input id="sender" name="sender" type="text" autocomplete="off" value="" class="">
+                            <label for="sender">
                                 Người gửi
                             </label>
                         </div>
 
                         <div class="input-field col s12 m12 l12">
-                            <input id="supplier" name="supplier" type="text" autocomplete="off" value="" class="">
-                            <label for="name">
+                            <input id="receiver" name="receiver" type="text" autocomplete="off" value="" class="">
+                            <label for="receiver">
                                 Người nhận
                             </label>
                         </div>
 
                         <div class="input-field col s12 m12 l12">
-                            <input id="supplier" name="supplier" type="text" length="255" maxlength="255" autocomplete="off" value="" class="">
-                            <label for="name">
+                            <input id="note" name="note" type="text" length="255" maxlength="255" autocomplete="off" value="" class="">
+                            <label for="note">
                                 Ghi chú
                             </label>
                         </div>
@@ -211,61 +269,7 @@
         <div class="mn-header navbar-fixed">
             <nav class="white nav-action">
                 <div class="row">
-                    <div class="col s12 m12 l8">
-                        <div class="progress-bar-step">
-                            <div class="progress-bar-item">
-                                <div class="progress-bar-item-title">
-                                    Đặt hàng
-                                </div>
-                                <div class="progress-bar-item-line"></div>
-                                <div class="progress-bar-item-ico">
-                                    <div class="progress-bar-item-ico-in active">
-                                        <i class="material-icons">check</i>
-                                    </div>
-                                </div>
-                                <div class="progress-bar-item-line"></div>        
-                            </div>
-                            <div class="progress-bar-item">
-                                <div class="progress-bar-item-title">
-                                    Duyệt
-                                </div>
-                                <div class="progress-bar-item-line "></div>
-                                <div class="progress-bar-item-ico">
-                                    <div class="progress-bar-item-ico-in">
-                                        <i class="material-icons">check</i>
-                                    </div>
-                                </div>
-                                <div class="progress-bar-item-line"></div>
-                            </div>
-                            <div class="progress-bar-item">
-                                <div class="progress-bar-item-title">
-                                    Nhập kho
-                                </div>
-                                <div class="progress-bar-item-line "></div>
-                                <div class="progress-bar-item-ico">
-                                    <div class="progress-bar-item-ico-in">
-                                        <i class="material-icons">check</i>
-                                    </div>
-                                </div>
-                                <div class="progress-bar-item-line"></div>
-                            </div>
-                            <div class="progress-bar-item">
-                                <div class="progress-bar-item-title">
-                                    Hoàn thành
-                                </div>
-                                <div class="progress-bar-item-date"></div>
-
-                                <div class="progress-bar-item-line"></div>
-                                <div class="progress-bar-item-ico">
-                                    <div class="progress-bar-item-ico-in">
-                                        <i class="material-icons">check</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>  
-
-                    <div class="col s12 m12 l4 center">
+                    <div class="col s12 m12 l12 center">
                         <span class="waves-effect waves-light btn s6 m-r-xs m-l-lg btn-submit-form" data-step="2">
                             <i class="material-icons left lh-36">done_all</i>
                             Đặt hàng và duyệt (F1)
@@ -273,7 +277,7 @@
 
                         <span class="waves-effect waves-light btn s6 m-r-xs btn-submit-form" data-step="1">
                             <i class="material-icons left lh-36">check</i>
-                            Đặt hàng
+                            Đặt hàng (F2)
                         </span>
                     </div>
                 </div>
@@ -281,8 +285,11 @@
         </div>
 
         <div class="hide">
+            <input id="type" name="type" type="hidden" value="IMPORT" />
+            <input id="type_receipt" name="type_receipt" type="hidden" value="SUPPLIER" />
             <input id="data_items" name="data_items" type="hidden" value="" />
-            <input id="data_fee_other" name="data_fee_other" type="hidden" value="" />
+            <input id="fee_other_info" name="fee_other_info" type="hidden" value="" />
+            <input id="fee_other" name="fee_other" type="hidden" value="" />
             <input id="type_discount" name="type_discount" type="hidden" value="" />
             <input id="discount" name="discount" type="hidden" value="" />
             <input id="submit_step" name="submit_step" type="hidden" value="" />

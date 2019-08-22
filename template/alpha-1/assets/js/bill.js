@@ -141,9 +141,9 @@ var ss_bill = {
 		event: function(){
 			var self = this;
 			self.row_template = $(self.list + ' div.row:first-child').length > 0 ? $(self.list + ' div.row:first-child').clone()[0].outerHTML : '';
-			var data_fee_other = $('input#data_fee_other').val();
-			if(typeof(data_fee_other) != 'undefined' && data_fee_other.length > 0){
-				self.data = $.parseJSON(data_fee_other);
+			var fee_other_info = $('input#fee_other_info').val();
+			if(typeof(fee_other_info) != 'undefined' && fee_other_info.length > 0){
+				self.data = $.parseJSON(fee_other_info);
 			}
 
 			$(document).on('click', '#btn-bill-fee-other', function(e) {
@@ -205,8 +205,9 @@ var ss_bill = {
 
 			if(apply_value){			
 				$('#label-total-other').text(ss_page.utilities.parseNumberToTextMoney(self.total));
-				$('#label-total-other').attr('data-total-other', self.total);				
-				$('input#data_fee_other').val(JSON.stringify(self.data));
+				$('#label-total-other').attr('data-total-other', self.total);
+				$('input#fee_other').val(self.total);
+				$('input#fee_other_info').val(JSON.stringify(self.data));
 			}			
 		},
 		loadList: function(){
@@ -549,7 +550,6 @@ var ss_bill = {
 
 			    // focus input quantity
 			    tr.find('td[data-quantity] input#quantity').focus().select();
-
 			    
 			});
 		},
@@ -557,7 +557,7 @@ var ss_bill = {
 			var data =[];
 			$(ss_bill.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
 				var item = {
-					id: typeof($(this).data('id')) != 'undefined' ? ss_page.utilities.parseInt($(this).data('id')) : null,
+					product_item_id: typeof($(this).data('id')) != 'undefined' ? ss_page.utilities.parseInt($(this).data('id')) : null,
 					price: typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? ss_page.utilities.parseFloat($(this).find('td[data-price]').attr('data-price')) : 0,					
 					vat: typeof($(this).find('td[data-vat]').attr('data-vat')) != 'undefined' ? ss_page.utilities.parseInt($(this).find('td[data-vat]').attr('data-vat')) : 0,
 					type_discount: typeof($(this).find('td[data-discount-type]').attr('data-discount-type')) != 'undefined' ? $(this).find('td[data-discount-type]').attr('data-discount-type') : ss_bill.type_discount_default,
@@ -566,7 +566,6 @@ var ss_bill = {
 				};
 				data.push(item);
 			});
-
 			return data;
 		},
 		initPopoverPrice: function(tr = null){

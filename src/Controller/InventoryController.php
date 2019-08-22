@@ -143,8 +143,7 @@ class InventoryController extends AppController
                             $lazada_sku_attributes[] = $attribute;    
                         }                        
                         break;                    
-                }
-                
+                }                
             }
         }
 
@@ -176,14 +175,15 @@ class InventoryController extends AppController
         $data_post['id'] = $id;
 
         // parse data items
-        $items = !empty($data_post['data_items'])  ? json_decode($data_post['data_items'], true) : [];
+        $items = !empty($data_post['data_items']) ? json_decode($data_post['data_items'], true) : [];
         if(empty($items)){
             $result[MESSAGE] = 'Không lấy được thông tin sản phẩm';
             return $this->responseJson($result);
         }
         $data_post['items'] = $items;
         unset($data_post['data_items']);
-
+        debug(json_encode($data_post));
+        exit;
         $http = new Client();
         $response = $http->post(API_DOMAIN_URL . 'bill/save', json_encode($data_post), ['type' => 'json']);      
         $result = $response->getJson();

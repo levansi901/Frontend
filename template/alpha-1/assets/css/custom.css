@@ -768,6 +768,11 @@ label.active > .label-required{
     cursor: pointer;
 }
 
+.progress-bar-step{
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
 .progress-bar-step .progress-bar-item {
     width: auto;
     display: block;
@@ -844,9 +849,10 @@ label.active > .label-required{
     top: -3px;
 }
 
-.progress-bar-step .progress-bar-item .progress-bar-item-ico .progress-bar-item-ico-in.active svg {
-    width: 12px;
-    height: 12px;
-    top: 3px;
-    display: inline-block;
+.progress-bar-step .progress-bar-item .progress-bar-item-ico .progress-bar-item-ico-in.active i {
+    width: 100%;
+    line-height: 27px;
+    top: 0px;
+    font-size: 18px;
+    display: block;
 }
