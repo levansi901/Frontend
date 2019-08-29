@@ -135,6 +135,15 @@
                             </span>
                         </div>
 
+                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs hide">
+                            <span>
+                                VAT
+                            </span>
+                            <span id="label-total-vat" data-total-vat=""  class="right m-r-md">
+                                0
+                            </span>
+                        </div>
+
                         <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
                             <a id="btn-bill-discount" href="javascript:" shortcut="117">
                                 Chiết khấu (F6)

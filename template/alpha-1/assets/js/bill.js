@@ -28,8 +28,7 @@ var ss_bill = {
 
 		// event
 		self.items.event();
-		self.discount.event();
-			
+		self.discount.event();		
 	},
 	calculateTotal: function(){
 		var self = this;
@@ -40,35 +39,60 @@ var ss_bill = {
 		self.general.total_other = 0;
 		self.general.total_vat = 0;
 		self.general.total_final = 0;
+
 		
-		// total
+		self.general.discount = typeof($('#label-total-discount').attr('data-discount')) != 'undefined' ? ss_page.utilities.parseFloat($('#label-total-discount').attr('data-discount')) : 0;
+		self.general.type_discount = typeof($('#label-total-discount').attr('data-type-discount')) != 'undefined' ? $('#label-total-discount').attr('data-type-discount') : self.type_discount_default;
+		if(self.general.type_discount == 'PERCENT' && self.general.discount > 100){
+			self.general.discount = 0;
+			$('#label-total-discount').attr('data-discount', 0);
+		}	
+
+		var total_after_discount_product = 0;
+
+		if(self.general.discount > 0 && self.general.type_discount == 'MONEY'){
+			$(self.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
+				var price = typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? ss_page.utilities.parseFloat($(this).find('td[data-price]').attr('data-price')) : 0;
+				var quantity = typeof($(this).find('td[data-quantity]').attr('data-quantity')) ? ss_page.utilities.parseInt($(this).find('td[data-quantity]').attr('data-quantity')) : 1;
+				quantity = quantity >= 1 ? quantity : 1;
+				total_after_discount_product += price * quantity;
+			});
+		}
+
+		// item
 		$(self.table + ' > tbody').find('tr:not(.no-record)').each(function(index, tr) {
 			var price = typeof($(this).find('td[data-price]').attr('data-price')) != 'undefined' ? ss_page.utilities.parseFloat($(this).find('td[data-price]').attr('data-price')) : 0;
 			var quantity = typeof($(this).find('td[data-quantity]').attr('data-quantity')) ? ss_page.utilities.parseInt($(this).find('td[data-quantity]').attr('data-quantity')) : 1;
 			quantity = quantity >= 1 ? quantity : 1;
 			var row_total = price * quantity;
-			
+
 			self.general.total_quantity += quantity;		
 			self.general.total += row_total;
+
+			// calculate discount bill
+			var general_discount = 0;
+			if(self.general.discount > 0){
+				if(self.general.type_discount == 'MONEY'){
+					general_discount = (row_total / total_after_discount_product) * 100;					
+				}else{									
+					general_discount = (self.general.discount * row_total) / 100;
+				}
+				self.general.total_discount += general_discount;
+			}
+
+			// vat item
+			var vat = typeof($(this).find('td[data-vat]')) != 'undefined' ? ss_page.utilities.parseFloat($(this).find('td[data-vat]').attr('data-vat')) : 0;
+			var row_vat = 0;
+			
+			if(vat > 0){
+				row_vat = ((row_total - general_discount) * vat) / 100;
+				self.general.total_vat += row_vat;
+			}
 
 			// show label row total 
 			$(this).find('td[data-row-total]').attr('data-row-total', row_total);
 			$(this).find('td[data-row-total]').html(ss_page.utilities.parseNumberToTextMoney(row_total));
 		});
-
-		// discount
-		self.general.discount = typeof($('#label-total-discount').attr('data-discount')) != 'undefined' ? ss_page.utilities.parseFloat($('#label-total-discount').attr('data-discount')) : 0;
-		self.general.type_discount = typeof($('#label-total-discount').attr('data-type-discount')) != 'undefined' ? $('#label-total-discount').attr('data-type-discount') : self.type_discount_default;
-
-		if(self.general.type_discount == 'PERCENT'){
-			if(self.general.discount > 100){
-				self.general.discount = 0;
-				$('#label-total-discount').attr('data-discount', 0);
-			}
-			self.general.total_discount = parseFloat((self.general.discount * self.general.total) / 100);
-		}else{
-			self.general.total_discount = self.general.discount;
-		}
 		
 		// other fee
 		self.general.total_other = typeof($('#label-total-other').attr('data-total-other')) != 'undefined' ? ss_page.utilities.parseFloat($('#label-total-other').attr('data-total-other')) : 0;
@@ -82,8 +106,14 @@ var ss_bill = {
 		$('#label-total-quantity').attr('data-total-quantity', self.general.total_quantity).text(ss_page.utilities.parseNumberToTextMoney(self.general.total_quantity));
 		$('#label-total').attr('data-total', self.general.total).text(ss_page.utilities.parseNumberToTextMoney(self.general.total));
 		$('#label-total-discount').attr('data-total-discount', self.general.total_discount).text(ss_page.utilities.parseNumberToTextMoney(self.general.total_discount));
-		$('#label-total-vat').attr('data-total-vat', self.general.total_vat).text(ss_page.utilities.parseNumberToTextMoney(self.general.total_vat));
+		
 		$('#label-total-final').attr('data-total-final', self.general.total_final).text(ss_page.utilities.parseNumberToTextMoney(self.general.total_final));
+		if(self.general.total_vat > 0){
+			$('#label-total-vat').attr('data-total-vat', self.general.total_vat).text(ss_page.utilities.parseNumberToTextMoney(self.general.total_vat));
+			$('#label-total-vat').closest('div.col').toggleClass('hide', false);
+		}else{
+			$('#label-total-vat').closest('div.col').toggleClass('hide', true);
+		}
 	},
 	toggleNoRecord: function(show = true){
 		var self = this;
