@@ -5,8 +5,7 @@ use Cake\Core\Configure;
 use Cake\Http\Client;
 
 
-class ProductController extends AppController
-{
+class ProductController extends AppController {
 
     public function initialize() {
         parent::initialize();
@@ -99,20 +98,25 @@ class ProductController extends AppController
 
     public function saveProduct($id = null){
 
+        static::$css_layout[] = 'assets/plugins/fancybox/jquery.fancybox.css';
         static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
         static::$css_layout[] = 'assets/plugins/auto-complete/jquery.auto-complete.css';
 
         static::$js_files[] = 'assets/plugins/tinymce/tinymce.min.js';
+        static::$js_files[] = 'assets/plugins/fancybox/jquery.fancybox.js';
         static::$js_files[] = 'assets/plugins/jquery-validation/jquery.validate.min.js';
         static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
         static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
         static::$js_files[] = 'assets/plugins/auto-complete/jquery.auto-complete.min.js';
-        static::$js_files[] = 'assets/js/product.js';
+        static::$js_files[] = 'assets/js/product.js';        
 
         $title_for_layout = 'Thêm sản phẩm';
         if(!empty($id)){
             $title_for_layout = 'Xem thông tin sản phẩm';
         }                
+
+        $customer_id = 1;
+        $filemanager_access_key = base64_encode($customer_id . '|' . ACCESS_KEY_UPLOAD);
 
         // get data inital
         $lazada_info = true;        
@@ -147,12 +151,13 @@ class ProductController extends AppController
                 }
                 
             }
-        }
-
+        }        
+        
         $this->set('list_status', $list_status);
         $this->set('product', $product);
         $this->set('lazada_normal_attributes', $lazada_normal_attributes);
         $this->set('lazada_sku_attributes', $lazada_sku_attributes);
+        $this->set('filemanager_access_key', $filemanager_access_key);
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_for_layout', $title_for_layout);
         $this->set('url_reference', '/product/add');

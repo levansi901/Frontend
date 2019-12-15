@@ -180,7 +180,7 @@ table.custom-table thead th.hide-text{
 table.custom-table td a.img{
     position: relative;
     display: block;
-    background: #fafbfc;
+    background: #ccd5db;
     padding: 0;
     width: 40px;
     height: 40px;
@@ -855,4 +855,8 @@ label.active > .label-required{
     top: 0px;
     font-size: 18px;
     display: block;
+}
+
+.tox-tinymce .tox-statusbar span.tox-statusbar__branding a{
+    display: none;
 }

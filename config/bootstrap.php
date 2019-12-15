@@ -204,8 +204,11 @@ Type::build('timestamp')
 
 define('API_HTTP', 'http://');
 define('API_DOMAIN', 'salesupport.local');
+define('CDN_DOMAIN', 'cdn.local');
 
 define('API_DOMAIN_URL', API_HTTP . API_DOMAIN . '/rest/');
+define('CDN_DOMAIN_URL', API_HTTP . CDN_DOMAIN);
+define('ACCESS_KEY_UPLOAD', '3j2onldksd9021103jw312320ujdsodj0293u02j32odws0821');
 
 // system constant
 define('LANG_DEFAULT', 'vie');

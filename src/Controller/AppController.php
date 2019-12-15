@@ -59,6 +59,8 @@ class AppController extends Controller
             $this->set('js_layout', $js_layout);
         }
 
+        $this->set('cdn_url', CDN_DOMAIN_URL);
+
         // set view smarty
         $this->viewBuilder()->setClassName('Smarty');
     }

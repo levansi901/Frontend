@@ -5,10 +5,11 @@ String.prototype.replaceAll = function (search, replacement) {
 
 var ss_page = {
 	csrf_token: null,
+	cdn_url: null,
 	init: function(){
 		var self = this;
-		self.csrf_token = $('#csrf_token').val();    
-    	$('#csrf_token').remove();
+		self.csrf_token = $('#csrf_token').val();
+    	self.cdn_url = $('#cdn_url').val();
 
     	self.activeMenu();
 
@@ -194,6 +195,26 @@ var ss_page = {
 		        }
 		        e.preventDefault();
 		    }
+		});
+	},
+	tinyMce: function(params = {}){
+		var self = this;
+		tinymce.init({
+		  	selector: '.mce-editor',
+		  	height: 500,
+		  	menubar: false,
+		  	plugins: [
+		    	'advlist autolink lists link image charmap print preview textcolor',
+		    	'searchreplace visualblocks code fullscreen',
+		    	'media table contextmenu paste code help wordcount responsivefilemanager'
+		  	],
+		  	image_advtab: true ,
+		  	toolbar: 'formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link responsivefilemanager image | code | fullscreen',
+		  	filemanager_crossdomain: true,
+		  	external_filemanager_path: self.cdn_url + '/filemanager/',
+   			filemanager_title: 'CDN S-Sale',
+   			external_plugins: { 'filemanager' : self.cdn_url + '/filemanager/plugin.min.js'},
+   			filemanager_access_key: typeof(params.filemanager_access_key) != 'undefined' ? params.filemanager_access_key : null
 		});
 	},
 	validation: {

@@ -1,15 +1,11 @@
 var ss_product = {	
-	init: function(){
+	init: function(params = {}){
 		var self = this;
 		
         self.item_product.event();
         self.product_form.event();
         self.lazada_category.event();
-        self.lazada_brand.event();
-
-		tinymce.init({
-		    selector: '.mce-editor'
-		});
+        self.lazada_brand.event();       
 
 		$('select').material_select();
 
@@ -25,6 +21,11 @@ var ss_product = {
 	        		datepicker.update('minDate', date);
 	        	}
 	    	}
+	    });
+
+        var filemanager_access_key = $('#filemanager_access_key').val();
+	    ss_page.tinyMce({
+	    	filemanager_access_key: typeof(filemanager_access_key) != 'undefined' ? filemanager_access_key : null
 	    });
 	},
 	item_product: {
@@ -54,12 +55,22 @@ var ss_product = {
 
 			$(self.wrap_list).on('click', '.delete-item', function(e) {
 				e.stopPropagation();
+
+				self.checkConditions();
 				if(!self.can_delete){
 					return false;
 				}
 				var index = $(this).closest('.li-item').index();
 				self.removeItem(index);			
 			});
+
+			$(self.wrap_list + ' .btn-select-image').fancybox({
+                closeExisting: true,
+                iframe : {
+                    preload : false
+                }
+            });
+		
 		},
 		eventNewItem: function(){
 			var self = this;

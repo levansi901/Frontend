@@ -83,14 +83,14 @@
 
         <div class="row">
             <div class="file-field input-field col s12 m4 l6">
-                <div class="btn">
-                    <i class="material-icons">perm_media</i>
-                    <input id="item-upload_images-{$k}" data-name="item-upload_images" name="items[{$k}][upload_images]" type="file" multiple>
+                <div class="waves-effect waves-light btn btn-select-image" data-src="{$cdn_url}/filemanager/dialog.php?type=1&crossdomain=1&akey={$filemanager_access_key}&field_id=item-upload_images-{$k}" data-type="iframe">
+                    <i class="material-icons left lh-36">perm_media</i> 
+                    Chọn ảnh
                 </div>
                 <div class="file-path-wrapper">
-                    <input class="file-path" type="text" placeholder="Chọn 1 hoặc nhiều ảnh">
+                    <input id="item-upload_images-{$k}" data-name="item-upload_images" name="items[{$k}][upload_images]" type="text" placeholder="Chọn ảnh cho phiên bản sản phẩm">
                 </div>
-            </div>
+            </div>      
 
             <div class="col s12 m6 l6">
                 <div class="col s2 m3 l2">

@@ -5,7 +5,7 @@
         </span>        
     </div>
     <div class="col s6 m6 l6 no-p right-align">
-        <a href="/product/add" class="waves-effect waves-light green btn" title="Thêm sản phẩm mới">
+        <a href="/product/add" class="waves-effect waves-light btn" title="Thêm sản phẩm mới">
             <i class="material-icons left">add</i>
             Thêm sản phẩm mới
         </a>

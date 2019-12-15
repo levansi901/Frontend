@@ -113,7 +113,7 @@
                             {if !empty($product.status)}
                                 <i class="material-icons f-s-18 text-green">check</i>
                             {else}
-                                <i class="material-icons f-s-18">no_encryption</i>
+                                <i class="material-icons f-s-18 text-red">no_encryption</i>
                             {/if}
                         </td>                              
                     </tr>
