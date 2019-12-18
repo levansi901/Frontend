@@ -87,8 +87,9 @@
                     <i class="material-icons left lh-36">perm_media</i> 
                     Chọn ảnh
                 </div>
+                
                 <div class="file-path-wrapper">
-                    <input id="item-upload_images-{$k}" data-name="item-upload_images" name="items[{$k}][upload_images]" type="text" placeholder="Chọn ảnh cho phiên bản sản phẩm">
+                    <input id="item-upload_images-{$k}" data-name="item-upload_images" name="items[{$k}][upload_images]" type="text" placeholder="Chọn ảnh cho phiên bản sản phẩm" readonly="true" class="input-select-image">
                 </div>
             </div>      
 

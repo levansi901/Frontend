@@ -49,6 +49,5 @@
     <input type="hidden" id="csrf_token" value="{if !empty($csrf_token)}{$csrf_token}{/if}">
     <input type="hidden" id="filemanager_access_key" value="{if !empty($filemanager_access_key)}{$filemanager_access_key}{/if}" />
     <input type="hidden" id="cdn_url" value="{if !empty($cdn_url)}{$cdn_url}{/if}" />
-    cdn_url
 </body>
 </html>

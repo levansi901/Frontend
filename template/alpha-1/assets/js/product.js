@@ -64,12 +64,22 @@ var ss_product = {
 				self.removeItem(index);			
 			});
 
+			$(self.wrap_list).on('click', '.input-select-image', function(e) {
+				var wrap_item = $(this).closest('.input-field').find('.btn-select-image').trigger('click');
+			});
+
 			$(self.wrap_list + ' .btn-select-image').fancybox({
                 closeExisting: true,
                 iframe : {
                     preload : false
                 }
             });
+
+            
+
+            $(document).on('click', '.btn-select-image', function(e) {
+		        $(window).on('message', OnMessage);
+		    });
 		
 		},
 		eventNewItem: function(){
@@ -547,6 +557,23 @@ var ss_product = {
 			});
 		},
 	}
+}
+
+function OnMessage(e){
+    var event = e.originalEvent;
+   if(event.data.sender === 'responsivefilemanager' && event.data.field_id){
+        
+        var field_id = event.data.field_id;            
+        var url = event.data.url;
+        if($.isArray(url)){
+            url = JSON.stringify(url);
+        }
+
+        $('#' + field_id).val(url).trigger('change');
+        $.fancybox.close();
+
+        $(window).off('message', OnMessage);
+   }
 }
 
 $(document).ready(function() {

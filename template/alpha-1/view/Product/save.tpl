@@ -7,7 +7,7 @@
 
 <div class="col s12 m12 l12">
     <form id="product-form" role="form" action="/product/save{if !empty($product.id)}/{$product.id}{/if}" method="POST" enctype="multipart/form-data">
-    	<div class="card">
+        <div class="card">
             <div class="card-content my-form">
                 <div class="row">
                     <div class="input-field col s12 m12 l12">
@@ -109,7 +109,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card">            
             <div class="card-content my-form">
                 <div class="row card-title no-m">                
                     <div class="col s12 m12 l12">
@@ -173,26 +173,3 @@
         </div>      
     </div>    
 </div>
-
-<script type="text/javascript">
-    function OnMessage(e){
-      var event = e.originalEvent;
-       // Make sure the sender of the event is trusted
-       if(event.data.sender === 'responsivefilemanager' && event.data.field_id){
-            
-            var field_id = event.data.field_id;            
-            var url = event.data.url;
-            // console.log(field_id);
-            // console.log(event.data);
-            $('#' + field_id).val(url).trigger('change');
-            $.fancybox.close();
-
-            // Delete handler of the message from ResponsiveFilemanager
-            $(window).off('message', OnMessage);
-       }
-    }
-
-    $('.btn-select-image').on('click',function(){
-        $(window).on('message', OnMessage);
-    });
-</script>
