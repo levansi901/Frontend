@@ -170,16 +170,9 @@ class ProductController extends AppController {
 
         $result = [];
         $data_post = !empty($this->request->data) ? $this->request->data : [];
-
+        
         if ($this->request->is('post') && !empty($data_post)) {
             $data_post['id'] = $id;
-            $items = [];
-            if(!empty($data_post['items'])){
-                foreach ($data_post['items'] as $k => $item) {
-                    
-                }
-            }
-
             $http = new Client();
             $response = $http->post(API_DOMAIN_URL . 'product/save', json_encode($data_post), ['type' => 'json']);      
             $result = $response->getJson();

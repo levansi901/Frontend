@@ -66,18 +66,9 @@ var ss_product = {
 
 			$(self.wrap_list).on('click', '.input-select-image', function(e) {
 				var wrap_item = $(this).closest('.input-field').find('.btn-select-image').trigger('click');
-			});
+			});			         
 
-			$(self.wrap_list + ' .btn-select-image').fancybox({
-                closeExisting: true,
-                iframe : {
-                    preload : false
-                }
-            });
-
-            
-
-            $(document).on('click', '.btn-select-image', function(e) {
+            $(self.wrap_list).on('click', '.btn-select-image', function(e) {
 		        $(window).on('message', OnMessage);
 		    });
 		
@@ -100,6 +91,13 @@ var ss_product = {
 		        	}
 		    	}
 		    });
+
+		    $(self.wrap_list + ' .btn-select-image').fancybox({
+                closeExisting: true,
+                iframe : {
+                    preload : false
+                }
+            }); 
 		},
 		checkConditions: function(){
 			var self = this;

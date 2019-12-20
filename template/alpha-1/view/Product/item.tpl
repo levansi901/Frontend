@@ -83,20 +83,24 @@
 
         <div class="row">
             <div class="file-field input-field col s12 m4 l6">
-                <div class="waves-effect waves-light btn btn-select-image" data-src="{$cdn_url}/filemanager/dialog.php?type=1&crossdomain=1&akey={$filemanager_access_key}&field_id=item-upload_images-{$k}" data-type="iframe">
+                <div class="waves-effect waves-light btn btn-select-image" data-src="{$cdn_url}/filemanager/dialog.php?type=1&crossdomain=1&akey={$filemanager_access_key}&field_id=item-images-{$k}" data-type="iframe">
                     <i class="material-icons left lh-36">perm_media</i> 
                     Chọn ảnh
                 </div>
                 
                 <div class="file-path-wrapper">
-                    <input id="item-upload_images-{$k}" data-name="item-upload_images" name="items[{$k}][upload_images]" type="text" placeholder="Chọn ảnh cho phiên bản sản phẩm" readonly="true" class="input-select-image">
+                    <input id="item-images-{$k}" data-name="item-images" name="items[{$k}][images]" type="text" placeholder="Chọn ảnh cho phiên bản sản phẩm" readonly="true" class="input-select-image">
                 </div>
             </div>      
 
             <div class="col s12 m6 l6">
-                <div class="col s2 m3 l2">
-                    <!-- <img style="height: 40px;" class="" src="/template/alpha-1/assets/images/card-image.jpg" alt=""> -->
-                </div>                                
+                {if !empty($item.images)}
+                    {foreach from = $item.images item = image}
+                        <div class="col p-r-0">
+                            <img class="h-60" src="{$this->Utilities->getThumb($image)}">
+                        </div>
+                    {/foreach}
+                {/if}
             </div>                                
         </div>
 

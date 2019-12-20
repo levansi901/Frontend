@@ -45,10 +45,10 @@
                         {if !empty($product.items)}
                             {foreach from = $product.items key=k item = item}
                                 {assign var = number value = $k + 1}
-                                {$this->element('../Product/item',[item => $item, number => $number])}
+                                {$this->element('../Product/item', [item => $item, number => $number])}
                             {/foreach}
                         {else}
-                            {$this->element('../Product/item',[item => [], number => 1])}
+                            {$this->element('../Product/item', [item => [], number => 1])}
                         {/if}
                     </ul>
                 </div>
@@ -141,16 +141,20 @@
                     <span class="p-v-xs hide-on-small-only">
                         <input id="redirect-add" name="after_save" type="radio" value="add" class="with-gap" />
                         <label for="redirect-add">Tiếp tục thêm mới</label>
-                    </span>                 
+                    </span>                                     
 
-                    <span class="waves-effect waves-light btn s6 m-l-lg m-r-xs btn-submit-form">
-                        <i class="material-icons left lh-36">check</i>
-                        Thêm mới
-                    </span>
-
-                    <span class="waves-effect waves-light btn s6 blue-grey darken-4">
+                    <span class="waves-effect waves-light btn s6 blue-grey darken-4 m-l-lg m-r-xs ">
                         <i class="material-icons left lh-36">close</i>
                         Hủy bỏ
+                    </span>
+
+                    <span class="waves-effect waves-light btn s6 btn-submit-form">
+                        <i class="material-icons left lh-36">check</i>
+                        {if !empty($product.id)}
+                            Cập nhật
+                        {else}
+                            Thêm mới
+                        {/if}                        
                     </span>
                     
                 </div>    
