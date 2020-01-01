@@ -218,6 +218,11 @@ define('PAGE_DEFAULT', 20);
 define('DESC', 'DESC');
 define('ASC', 'ASC');
 
+define('ENABLE', 1);
+define('DISABLE', 0);
+define('STOP_BUSSINEUS', 2);
+define('STATUS_ALL', 'all');
+
 define('CODE', 'code');
 define('DATA', 'data');
 define('STATUS', 'status');
@@ -246,26 +251,57 @@ define('COD', 'COD');
 define('ONLINE_BANKING', 'ONLINE_BANKING');
 define('CASH', 'CASH');
 
+define('IMPORT', 'IMPORT');
+define('EXPORT', 'EXPORT');
+define('SUPPLIER', 'SUPPLIER');
+define('DELIVERY', 'DELIVERY');
+define('TRANSFER', 'TRANSFER');
+define('WHOLESALE', 'WHOLESALE');
+define('RETAIL', 'RETAIL');
+
 Configure::write('LIMIT_PAGINATION',
-    array(
+    [
         10 => 10,
         20 => 20,
         50 => 50,
-        100 => 100,
-    )
+        100 => 100
+    ]
 );
 
 Configure::write('TYPE_DISCOUNT',
-    array(
+    [
         MONEY => '$',
-        PERCENT => '%',        
-    )
+        PERCENT => '%'
+    ]
 );
 
 Configure::write('PAYMENT_METHOD',
-    array(
+    [
         COD => 'Thu hộ(COD)',
         ONLINE_BANKING => 'Chuyển khoản',
-        CASH => 'Tiền mặt',
-    )
+        CASH => 'Tiền mặt'
+    ]
+);
+
+
+Configure::write('STATUS',
+    [
+        ENABLE => 'Hoạt động',
+        DISABLE => 'Không hoạt động'
+    ]
+);
+
+Configure::write('STATUS_PRODUCT',
+    [
+        ENABLE => 'Hoạt động',
+        DISABLE => 'Không hoạt động',
+        STOP_BUSSINEUS => 'Ngừng kinh doanh'
+    ]
+);
+
+Configure::write('TYPE_SALE',
+    [
+        RETAIL => 'Bán lẻ',
+        WHOLESALE => 'Bán buôn'
+    ]
 );

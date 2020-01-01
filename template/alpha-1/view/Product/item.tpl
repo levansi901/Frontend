@@ -1,5 +1,5 @@
 {assign var = k value = $number - 1}
-<li data-index="{$k}" class="li-item">
+<li data-index="{$k}" data-item-id="{if !empty($item.id)}{$item.id}{/if}" class="li-item">
     <div class="collapsible-header">
         <i class="material-icons m-r-xs index-item">
             filter_{if $number < 10}{$number}{else}9_plus{/if}
@@ -45,21 +45,21 @@
 
             <div class="input-field col s12 m4 l3">
                 <input id="item-price_discount-{$k}" data-name="item-price_discount" name="items[{$k}][price_discount]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_discount)}{$item.price_discount}{/if}">
-                <label for="item-price-discount-{$k}"> 
+                <label for="item-price_discount-{$k}"> 
                     Giá khuyến mãi 
                 </label>                                    
             </div>
 
             <div class="input-field col s12 m4 l3">
-                <input id="item-time_start_discount-{$k}" data-name="item-time_start_discount" name="items[{$k}][time_start_discount]" type="text" class="w-100 input-date-picker" autocomplete="off" value="{if !empty($item.time_start_discount)}{$item.time_start_discount}{/if}">
-                <label for="item-time-start-{$k}"> 
+                <input id="item-time_start_discount-{$k}" data-name="item-time_start_discount" name="items[{$k}][time_start_discount]" type="text" class="w-100 input-date-picker" autocomplete="off" value="{if !empty($item.time_start_discount)}{date('d/m/Y - H:i', strtotime($item.time_start_discount))}{/if}">
+                <label for="item-time_start_discount-{$k}"> 
                     Ngày bắt đầu giảm giá 
                 </label>
             </div>
 
             <div class="input-field col s12 m4 l3">
-                <input id="item-time_end_discount-{$k}" data-name="item-time_end_discount" name="items[{$k}][time_end_discount]" type="text" class="w-100 input-date-picker" autocomplete="off" value="{if !empty($item.time_end_discount)}{$item.time_end_discount}{/if}">
-                <label for="item-time-end-{$k}">
+                <input id="item-time_end_discount-{$k}" data-name="item-time_end_discount" name="items[{$k}][time_end_discount]" type="text" class="w-100 input-date-picker" autocomplete="off" value="{if !empty($item.time_end_discount)}{date('d/m/Y - H:i', strtotime($item.time_end_discount))}{/if}">
+                <label for="item-time_end_discount-{$k}">
                     Ngày kết thúc giảm giá
                 </label>
             </div>
@@ -75,7 +75,7 @@
 
             <div class="input-field col s12 m4 l3">
                 <input id="item-price_whole_sale-{$k}" data-name="item-price_whole_sale" name="items[{$k}][price_whole_sale]" type="text" class="w-100 auto-numeric" autocomplete="off" value="{if !empty($item.price_whole_sale)}{$item.price_whole_sale}{/if}">
-                <label for="item-price-whole-sale-{$k}">
+                <label for="item-price_whole_sale-{$k}">
                     Giá buôn
                 </label>
             </div>
@@ -83,7 +83,7 @@
 
         <div class="row">
             <div class="file-field input-field col s12 m4 l6">
-                <div class="waves-effect waves-light btn btn-select-image" data-src="{$cdn_url}/filemanager/dialog.php?type=1&crossdomain=1&akey={$filemanager_access_key}&field_id=item-images-{$k}" data-type="iframe">
+                <div class="waves-effect waves-light btn btn-select-image" data-src="{$cdn_url}/filemanager/dialog.php?type=1&crossdomain=1&akey={$filemanager_access_key}&field_id=item-images" data-type="iframe">
                     <i class="material-icons left lh-36">perm_media</i> 
                     Chọn ảnh
                 </div>
@@ -93,12 +93,23 @@
                 </div>
             </div>      
 
-            <div class="col s12 m6 l6">
+            <div class="preview-item-images col s12 m6 l6">
                 {if !empty($item.images)}
-                    {foreach from = $item.images item = image}
-                        <div class="col p-r-0">
-                            <img class="h-60" src="{$this->Utilities->getThumb($image)}">
-                        </div>
+                    {foreach from = $item.images key = k_image item = image}
+                        <div class="item-image hoverable">
+                            <a href="{$image}" data-fancybox="images">
+                                <img class="h-60" src="{$this->Utilities->getThumb($image)}">                                
+                            </a>
+
+                            <div class="icons-inner valign-wrapper">
+                                <a href="{$image}" data-fancybox="images" class="m-r-xxs"> 
+                                    <i class="material-icons white-text f-s-18">open_in_new</i>
+                                </a> 
+                                <a href="#" class="delete-item-image"> 
+                                    <i class="material-icons white-text f-s-18">delete_forever</i>
+                                </a>
+                            </div>
+                        </div>                        
                     {/foreach}
                 {/if}
             </div>                                

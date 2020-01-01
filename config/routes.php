@@ -53,6 +53,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
+        '/product/delete/image', ['controller' => 'Product', 'action' => 'deleteProductImage']
+    );
+
+    $routes->connect(
         '/product/change-status', ['controller' => 'Product', 'action' => 'changeStatusProduct']
     );
 

@@ -201,7 +201,7 @@ var ss_page = {
 		var self = this;
 		tinymce.init({
 		  	selector: '.mce-editor',
-		  	height: 500,
+		  	height: 400,
 		  	menubar: false,
 		  	plugins: [
 		    	'advlist autolink lists link image charmap print preview textcolor',
@@ -363,7 +363,7 @@ var ss_list = {
 		});
 
 		//sort data table
-		$(self.form).on('click', 'th.sorting, th.sorting_asc, th.sorting_desc', function() {
+		$(self.form).on('click', 'th.sorting:not(.hide-text), th.sorting_asc:not(.hide-text), th.sorting_desc:not(.hide-text)', function() {
 			var sort = $(this).data('sort');
 			var direction = '';
 			if(sort == 'undefined'){

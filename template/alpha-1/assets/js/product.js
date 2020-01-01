@@ -13,6 +13,7 @@ var ss_product = {
 
         $('.input-date-picker').datepicker({
         	timepicker: true,
+        	dateFormat: 'dd/mm/yyyy',
         	onSelect(formattedDate, date, inst) {
 	        	var input = $(inst.el);	        	
 	        	if(input.data('name') == 'item-time_start_discount'){
@@ -26,7 +27,7 @@ var ss_product = {
         var filemanager_access_key = $('#filemanager_access_key').val();
 	    ss_page.tinyMce({
 	    	filemanager_access_key: typeof(filemanager_access_key) != 'undefined' ? filemanager_access_key : null
-	    });
+	    });	    
 	},
 	item_product: {
 		wrap_items: '#wrap-items',
@@ -35,6 +36,7 @@ var ss_product = {
 		item_html: '',
 		can_add: false,
 		can_delete: true,
+		index_select_image: null,
 		event: function(){
 			var self = this;
 
@@ -64,14 +66,49 @@ var ss_product = {
 				self.removeItem(index);			
 			});
 
-			$(self.wrap_list).on('click', '.input-select-image', function(e) {
-				var wrap_item = $(this).closest('.input-field').find('.btn-select-image').trigger('click');
-			});			         
+			$(self.wrap_list + ' .btn-select-image').fancybox({
+	            closeExisting: true,
+	            iframe : {
+	                preload : false
+	            }
+	        });
 
-            $(self.wrap_list).on('click', '.btn-select-image', function(e) {
-		        $(window).on('message', OnMessage);
-		    });
-		
+	        $(self.wrap_list).on('click', '.btn-select-image', function(e) {
+	        	var index = $(this).closest('li.li-item').data('index');	        	
+				self.index_select_image = typeof(index) != 'undefined' ? index : null;
+	        	$(window).on('message', OnMessage);
+	        });
+
+			$(self.wrap_list).on('click', '.input-select-image', function(e) {				
+				var wrap_item = $(this).closest('.input-field').find('.btn-select-image').trigger('click');
+			});
+
+			$(self.wrap_list).on('click', '.delete-item-image', function(e) {
+				var wrap_image = $(this).closest('.item-image');
+				
+				var index_image = wrap_image.index();
+				var item_id = $(this).closest('li.li-item').data('item-id');
+				
+				var params = {
+					index_image: typeof(index_image) != 'undefined' ? index_image : null,
+					item_id: typeof(item_id) != 'undefined' ? item_id : null,
+				}
+				
+				ss_page.alertWarning({
+					title: 'Xóa ảnh sản phẩm',
+					text: 'Bạn chắc chắn muốn xóa ảnh này ?'
+				}, function(rs){
+					ss_page.callAjax({
+						url: '/product/delete/image',
+						data: params
+					}).done(function(response) {
+						if(typeof(response.success) != 'undefined' && response.success){
+							wrap_image.remove();
+						}
+					});					
+				});
+				return false;
+			});
 		},
 		eventNewItem: function(){
 			var self = this;
@@ -93,11 +130,11 @@ var ss_product = {
 		    });
 
 		    $(self.wrap_list + ' .btn-select-image').fancybox({
-                closeExisting: true,
-                iframe : {
-                    preload : false
-                }
-            }); 
+	            closeExisting: true,
+	            iframe : {
+	                preload : false
+	            }
+	        });
 		},
 		checkConditions: function(){
 			var self = this;
@@ -193,10 +230,10 @@ var ss_product = {
 		setIndexItem: function(index){
 			var self = this;
 			var li_item = $(self.wrap_list + ' .li-item:eq('+ index +')');
+			
 			li_item.attr('data-index', index);
 			li_item.find('.collapsible-header i.index-item').html('filter_' + (index + 1));
 			li_item.find('input[data-name], select[data-name]').each(function(idx, input) {
-
 				var id = $(this).data('name')+ '-' + index;
 				var name = typeof($(this).data('name').split('-')[1]) != 'undefined' ? $(this).data('name').split('-')[1] : '';
 
@@ -206,14 +243,19 @@ var ss_product = {
 					$(this).attr('name', 'items[' + index + '][lazada_item_attributes][' + name +']');
 				}
 				
-				$(this).next('label').attr('for', id).toggleClass('active',$(this).val().length > 0 ? true : false);
+				$(this).next('label').attr('for', id).toggleClass('active', $(this).val().length > 0 ? true : false);
 			});
 		},
 		addNewItem: function(){
 			var self = this;
 			$(self.wrap_list).append(self.item_html);
-
 			var index = $(self.wrap_list + ' .li-item:last-child').index();
+
+			var li_item = $(self.wrap_list + ' .li-item:eq('+ index +')');
+			if(li_item.data('item-id') > 0){
+				li_item.find('.preview-item-images').remove();
+			}
+			
 			self.clearInputItem(index);
 			self.setIndexItem(index);		
 			self.activeItem(index);			
@@ -226,7 +268,7 @@ var ss_product = {
 				title: 'Xóa phiên bản sản phẩm',
 				text: 'Bạn chắc chắn muốn xóa phiên bản này ?'
 			}, function(rs){		
-				var item_id = li_item.find('#item_id');						
+				var item_id = li_item.data('item-id');						
 				if(item_id > 0){
 					self.items_deleted.push(item_id);
 				}
@@ -234,6 +276,25 @@ var ss_product = {
 				self.resetIndexItem();
 				self.checkConditions();
 			});
+		},
+		callbackSelectImage: function(e){
+			var self = this;
+
+			var event = e.originalEvent;     
+		   	if(event.data.sender === 'responsivefilemanager'){          		       
+		        var url = event.data.url;
+
+		        if($.isArray(url)){
+		            url = JSON.stringify(url);
+		        }
+
+		        if(self.index_select_image != null){
+		        	$('#item-images-' + self.index_select_image).val(url).trigger('change');	
+		        }
+		        
+		        $.fancybox.close();
+		        $(window).off('message', OnMessage);
+		   	}
 		}
 	},
 	product_form: {
@@ -558,20 +619,7 @@ var ss_product = {
 }
 
 function OnMessage(e){
-    var event = e.originalEvent;
-   if(event.data.sender === 'responsivefilemanager' && event.data.field_id){
-        
-        var field_id = event.data.field_id;            
-        var url = event.data.url;
-        if($.isArray(url)){
-            url = JSON.stringify(url);
-        }
-
-        $('#' + field_id).val(url).trigger('change');
-        $.fancybox.close();
-
-        $(window).off('message', OnMessage);
-   }
+	ss_product.item_product.callbackSelectImage(e);
 }
 
 $(document).ready(function() {

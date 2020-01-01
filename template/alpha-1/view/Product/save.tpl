@@ -9,62 +9,21 @@
     <form id="product-form" role="form" action="/product/save{if !empty($product.id)}/{$product.id}{/if}" method="POST" enctype="multipart/form-data">
         <div class="card">
             <div class="card-content my-form">
+                <div class="row card-title no-m">                
+                    <div class="col s12 m12 l12">
+                        Thông tin chính
+                    </div>
+                </div>
+
                 <div class="row">
-                    <div class="input-field col s12 m12 l12">
+                    <div class="input-field col s12 m8 l9">
                         <input id="name" name="name" type="text" length="255" maxlength="255" autocomplete="off" value="{if !empty($product.name)}{$product.name}{/if}" class="required">
                         <label for="name">
                             Tên sản phẩm
                             <small class="label-required text-red">*</small>
                         </label>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="input-field col s12 m12 l12">
-                        <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off" readonly="true" value="{if !empty($product.lazada_category_tree_name)}{$product.lazada_category_tree_name}{/if}" class="required" >
-                        <label for="select_lazada_category">
-                            {$this->element('/lazada/icon')}
-                            Danh mục Lazada
-                            <small class="label-required text-red">*</small>               
-                        </label>
-
-                        <input type="hidden" id="lazada_category_id" name="lazada_category_id" value="{if !empty($product.lazada_category_id)}{$product.lazada_category_id}{/if}">
-
-                        <input type="hidden" id="lazada_category_tree_ids" name="lazada_category_tree_ids" value="{if !empty($product.lazada_category_tree_ids)}{$product.lazada_category_tree_ids}{/if}">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div id="wrap-items" class="card-content my-form">
-                <span class="card-title">Phiên bản sản phẩm</span>
-                <div class="row">
-                    <ul id="list-items" class="collapsible popout collapsible-custom" data-collapsible="expandable">
-                        {if !empty($product.items)}
-                            {foreach from = $product.items key=k item = item}
-                                {assign var = number value = $k + 1}
-                                {$this->element('../Product/item', [item => $item, number => $number])}
-                            {/foreach}
-                        {else}
-                            {$this->element('../Product/item', [item => [], number => 1])}
-                        {/if}
-                    </ul>
-                </div>
-
-                <div class="row center">
-                    <span id="add-item" class="waves-effect waves-light btn">
-                        <i class="material-icons left">add</i>
-                        Thêm phiên bản mới
-                    </span>
-                </div>
-            </div>
-        </div>    
-
-        <div class="card">
-            <div class="card-content my-form">
-                <div class="row">
                     <div class="input-field col s12 m4 l3">
                         {$this->Form->select('status',$list_status , ['name'=>'status','empty' => null,'default' => {"{if !empty($product.status)}{$product.status}{/if}"} ,'class' => ''])}
                         <label for="status">Trạng thái</label>
@@ -92,15 +51,64 @@
                         <label for="weight">Cân nặng <small>(gram)</small></label>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m12 l12">
+                        <input id="select_lazada_category" name="select_lazada_category" type="text" autocomplete="off" readonly="true" value="{if !empty($product.lazada_category_tree_name)}{$product.lazada_category_tree_name}{/if}" class="required" >
+                        <label for="select_lazada_category">
+                            {$this->element('/lazada/icon')}
+                            Danh mục Lazada
+                            <small class="label-required text-red">*</small>               
+                        </label>
+
+                        <input type="hidden" id="lazada_category_id" name="lazada_category_id" value="{if !empty($product.lazada_category_id)}{$product.lazada_category_id}{/if}">
+
+                        <input type="hidden" id="lazada_category_tree_ids" name="lazada_category_tree_ids" value="{if !empty($product.lazada_category_tree_ids)}{$product.lazada_category_tree_ids}{/if}">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div id="wrap-items" class="card-content my-form">
+                <span class="row card-title no-m">
+                    <div class="col s12 m12 l12">
+                        Phiên bản sản phẩm
+                    </div>                    
+                </span>
+                <div class="row">
+                    <div class="col s12 m12 l12">
+                        <ul id="list-items" class="collapsible popout collapsible-custom" data-collapsible="expandable">
+                            {if !empty($product.items)}
+                                {foreach from = $product.items key=k item = item}
+                                    {assign var = number value = $k + 1}
+                                    {$this->element('../Product/item', [item => $item, number => $number])}
+                                {/foreach}
+                            {else}
+                                {$this->element('../Product/item', [item => [], number => 1])}
+                            {/if}
+                        </ul>
+                    </div>                    
+                </div>
+
+                <div class="row center">
+                    <span id="add-item" class="waves-effect waves-light btn">
+                        <i class="material-icons left">add</i>
+                        Thêm phiên bản mới
+                    </span>
+                </div>
             </div>
         </div>
         
         <div id="wrap-lazada-spu-attributes" class="card {if empty($lazada_normal_attributes)}hide{/if}">
             <div class="card-content my-form">
-                <span class="card-title">
-                    {$this->element('/lazada/icon')}
+                <span class="row card-title no-m">
+                    <div class="col s12 m12 l12">
+                        {$this->element('/lazada/icon')}
                     Thuộc tính Lazada
-                </span>
+                    </div>                    
+                </span>                
                 <div class="row lazada-spu-attributes">
                     {if !empty($lazada_normal_attributes)}
                         {$this->element('../Product/lazada_attributes',['lazada_attributes' => $lazada_normal_attributes, show_icon => false])}             

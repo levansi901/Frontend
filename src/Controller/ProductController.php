@@ -25,17 +25,27 @@ class ProductController extends AppController {
         $result = $response->json;
         $data = !empty($result[DATA]) ? $result[DATA] : [];
 
-        $list_status = $list_shops = $list_brands = $list_categories = $list_has_inventory = $list_has_image = $products = $pagination = [];
+        $list_shops = $list_brands = $list_categories = $products = $pagination = [];
 
         if(!empty($data)){
         	$list_status = !empty($data['list_status']) ? $data['list_status'] : [];
-            $list_shops = !empty($data['list_shops']) ? $data['list_shops'] : [];
-            $list_has_inventory = !empty($data['list_has_inventory']) ? $data['list_has_inventory'] : [];
-            $list_has_image = !empty($data['list_has_image']) ? $data['list_has_image'] : [];       
+            $list_shops = !empty($data['list_shops']) ? $data['list_shops'] : [];            
         	$products = !empty($data['products'][DATA]) ? $data['products'][DATA] : [];
             $pagination = !empty($data['products'][PAGINATION]) ? $data['products'][PAGINATION] : [];
         }
-        
+
+        $list_has_inventory = [
+            0 => 'Hết hàng',
+            1 => 'Còn hàng'
+        ];
+
+        $list_has_image = [
+            0 => 'Không có ảnh',
+            1 => 'Có ảnh'
+        ];
+
+        $list_status = Configure::read('STATUS');
+
         $this->set('list_status', $list_status);
         $this->set('list_shops', $list_shops);
         $this->set('list_has_inventory', $list_has_inventory);
@@ -51,7 +61,7 @@ class ProductController extends AppController {
     public function listProduct(){
         $this->layout = false;
 
-        $params = array(
+        $params = [
             'id_filter' => '',
             'keyword' => '',
             'category_filter' => '',
@@ -69,8 +79,8 @@ class ProductController extends AppController {
             'direction' => '',
             'format' => '',
             'lang' => '',
-            'limit' => PAGE_DEFAULT            
-        );
+            'limit' => PAGE_DEFAULT  
+        ];
 
         if (!$this->request->is('ajax')) {
             return $this->redirect('/product');            
@@ -78,13 +88,14 @@ class ProductController extends AppController {
 
         // mere data port from view
         $data_post = !empty($this->request->data) ? $this->request->data : [];
+
         if ($this->request->is('post') && !empty($data_post)) {
             $params = array_merge($params, $data_post);
         }
-
+        
         // get data
         $http = new Client();
-        $response = $http->get(API_DOMAIN_URL . 'product/list?' . http_build_query(array_filter($params)));  
+        $response = $http->get(API_DOMAIN_URL . 'product/list?' . http_build_query(array_filter($params, 'strlen')));  
         $result = $response->json;
         $products = !empty($result[DATA]) ? $result[DATA] : [];
         $pagination = !empty($result[PAGINATION]) ? $result[PAGINATION] : [];
@@ -112,7 +123,7 @@ class ProductController extends AppController {
 
         $title_for_layout = 'Thêm sản phẩm';
         if(!empty($id)){
-            $title_for_layout = 'Xem thông tin sản phẩm';
+            $title_for_layout = 'Cập nhật thông tin sản phẩm';
         }                
 
         $customer_id = 1;
@@ -229,6 +240,24 @@ class ProductController extends AppController {
         if ($this->request->is('post') && !empty($ids)) {      
             $http = new Client();
             $response = $http->post(API_DOMAIN_URL . 'product/delete', json_encode(['ids' => $ids]), ['type' => 'json']);      
+            $result = $response->getJson();
+            $data = !empty($result[DATA]) ? $result[DATA] : [];
+        }
+        $this->response->type('json');
+        $this->response->body(json_encode($result));
+        return $this->response;
+    }
+
+    public function deleteProductImage(){
+        $this->layout = false;
+        $this->autoRender = false;
+
+        $result = [];
+        $data_post = !empty($this->request->data) ? $this->request->data : [];
+
+        if ($this->request->is('post') && !empty($data_post['item_id']) && isset($data_post['index_image'])) {      
+            $http = new Client();
+            $response = $http->post(API_DOMAIN_URL . 'product/delete/image', json_encode($data_post), ['type' => 'json']);                  
             $result = $response->getJson();
             $data = !empty($result[DATA]) ? $result[DATA] : [];
         }

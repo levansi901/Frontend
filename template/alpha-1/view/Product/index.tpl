@@ -78,13 +78,13 @@
                                     </div>
 
                                     <div class="input-field col s12 m4 l3">
-                                        <input id="create_from" name="create_from" type="text" maxlength="11" autocomplete="off" class="input-date-picker">
-                                        <label for="create_from">Ngày tạo</label>
+                                        <input id="created_from" name="created_from" type="text" maxlength="11" autocomplete="off" class="input-date-picker">
+                                        <label for="created_from">Ngày tạo</label>
                                     </div>
 
                                     <div class="input-field col s12 m4 l3">
-                                        <input id="create_to" name="create_to" type="text" maxlength="11" autocomplete="off" class="input-date-picker">
-                                        <label for="create_to">Đến ngày</label>
+                                        <input id="created_to" name="created_to" type="text" maxlength="11" autocomplete="off" class="input-date-picker">
+                                        <label for="created_to">Đến ngày</label>
                                     </div>
 
                                                                        

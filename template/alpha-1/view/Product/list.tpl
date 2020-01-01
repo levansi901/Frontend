@@ -41,65 +41,77 @@
                             </li>
                         </ul>
                     </div>
-                </th>
-                <th class="w-3">                    
-                    
-                </th>
+                </th>                
                 <th class="w-30 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == name}sorting_{$params.direction}{else}sorting{/if}" data-sort="name">
                     Sản phẩm
+                </th>
+
+                <th class="w-3">                    
+                    
                 </th>
 
                 <th class="w-15 left-align"> 
                     Mã
                 </th>
 
-                <th class="w-15 {if !empty($params.sort) && !empty($params.direction) && $params.sort == price}sorting_{$params.direction}{else}sorting{/if}" data-sort="price"> 
+                <th class="w-15 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == price}sorting_{$params.direction}{else}sorting{/if}" data-sort="price"> 
                     Giá
                 </th>
 
-                <th class="w-15 {if !empty($params.sort) && !empty($params.direction) && $params.sort == price_discount}sorting_{$params.direction}{else}sorting{/if}" data-sort="price_discount" title="Giá khuyến mãi"> 
+                <th class="w-15 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == price_discount}sorting_{$params.direction}{else}sorting{/if}" data-sort="price_discount" title="Giá khuyến mãi"> 
                     Giá KM
                 </th>
-                <th class="w-10">Tồn</th>
+                <th class="w-3 sorting" data-sort="inventory">Tồn</th>
                 <th class="w-3">TT</th>
             </tr>
         </thead>
+
         <tbody>                    
             {if !empty($products)}
+                {assign var = product_id value= ''}
                 {foreach from = $products key = k_product item = product}
-                    <tr data-id="{$product.id}" >
-                        <td class="center">
+                    {assign var = same_item value = false}
+                    {if $product_id == $product.product_id}
+                        {assign var = same_item value= true}                    
+                    {/if}
+                    <tr class="{if $same_item}same-item{/if}" data-id="{$product.id}" data-product-id="{$product.product_id}">
+                        <td class="{if $same_item}same-column{/if} center">
                             <input id="row-{$k_product}" type="checkbox" class="filled-in no-text select-record"/>
                             <label for="row-{$k_product}"></label>                              
-                        </td>
+                        </td>                        
 
-                        <td class="center">
-                            <a class="img" href="/product/edit/{$product.id}">
-                                <img src="/no-image.png"/>
-                            </a>                            
-                        </td>
-
-                        <td>
-                            {if !empty($product.name)}
-                                <a href="/product/edit/{$product.id}" title="Xem thông tin sản phẩm">
-                                    {$product.name}
-                                </a>                                
+                        <td class="{if $same_item}same-column{/if}">
+                            {if !empty($product.name) && !$same_item}
+                                {$product.name}
                             {/if}
+                        </td>
+
+                        <td class="center p-l-0">
+                            <a class="img" href="/product/edit/{$product.id}">
+                                {if !empty($product.images[0])}
+                                    <img class="img-product" src="{$product.images[0]}"/>
+                                {else}
+                                    <img src="/no-image.png"/>
+                                {/if}
+                                                             
+                            </a>                            
                         </td>
 
                         <td >
                             {if !empty($product.code)}
-                                {$product.code}
+                                <a href="/product/edit/{$product.id}" title="Xem thông tin sản phẩm">
+                                    {$product.code}
+                                </a>                                  
                             {/if}
                         </td>
 
-                        <td class="center">
+                        <td>
                             {if !empty((float)$product.price)}
                                 {$product.price|number_format:0:",":","}
                             {/if}
                         </td>
 
-                        <td class="center">
+                        <td>
                             {if !empty((float)$product.price_discount)}
                                 {$product.price_discount|number_format:0:",":","}
                             {/if}
@@ -111,12 +123,13 @@
 
                         <td class="center status-column">
                             {if !empty($product.status)}
-                                <i class="material-icons f-s-18 text-green">check</i>
+                                <i class="material-icons f-s-18 text-green" title="Hoạt động">check</i>
                             {else}
-                                <i class="material-icons f-s-18 text-red">no_encryption</i>
+                                <i class="material-icons f-s-18" title="Không hoạt động">no_encryption</i>
                             {/if}
                         </td>                              
                     </tr>
+                    {assign var = product_id value= $product.product_id}
                 {/foreach}
             {else}
                 <tr >

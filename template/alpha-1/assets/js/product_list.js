@@ -5,14 +5,14 @@ var ss_product_list = {
 		var self = this;	
 		$('select').material_select();
 
-		$('.auto-numeric').autoNumeric('init', default_option_autonumric);        
+		$('.auto-numeric').autoNumeric('init', default_option_autonumric);
 
         $('.input-date-picker').datepicker({
-        	timepicker: true,
+        	dateFormat: 'dd/mm/yyyy',
         	onSelect(formattedDate, date, inst) {
 	        	var input = $(inst.el);	        	
 	        	if(input.attr('id') == 'create_from'){
-	        		var datepicker =  $('#create_to').datepicker().data('datepicker');
+	        		var datepicker = $('#create_to').datepicker().data('datepicker');
 	        		datepicker.update('minDate', date);
 	        	}
 	    	}
@@ -99,6 +99,16 @@ var ss_product_list = {
 					}	            
 				})
 			});
+		});
+
+		$(self.form).on('mouseenter', self.table + ' > tbody > tr', function () {
+		    var product_id = $(this).data('product-id');
+		    $(self.table + ' > tbody > tr[data-product-id=' + product_id + ']').addClass('h');
+		});
+
+		$(self.form).on('mouseleave', self.table + ' > tbody > tr', function () {
+		    var product_id = $(this).data('product-id');
+		    $(self.table + ' > tbody > tr[data-product-id=' + product_id + ']').removeClass('h');
 		});
 
 	},
