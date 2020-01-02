@@ -83,7 +83,7 @@ var ss_page = {
 			case 'success':
 				wrap_class = 'green';
 				icon = '<i class="material-icons m-r-lg">check</i>';
-				time_default = 2000;
+				time_default = 500;
 			break;
 
 			case 'error':
@@ -333,7 +333,11 @@ var ss_list = {
 			var page = typeof($(this).data('page')) != 'undefined' ? parseInt($(this).data('page')) : null;
 			if(page == null) return false;
 			$(self.form).find('input[name="page"]').val(page);	
-			self.loadListData();
+			self.loadListData(function(){
+				$('html, body').animate({
+			        scrollTop: $(self.wrap_list).offset().top - 5
+			    }, 400);
+			});
 		});
 
 		//limit change
@@ -420,7 +424,12 @@ var ss_list = {
 		});		
 
 	},
-	loadListData: function(){
+	loadListData: function(callback){
+
+		if (typeof(callback) != 'function') {
+	        callback = function () {};
+	    }
+
 		var self = this;
 
 		var data = {};
@@ -439,14 +448,13 @@ var ss_list = {
 			url: url,
 			data_type: 'html',
 			data: data
-		}).done(function(response) {
-			$('html, body').animate({
-		        scrollTop: $(self.wrap_list).offset().top - 5
-		    }, 400);
+		}).done(function(response) {			
 
 			$(self.wrap_list).html(response);
 			$('select').material_select();
 			$('.dropdown-button').dropdown();
+
+			callback();
 		});
 	},
 	toggleMoreFilter: function(){

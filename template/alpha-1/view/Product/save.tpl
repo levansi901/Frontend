@@ -6,7 +6,7 @@
 {$this->element('/layout/breadcrumb',['data'=> $data_breadcrumb])}
 
 <div class="col s12 m12 l12">
-    <form id="product-form" role="form" action="/product/save{if !empty($product.id)}/{$product.id}{/if}" method="POST" enctype="multipart/form-data">
+    <form id="product-form" data-id="{if !empty($product.id)}{$product.id}{/if}" role="form" action="/product/save{if !empty($product.id)}/{$product.id}{/if}" method="POST" enctype="multipart/form-data">
         <div class="card">
             <div class="card-content my-form">
                 <div class="row card-title no-m">                

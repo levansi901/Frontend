@@ -37,7 +37,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/product/edit/:id', ['controller' => 'Product', 'action' => 'saveProduct'], ['pass' => array('id'), "id" => "[0-9]+"]
+        '/product/edit/:id', ['controller' => 'Product', 'action' => 'saveProduct'], ['pass' => ['id'], 'id' => '[0-9]+']
     );
 
     $routes->connect(
@@ -45,7 +45,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/product/save/:id', ['controller' => 'Product', 'action' => 'ajaxSaveProduct'], ['pass' => array('id'), "id" => "[0-9]+"]
+        '/product/save/:id', ['controller' => 'Product', 'action' => 'ajaxSaveProduct'], ['pass' => ['id'], 'id' => '[0-9]+']
     );
 
     $routes->connect(
@@ -110,11 +110,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/inventory/save/:id', ['controller' => 'Inventory', 'action' => 'ajaxSaveBill'], ['pass' => array('id'), "id" => "[0-9]+"]
+        '/inventory/save/:id', ['controller' => 'Inventory', 'action' => 'ajaxSaveBill'], ['pass' => ['id'], 'id' => '[0-9]+']
     );
 
     $routes->connect(
-        '/inventory/edit/:id', ['controller' => 'Inventory', 'action' => 'saveBill'], ['pass' => array('id'), "id" => "[0-9]+"]
+        '/inventory/edit/:id', ['controller' => 'Inventory', 'action' => 'saveBill'], ['pass' => ['id'], 'id' => '[0-9]+']
     );
 
     $routes->connect(

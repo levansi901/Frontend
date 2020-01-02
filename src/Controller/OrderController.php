@@ -50,7 +50,7 @@ class OrderController extends AppController
     public function listOrder(){
         $this->layout = false;
 
-        $params = array(
+        $params = [
             'id_filter' => '',
             'keyword' => '',
             'category_filter' => '',
@@ -68,8 +68,8 @@ class OrderController extends AppController
             'direction' => '',
             'format' => '',
             'lang' => '',
-            'limit' => PAGE_DEFAULT            
-        );
+            'limit' => PAGE_DEFAULT
+        ];
 
         if (!$this->request->is('ajax')) {
             return $this->redirect('/product');            

@@ -1,4 +1,5 @@
-var ss_product = {	
+var ss_product = {
+
 	init: function(params = {}){
 		var self = this;
 		
@@ -30,6 +31,7 @@ var ss_product = {
 	    });	    
 	},
 	item_product: {
+		form: '#product-form',
 		wrap_items: '#wrap-items',
 		wrap_list: '#list-items',
 		items_deleted: [],
@@ -41,7 +43,14 @@ var ss_product = {
 			var self = this;
 
 			self.item_html = $(self.wrap_list + ' > .li-item:first-child')[0].outerHTML;
-			self.activeItem(0);
+			var item_id = typeof($(self.form).data('id')) != 'undefined' ? $(self.form).data('id') : null;
+			
+			var active_index = 0;
+			if(item_id > 0){
+				active_index = $(self.wrap_list).find('li[data-item-id='+ item_id +']').data('index');
+			}
+
+			self.activeItem(active_index > 0 ? active_index : 0);				
 			self.checkConditions();
 
 			$(self.wrap_items).on('click', '#add-item', function(e) {

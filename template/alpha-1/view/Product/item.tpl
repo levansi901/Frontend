@@ -10,10 +10,10 @@
         <i class="material-icons no-m right delete-item" title="Xóa">delete_forever</i>
     </div>
     
-    <div class="collapsible-body">        
+    <div class="collapsible-body">
         <div class="row m-t-xs lazada-sku-attributes">
             {if !empty($lazada_sku_attributes)}
-                {$this->element('../Product/lazada_attributes',['lazada_attributes' => $lazada_sku_attributes, 'show_icon' => true, 'index' => $k])}
+                {$this->element('../Product/lazada_attributes', ['lazada_attributes' => $lazada_sku_attributes, 'show_icon' => true, 'index' => $k])}
             {/if}
         </div>
         

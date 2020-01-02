@@ -163,7 +163,8 @@ class ProductController extends AppController {
                 
             }
         }        
-        
+        debug($product);
+        exit;
         $this->set('list_status', $list_status);
         $this->set('product', $product);
         $this->set('lazada_normal_attributes', $lazada_normal_attributes);
@@ -181,9 +182,11 @@ class ProductController extends AppController {
 
         $result = [];
         $data_post = !empty($this->request->data) ? $this->request->data : [];
-        
+
         if ($this->request->is('post') && !empty($data_post)) {
             $data_post['id'] = $id;
+            debug(json_encode($data_post));
+            exit;
             $http = new Client();
             $response = $http->post(API_DOMAIN_URL . 'product/save', json_encode($data_post), ['type' => 'json']);      
             $result = $response->getJson();

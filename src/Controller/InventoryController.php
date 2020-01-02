@@ -51,7 +51,7 @@ class InventoryController extends AppController
     public function listBill(){
         $this->layout = false;
 
-        $params = array(
+        $params = [
             'id_filter' => '',
             'keyword' => '',
             'category_filter' => '',
@@ -69,8 +69,8 @@ class InventoryController extends AppController
             'direction' => '',
             'format' => '',
             'lang' => '',
-            'limit' => PAGE_DEFAULT            
-        );
+            'limit' => PAGE_DEFAULT
+        ];
 
         if (!$this->request->is('ajax')) {
             return $this->redirect('/product');            

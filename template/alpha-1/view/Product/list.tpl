@@ -42,7 +42,7 @@
                         </ul>
                     </div>
                 </th>                
-                <th class="w-30 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == name}sorting_{$params.direction}{else}sorting{/if}" data-sort="name">
+                <th class="w-30 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == name}sorting_{$params.direction}{else}sorting{/if}" data-sort="name" title="Tên sản phẩm">
                     Sản phẩm
                 </th>
 
@@ -50,19 +50,19 @@
                     
                 </th>
 
-                <th class="w-15 left-align"> 
+                <th class="w-15 left-align" title="Mã sản phẩm"> 
                     Mã
                 </th>
 
-                <th class="w-15 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == price}sorting_{$params.direction}{else}sorting{/if}" data-sort="price"> 
+                <th class="w-15 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == price}sorting_{$params.direction}{else}sorting{/if}" data-sort="price" title="Giá sản phẩm"> 
                     Giá
                 </th>
 
                 <th class="w-15 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == price_discount}sorting_{$params.direction}{else}sorting{/if}" data-sort="price_discount" title="Giá khuyến mãi"> 
                     Giá KM
                 </th>
-                <th class="w-3 sorting" data-sort="inventory">Tồn</th>
-                <th class="w-3">TT</th>
+                <th class="w-3 sorting" data-sort="inventory" title="Số lượng sản phẩm còn trong ko">Tồn</th>
+                <th class="w-3" title="Trạng thái sản phẩm">TT</th>
             </tr>
         </thead>
 
@@ -118,23 +118,25 @@
                         </td>
 
                         <td class="center">
-                            
+                            {if !empty($product.inventory)}
+                                {$product.inventory|number_format:0:",":","}
+                            {/if}
                         </td>
 
                         <td class="center status-column">
                             {if !empty($product.status)}
-                                <i class="material-icons f-s-18 text-green" title="Hoạt động">check</i>
+                                <i class="material-icons f-s-18 text-green" title="Sản phẩm đang được kích hoạt">check</i>
                             {else}
-                                <i class="material-icons f-s-18" title="Không hoạt động">no_encryption</i>
+                                <i class="material-icons f-s-18" title="Sản phẩm đang không kích hoạt">no_encryption</i>
                             {/if}
                         </td>                              
                     </tr>
                     {assign var = product_id value= $product.product_id}
                 {/foreach}
             {else}
-                <tr >
+                <tr>
                     <td colspan="12" class="center">
-                        <i class="">
+                        <i>
                             Không tìm thấy sản phẩm nào
                         </i>
                     </td>                            
