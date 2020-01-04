@@ -23,7 +23,7 @@
     {/if}
 
     <div class="pagination">
-        <span class="count-record"> {$start_record} - {$end_record} / {$total_record} </span>
+        <span class="count-record hide-on-small-only"> {$start_record} - {$end_record} / {$total_record} </span>
 
         {if $current_page != 1}
             <li data-page="1" title="Trang đầu">

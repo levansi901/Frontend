@@ -7,7 +7,7 @@
     <div class="col s6 m6 l6 no-p right-align">
         <a href="/product/add" class="waves-effect waves-light btn" title="Thêm sản phẩm mới">
             <i class="material-icons left">add</i>
-            Thêm sản phẩm mới
+            Thêm mới
         </a>
     </div>    
 </div>
@@ -29,16 +29,17 @@
 
                     <div class="input-field col s12 m4 l3 right-align">
                     	<a id="filter-data" class="waves-effect waves-light btn m-b-xs m-r-xxs" title="Tìm kiếm">
+                            <i class="material-icons left">search</i>                            
                     		Tìm kiếm
     	                </a>
 
-    	                <a id="reset-filter" class="btn-floating btn waves-effect waves-light m-b-xs" title="Làm mới">
-                    		<i class="material-icons">refresh</i>
-    	                </a>
+                        <a id="reset-filter" class="btn-floating waves-effect waves-effect waves-light m-b-xs" title="Làm mới">
+                            <i class="material-icons">refresh</i>
+                        </a>
 
-    	                <a id="more-filter" class="btn-floating btn waves-effect waves-light blue-grey darken-4 m-b-xs" title="Hiển thị bộ lọc khác">
-                    		<i class="material-icons">keyboard_arrow_down</i>
-    	                </a>
+                        <a id="more-filter" class="btn-floating waves-effect waves-effect blue-grey darken-4 m-b-xs" title="Hiển thị bộ lọc khác">
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        </a>
                     </div>
                 </div>
 

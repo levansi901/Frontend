@@ -1,15 +1,14 @@
-<div class="row m-b-xs">
-    <div class="col s6 m6 l6 no-p">
-        <span class="page-title no-m">
-           Nhập hàng mới
-        </span>
-    </div>
-</div>
+{assign var=data_breadcrumb value=[
+0=>['title' => 'Danh sách', 'url' => '/inventory/bill'],
+1=>['title' => "{$title_for_layout}", 'url' => ""]
+]}
 
-<div class="row">
-    <form id="bill-form" role="form" action="" method="POST" enctype="multipart/form-data">
+{$this->element('/layout/breadcrumb', ['data'=> $data_breadcrumb])}
+
+<div class="row row-offset">
+    <form id="bill-form" role="form" action="" method="POST" enctype="multipart/form-data">    
         <div class="col s12 m9 l9">
-            <div class="card">    
+            <div class="card hide-on-small-only">
                 <div class="card-content p-b-0">
                     <div class="row">
                         <div class="progress-bar-step">
@@ -79,45 +78,47 @@
                     </div> 
 
                     <div class="row no-m">
-                        <table id="bill-table" class="display responsive-table custom-table">
-                            <thead>
-                                <tr>
-                                    <th class="w-18 left-align">                    
-                                        Mã
-                                    </th>
+                        <div class="table-responsive">
+                            <table id="bill-table" class="display custom-table">
+                                <thead>
+                                    <tr>
+                                        <th class="w-18 left-align">                    
+                                            Mã
+                                        </th>
 
-                                    <th class="w-40 left-align">
-                                        Sản phẩm
-                                    </th>
+                                        <th class="w-40 left-align">
+                                            Sản phẩm
+                                        </th>
 
-                                    <th class="w-15 right-align"> 
-                                        Giá nhập
-                                    </th>
+                                        <th class="w-15 right-align"> 
+                                            Giá nhập
+                                        </th>
 
-                                    <th class="w-12 right-align"> 
-                                        Số lượng
-                                    </th>
-                                    
-                                    <th class="w-13 right-align">Thành tiền</th>
-                                    <th class="w-1"></th>
-                                </tr>
-                            </thead>
-                            <tbody>                    
-                                <tr class="no-record">
-                                    <td colspan="12" class="center">
-                                        <i>
-                                            Hãy chọn 1 sản phẩm
-                                        </i>
-                                    </td>                            
-                                </tr>
-                            </tbody>
-                        </table>                    
+                                        <th class="w-12 right-align"> 
+                                            Số lượng
+                                        </th>
+                                        
+                                        <th class="w-13 right-align">Thành tiền</th>
+                                        <th class="w-1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>                    
+                                    <tr class="no-record">
+                                        <td colspan="12" class="center">
+                                            <i>
+                                                Hãy chọn 1 sản phẩm
+                                            </i>
+                                        </td>                            
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>                   
                 </div>
 
                 <div class="card-action">
                     <div class="row no-m f-s-13">
-                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
+                        <div class="col s12 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
                             <span>
                                 Số lượng
                             </span>
@@ -126,7 +127,7 @@
                             </span>
                         </div>
 
-                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
+                        <div class="col s12 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
                             <span>
                                 Tổng tiền
                             </span>
@@ -135,7 +136,7 @@
                             </span>
                         </div>
 
-                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs hide">
+                        <div class="col s12 m6 l4 offset-l8 offset-m6 no-p m-b-xs hide">
                             <span>
                                 VAT
                             </span>
@@ -144,7 +145,7 @@
                             </span>
                         </div>
 
-                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
+                        <div class="col s12 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
                             <a id="btn-bill-discount" href="javascript:" shortcut="117">
                                 Chiết khấu (F6)
                                 <i class="material-icons v-align-b">arrow_drop_down</i>
@@ -154,7 +155,7 @@
                             </span>
                         </div>
 
-                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
+                        <div class="col s12 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
                             <a id="btn-bill-fee-other" href="javascript:" shortcut="118">
                                 Chi phí khác (F7)
                                 <i class="material-icons v-align-b">arrow_drop_down</i>
@@ -164,7 +165,7 @@
                             </span>
                         </div>
 
-                        <div class="col s6 m6 l4 offset-l8 offset-m6 no-p">
+                        <div class="col s12 m6 l4 offset-l8 offset-m6 no-p">
                             <span>
                                 Tiền cần trả
                             </span>
@@ -186,7 +187,7 @@
                             <label>
                                 <input id="payment-confirm" type="checkbox">
                                 <span class="lever"></span>
-                                Thanh toán cho nhà cung cấp
+                                Thanh toán ngay
                             </label>
                         </div>
                     </div>
@@ -214,7 +215,7 @@
                 </div>
             </div>
 
-            <div class="card">    
+            <div class="card m-b-xxl">    
                 <div class="card-content">     
                     <span class="page-title no-m lh-20">
                        Nhập hàng
@@ -231,7 +232,7 @@
         </div>
 
         <div class="col s12 m3 l3">
-            <div class="card">    
+            <div class="card m-b-xxl">    
                 <div class="card-content">
                     <div class="row">
                         <div class="input-field col s12 m12 l12">
@@ -278,14 +279,14 @@
         <div class="mn-header navbar-fixed">
             <nav class="white nav-action">
                 <div class="row">
-                    <div class="col s12 m12 l12 center">
-                        <span class="waves-effect waves-light btn s6 m-r-xs m-l-lg btn-submit-form" data-step="2">
-                            <i class="material-icons left lh-36">done_all</i>
-                            Đặt hàng và duyệt (F1)
+                    <div class="col s12 m12 l12 center no-p">
+                        <span class="waves-effect waves-light btn s6 m-r-xxs p-h-xs btn-submit-form" data-step="2">
+                            <i class="material-icons left lh-36 m-r-xxs">done_all</i>
+                            Đặt và duyệt (F1)
                         </span>
 
-                        <span class="waves-effect waves-light btn s6 m-r-xs btn-submit-form" data-step="1">
-                            <i class="material-icons left lh-36">check</i>
+                        <span class="waves-effect waves-light btn s6 p-h-xs btn-submit-form" data-step="1">
+                            <i class="material-icons left lh-36 m-r-xxs">check</i>
                             Đặt hàng (F2)
                         </span>
                     </div>

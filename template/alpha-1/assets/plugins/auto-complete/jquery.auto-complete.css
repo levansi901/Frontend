@@ -62,4 +62,6 @@
 .autocomplete-suggestion .suggestion-content-code,
 .autocomplete-suggestion .suggestion-content-quantity{
     padding-top: 2px;
+    font-style: italic;
+    font-size: 12px;
 }

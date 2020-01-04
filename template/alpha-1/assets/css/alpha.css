@@ -200,14 +200,18 @@ body:not(.loaded) .mn-content {
 
 .mn-header {
     z-index: 999;
-    height: 60px!important;
+    height: 45px!important;
+}
+
+.mn-header > nav.nav-top {
+    height: 45px!important;
 }
 
 .header-title {
     font-size: 15px;
     font-weight: bold;
     text-transform: uppercase;
-    line-height: 60px;
+    line-height: 45px;
     float: left;
     color: #fff;
     margin-left: 8px;
@@ -227,8 +231,8 @@ body:not(.loaded) .mn-content {
 nav {
     position: relative;
     padding: 0 16px;
-    height: 60px!important;
-    line-height: 60px!important;
+    height: 45px!important;
+    line-height: 45px!important;
 }
 
 .mn-header.navbar-fixed nav .nav-wrapper {
@@ -261,7 +265,7 @@ nav i,
 nav [class^="mdi-"], 
 nav [class*="mdi-"], 
 nav i.material-icons {
-    line-height: 60px;
+    line-height: 50px;
 }
 
 nav ul li:hover,
@@ -315,7 +319,7 @@ nav .nav-wrapper ul li img + span {
 
 nav .nav-wrapper ul li span.badge {
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 5px;
     min-width: 1px!important;
     line-height: 1.5;
@@ -330,7 +334,7 @@ nav .nav-wrapper ul li span.badge {
     border: none;
     background: none;
     outline: 0;
-    padding-top: 30px;
+    padding-top: 21px;
 }
 
 .material-design-hamburger__icon {
@@ -546,7 +550,7 @@ nav .nav-wrapper ul li span.badge {
 
 .notifications-dropdown {
     overflow-y: visible;
-    top: 60px!important;
+    top: 45px!important;
     padding: 0!important;
 }
 
@@ -1348,7 +1352,7 @@ nav .nav-wrapper ul li span.badge {
 
 .page-title {
     float: left;
-    margin: 0 8px 5px 8px;
+    /*margin: 0 8px 5px 8px;*/
     color: #26a69a;
     line-height: 37px;
     text-transform: uppercase;
@@ -1387,7 +1391,7 @@ nav .nav-wrapper ul li span.badge {
 .side-nav {
     padding: 0!important;
     height: 100%;
-    /*margin-top: 60px;*/
+    margin-top: 45px;
     z-index: 997;
     width: 220px;
 }
@@ -1397,7 +1401,7 @@ nav .nav-wrapper ul li span.badge {
 }
 
 .sidebar-menu {
-    padding-top: 15px!important;
+    padding-top: 10px!important;
     padding-bottom: 15px!important;
 }
 
@@ -1674,7 +1678,7 @@ li.active .nav-drop-icon {
 }
 
 .mn-inner {
-    padding: 15px 25px 9.5px 25px;
+    padding: 10px 25px 9.5px 25px;
     min-height: calc(100% - 181px);
 }
 

@@ -136,22 +136,22 @@
         <div class="mn-header navbar-fixed">
             <nav class="white nav-action">
                 <div class="row center">
-                    <span class="p-v-xs hide-on-small-only m-r-sm">
+                    <span class="p-v-xs m-r-sm hide-on-small-only">
                         <input id="redirect-list" name="after_save" type="radio" checked="true" value="list" class="with-gap" />
                         <label for="redirect-list">Về trang danh sách</label>
                     </span>
 
-                    <span class="p-v-xs hide-on-small-only m-r-sm">
+                    <span class="p-v-xs m-r-sm hide-on-small-only">
                         <input id="redirect-edit" name="after_save" type="radio" value="edit" class="with-gap" />
                         <label for="redirect-edit">Về trang cập nhât</label>
                     </span>   
 
-                    <span class="p-v-xs hide-on-small-only">
+                    <span class="p-v-xs m-r-lg hide-on-small-only">
                         <input id="redirect-add" name="after_save" type="radio" value="add" class="with-gap" />
                         <label for="redirect-add">Tiếp tục thêm mới</label>
                     </span>                                     
 
-                    <span class="waves-effect waves-light btn s6 blue-grey darken-4 m-l-lg m-r-xs ">
+                    <span class="waves-effect waves-light btn s6 blue-grey darken-4 m-r-xs">
                         <i class="material-icons left lh-36">close</i>
                         Hủy bỏ
                     </span>
@@ -178,7 +178,7 @@
         </div>  
 
         <div class="row m-b-xs right">
-            <a class="modal-close waves-effect waves-light btn black m-r-xs s6">Hủy bỏ</a>
+            <a class="modal-close waves-effect waves-light btn black m-r-xxs s6">Hủy bỏ</a>
             <a id="select-lazada-category" class="waves-effect waves-light btn s6 disabled">
                 Đồng ý
             </a>

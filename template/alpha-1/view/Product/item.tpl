@@ -89,7 +89,7 @@
                 </div>
                 
                 <div class="file-path-wrapper">
-                    <input id="item-images-{$k}" data-name="item-images" name="items[{$k}][images]" type="text" placeholder="Chọn ảnh cho phiên bản sản phẩm" readonly="true" class="input-select-image">
+                    <input id="item-images-{$k}" data-name="item-images" name="items[{$k}][images]" type="text" placeholder="Chọn ảnh" readonly="true" class="input-select-image">
                 </div>
             </div>      
 
@@ -98,7 +98,7 @@
                     {foreach from = $item.images key = k_image item = image}
                         <div class="item-image hoverable">
                             <a href="{$image}" data-fancybox="images">
-                                <img class="h-60" src="{$this->Utilities->getThumb($image)}">                                
+                                <img class="h-55" src="{$this->Utilities->getThumb($image)}">                                
                             </a>
 
                             <div class="icons-inner valign-wrapper">

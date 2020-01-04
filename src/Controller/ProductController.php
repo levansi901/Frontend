@@ -13,8 +13,10 @@ class ProductController extends AppController {
     }
 
     public function index(){
+        static::$css_layout[] = 'assets/plugins/fancybox/jquery.fancybox.css';
         static::$css_layout[] = 'assets/plugins/air-datepicker/css/datepicker.css';
         
+        static::$js_files[] = 'assets/plugins/fancybox/jquery.fancybox.js';
         static::$js_files[] = 'assets/plugins/air-datepicker/js/datepicker.js';
         static::$js_files[] = 'assets/plugins/auto-numeric/auto-numeric.min.js';
         static::$js_files[] = 'assets/js/product_list.js';    
@@ -123,7 +125,7 @@ class ProductController extends AppController {
 
         $title_for_layout = 'Thêm sản phẩm';
         if(!empty($id)){
-            $title_for_layout = 'Cập nhật thông tin sản phẩm';
+            $title_for_layout = 'Cập nhật sản phẩm';
         }                
 
         $customer_id = 1;
