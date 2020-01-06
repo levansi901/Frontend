@@ -1006,3 +1006,20 @@ textarea.materialize-textarea:focus.valid {
     margin-left: -10.5px !important;
     margin-right: -10.5px !important;
 }
+
+.text-capitalize{
+    text-transform: capitalize !important;
+}
+
+.text-uppercase{
+    text-transform: uppercase !important;
+}
+
+.text-lowercase{
+    text-transform: lowercase !important;
+}
+
+.fake-link{
+    color: #039be5;
+    cursor: pointer;
+}

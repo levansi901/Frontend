@@ -52,28 +52,31 @@ class InventoryController extends AppController
         $this->layout = false;
 
         $params = [
-            'id_filter' => '',
-            'keyword' => '',
-            'category_filter' => '',
-            'status' => '',
-            'brand_id' => '',
-            'available_stock' => '',
-            'price_from' => '',
-            'price_to' => '',
-            'image_filter' => '',
-            'create_by' => '',
+            'code' => '',
+            'product_filter' => '',
+            'type' => '',
+            'type_receipt' => '',
+            'shop_id' => '',
+            'supplier_id' => '',
+            'check_inventory_id' => '',
+            'return_bill_id' => '',
+            'ecommerce_partner' => '',
+            'staff_id' => '',
+            'created_by' => '',
+            'note' => '',
             'create_from' => '',
             'create_to' => '',
+            'total_from' => '',
+            'total_to' => '',
             'page' => 1,
             'sort' => '',
             'direction' => '',
             'format' => '',
-            'lang' => '',
             'limit' => PAGE_DEFAULT
         ];
 
         if (!$this->request->is('ajax')) {
-            return $this->redirect('/product');            
+            return $this->redirect('/inventory/bill');            
         }   	        
 
         // mere data port from view
@@ -84,15 +87,16 @@ class InventoryController extends AppController
 
         // get data
         $http = new Client();
-        $response = $http->get(API_DOMAIN_URL . 'product/list?' . http_build_query(array_filter($params)));  
+        $response = $http->get(API_DOMAIN_URL . 'bill/list?' . http_build_query(array_filter($params, 'strlen')));  
         $result = $response->json;
-        $products = !empty($result[DATA]) ? $result[DATA] : [];
+        $bills = !empty($result[DATA]) ? $result[DATA] : [];
         $pagination = !empty($result[PAGINATION]) ? $result[PAGINATION] : [];
         
         $this->set('params', $params);
-        $this->set('products', $products);
+        $this->set('bills', $bills);
         $this->set('pagination', $pagination);
         $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));
+        $this->set('list_type_receipt', Configure::read('TYPE_RECEIPT'));
         $this->render('list');
     }
 

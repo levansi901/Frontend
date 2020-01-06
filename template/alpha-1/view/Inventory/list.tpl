@@ -45,7 +45,7 @@
                         </div>
                     </th>
 
-                    <th class="w-10 left-align" title="Mã phiếu">
+                    <th class="w-5 left-align" title="Mã phiếu">
                         Mã phiếu
                     </th>                    
 
@@ -63,10 +63,14 @@
 
                     <th class="w-10 right-align" title="Tổng tiền">
                         Tổng tiền
-                    </th>                    
+                    </th>
 
-                    <th class="w-5" title="Người tạo"> 
-                        Người tạo
+                    <th class="w-10" title="Thời gian tạo phiếu">
+                        Ngày tạo
+                    </th>
+
+                    <th class="w-5" title="Trạng thái phiếu phiếu">
+                        Trạng thái
                     </th>
                 </tr>
             </thead>
@@ -99,8 +103,10 @@
                                 {/if}
 
                                 {if !empty($list_type_receipt[$item.bill.type_receipt])}
-                                    - {$list_type_receipt[$item.bill.type_receipt]}
-                                {/if}                            
+                                    <span class="text-capitalize">
+                                        {$list_type_receipt[$item.bill.type_receipt]}
+                                    </span>
+                                {/if}                  
                             </td>
 
                             <td>
@@ -111,29 +117,42 @@
 
                             <td class="center">
                                 {if !empty($item.bill.total_items)}
-                                    {$item.bill.total_items|number_format:0:".":","}
+                                    <span class="fake-link" title="Xem thông tin sản phẩm">
+                                        {$item.bill.total_items|number_format:0:".":","}
+                                    </span>                                    
                                 {/if}
                             </td>
 
                             <td class="right-align">
                                 {if !empty($item.bill.total_final)}
-                                    {$item.bill.total_final|number_format:0:".":","}
+                                    <span class="fake-link" title="Xem thông tin sản phẩm">
+                                        {$item.bill.total_final|number_format:0:".":","}
+                                    </span>
                                 {/if}
                             </td>
 
                             <td class="center">
+                                {if !empty($item.bill.created)}
+                                    <p class="center">
+                                        {date('H:i - d/m/Y', strtotime($item.bill.created))}
+                                    </p>
+                                {/if}
+
                                 {if !empty($item.bill.created_by_name)}
                                     {$item.bill.created_by_name}
                                 {/if}
                             </td>
+
+                            <td class="center">
+
+                            </td>
                         </tr>
-                        {assign var = product_id value= $product.product_id}
                     {/foreach}
                 {else}
                     <tr>
                         <td colspan="12" class="center">
                             <i>
-                                Không tìm thấy sản phẩm nào
+                                Không tìm thấy phiếu xuất/nhập kho nào
                             </i>
                         </td>                            
                     </tr>

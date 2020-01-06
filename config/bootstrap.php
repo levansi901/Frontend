@@ -310,7 +310,7 @@ Configure::write('TYPE_SALE',
 Configure::write('TYPE_BILL',
     [
         IMPORT => 'Nhập',
-        EXPORT => 'Xuât'
+        EXPORT => 'Xuất'
     ]
 );
 

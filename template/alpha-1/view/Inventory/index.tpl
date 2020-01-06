@@ -1,31 +1,41 @@
 <div class="row m-b-xs">
     <div class="col s6 m6 l6 no-p">
         <span class="page-title no-m">
-            Sản phẩm
+            Phiếu xuất/nhập kho
         </span>        
     </div>
     <div class="col s6 m6 l6 no-p right-align">
-        <a href="/product/add" class="waves-effect waves-light btn" title="Thêm sản phẩm mới">
+        <a href="/inventory/add-supplier" class="waves-effect waves-light btn" title="Tạo phiếu mới">
             <i class="material-icons left">add</i>
-            Thêm mới
+            Tạo phiếu
         </a>
     </div>    
 </div>
   
 <div class="row no-m">
-    <form id="form-list-data" action="/product/list" class="no-m no-p">    
+    <form id="form-list-data" action="/inventory/bill/list" class="no-m no-p">    
         <div id="wrap-filter" class="card no-m">
             <div class="card-content p-v-xs p-h-xs m-b-xs p-b-0">
                 <div class="row no-m">
-                    <div class="input-field col s12 m4 l6">
-                        <input id="keyword" name="keyword" type="text" maxlength="100" autocomplete="off">
-                        <label for="keyword">Tìm kiếm sản phẩm</label>
-                    </div>     
+                    <div class="input-field col s12 m2 l2">
+                        <input id="code" name="code" type="text" maxlength="20" autocomplete="off">
+                        <label for="code">Mã phiếu</label>
+                    </div>
 
                     <div class="input-field col s12 m4 l3">
-                        {$this->Form->select('shop_id', $list_shops , ['name'=>'shop_id', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
-                        <label for="shop_id">Chi nhánh</label>
+                        <input id="product_filter" name="product_filter" type="text" maxlength="100" autocomplete="off">
+                        <label for="product_filter">Sản phẩm</label>
+                    </div>
+
+                    <div class="input-field col s12 m4 l2">
+                        {$this->Form->select('type', $list_type_bill , ['name'=>'type', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
+                        <label for="type">Loại phiếu</label>                        
                     </div>               
+
+                    <div class="input-field col s12 m4 l2">
+                        {$this->Form->select('type_receipt', $list_type_receipt , ['name'=>'type_receipt', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
+                        <label for="type_receipt">Kiểu phiếu</label>
+                    </div>
 
                     <div class="input-field col s12 m4 l3 right-align">
                         <a id="filter-data" class="waves-effect waves-light btn m-b-xs m-r-xxs" title="Tìm kiếm">
@@ -54,28 +64,20 @@
                                     </div>
 
                                     <div class="input-field col s12 m4 l3">   
-                                        {$this->Form->select('has_inventory', $list_has_inventory , ['name'=>'has_inventory', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
-                                        <label for="has_inventory">Tình trạng</label>
+                                        {$this->Form->select('shop_id', $list_shops , ['name'=>'shop_id', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
+                                        <label for="shop_id">Chi nhánh</label>
                                     </div>                                    
 
-                                    <div class="input-field col s12 m4 l3">   
-                                        {$this->Form->select('has_image', $list_has_image , ['name'=>'has_image', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
-                                        <label for="has_image">Hình ảnh</label>
-                                    </div>
-
-                                    <div class="input-field col s12 m4 l3">   
-                                        {$this->Form->select('brand_id', $list_brands , ['name'=>'brand_id', 'empty' => "-- Chọn --", 'default' => '' , 'class' => ''])}
-                                        <label for="brand_id">Thương hiệu</label>
-                                    </div> 
-
                                     <div class="input-field col s12 m4 l3">
-                                        <input id="price_from" name="price_from" type="text" maxlength="11" autocomplete="off" class="auto-numeric">
-                                        <label for="price_from">Giá từ</label>
+                                        <input id="supplier_name" name="supplier_name" type="text" autocomplete="off">
+                                        <label for="supplier_name">Nhà cung cấp</label>
+                                        <input id="supplier_id" name="supplier_id" type="hidden" autocomplete="off">
                                     </div>
 
                                     <div class="input-field col s12 m4 l3">
-                                        <input id="price_to" name="price_to" type="text" maxlength="11" autocomplete="off" class="auto-numeric">
-                                        <label for="price_to">Đến</label>
+                                        <input id="created_by_name" name="created_by_name" type="text" autocomplete="off">
+                                        <label for="created_by_name">Người tạo</label>
+                                        <input id="created_by" name="created_by" type="hidden" autocomplete="off">
                                     </div>
 
                                     <div class="input-field col s12 m4 l3">
@@ -86,6 +88,11 @@
                                     <div class="input-field col s12 m4 l3">
                                         <input id="created_to" name="created_to" type="text" maxlength="11" autocomplete="off" class="input-date-picker">
                                         <label for="created_to">Đến ngày</label>
+                                    </div>
+
+                                    <div class="input-field col s12 m4 l3">
+                                        <input id="note" name="note" type="text" autocomplete="off">
+                                        <label for="note">Ghi chú</label>
                                     </div>
                                 </div>
                             </div>
