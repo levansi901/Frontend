@@ -251,6 +251,7 @@ define('COD', 'COD');
 define('ONLINE_BANKING', 'ONLINE_BANKING');
 define('CASH', 'CASH');
 
+//stores
 define('IMPORT', 'IMPORT');
 define('EXPORT', 'EXPORT');
 define('SUPPLIER', 'SUPPLIER');
@@ -303,5 +304,22 @@ Configure::write('TYPE_SALE',
     [
         RETAIL => 'Bán lẻ',
         WHOLESALE => 'Bán buôn'
+    ]
+);
+
+Configure::write('TYPE_BILL',
+    [
+        IMPORT => 'Nhập',
+        EXPORT => 'Xuât'
+    ]
+);
+
+Configure::write('TYPE_RECEIPT',
+    [
+        SUPPLIER => 'Nhà cung cấp',
+        DELIVERY => 'Vận chuyển',
+        WHOLESALE => 'Bán buôn',
+        RETAIL => 'Bán lẻ',
+        TRANSFER => 'Chuyển kho'
     ]
 );

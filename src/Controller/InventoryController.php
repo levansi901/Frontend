@@ -27,25 +27,25 @@ class InventoryController extends AppController
         $result = $response->json;
         $data = !empty($result[DATA]) ? $result[DATA] : [];
 
-        $list_status = $list_shops = $list_brands = $list_categories = $list_has_inventory = $list_has_image = $products = $pagination = [];
+        $list_shops = $bills = $pagination = [];
 
         if(!empty($data)){
-        	$list_status = !empty($data['list_status']) ? $data['list_status'] : [];
-            $list_shops = !empty($data['list_shops']) ? $data['list_shops'] : [];
-            $list_has_inventory = !empty($data['list_has_inventory']) ? $data['list_has_inventory'] : [];
-            $list_has_image = !empty($data['list_has_image']) ? $data['list_has_image'] : [];       
-        	$products = !empty($data['products'][DATA]) ? $data['products'][DATA] : [];
+            $list_shops = !empty($data['list_shops']) ? $data['list_shops'] : [];  
+        	$bills = !empty($data['bills'][DATA]) ? $data['bills'][DATA] : [];
             $pagination = !empty($data['products'][PAGINATION]) ? $data['products'][PAGINATION] : [];
-        }   
-        $this->set('list_status', $list_status);
+        } 
+
         $this->set('list_shops', $list_shops);
-        $this->set('list_has_inventory', $list_has_inventory);
-        $this->set('list_has_image', $list_has_image);
-        $this->set('products', $products);
+        $this->set('bills', $bills);
         $this->set('pagination', $pagination);
-        $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));        
+        // debug($bills);
+        // exit;
+        
+        $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));
+        $this->set('list_type_bill', Configure::read('TYPE_BILL'));
+        $this->set('list_type_receipt', Configure::read('TYPE_RECEIPT'));
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
-        $this->set('title_for_layout', 'Sản phẩm');
+        $this->set('title_for_layout', 'Phiếu xuất/nhập kho');
     }
 
     public function listBill(){

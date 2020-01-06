@@ -1,134 +1,146 @@
-<div class="card-content p-t-10 p-b-0 p-h-xs">   
-    <table id="data-table" class="display responsive-table custom-table">
-        <thead>
-            <tr>
-                <th class="w-3">
-                    <input id="select-all" type="checkbox" class="filled-in no-text"/>
-                    <label for="select-all"></label>
-                    <div id="wrap-action-list" class="hide">
+<div class="card-content p-t-10 p-b-0 p-h-xs">
+    <div class="table-responsive">
+        <table id="data-table" class="display custom-table">
+            <thead>
+                <tr>
+                    <th class="w-1 left-align">
+                        <input id="select-all" type="checkbox" class="filled-in no-text"/>
+                        <label for="select-all"></label>
+                        <div id="wrap-action-list" class="hide">
                             <a data-activates="action-list" class="dropdown-button waves-effect waves-light btn btn-action" title="Chọn hành động">
-                            <i class="material-icons left">expand_more</i>
-                            Chọn hành động
-                        </a>  
-                        <ul id="action-list" class="dropdown-content">
-                            <li class="hide">
-                                <a title="Giảm giá đồng loạt">
-                                    <i class="material-icons left">card_giftcard</i>
-                                    Giảm giá đồng loạt
-                                </a>
-                            </li>
+                                <i class="material-icons left">expand_more</i>
+                                Chọn hành động
+                            </a>
 
-                            <li>
-                                <a class="change-status-selected" data-status="1" title="Kích hoạt sản phẩm">
-                                    <i class="material-icons f-s-14 text-green">check</i>
-                                    Hoạt động
-                                </a>   
-                            </li>
+                            <ul id="action-list" class="dropdown-content">
+                                <li class="hide">
+                                    <a title="Giảm giá đồng loạt">
+                                        <i class="material-icons left">card_giftcard</i>
+                                        Giảm giá đồng loạt
+                                    </a>
+                                </li>
 
-                            <li>
-                                <a class="change-status-selected" data-status="0" title="Tạm ngừng hoạt động sản phẩm">
-                                    <i class="material-icons f-s-14">no_encryption</i>
-                                    Không hoạt động
-                                </a>   
-                            </li>
+                                <li>
+                                    <a class="change-status-selected" data-status="1" title="Kích hoạt sản phẩm">
+                                        <i class="material-icons f-s-14 text-green">check</i>
+                                        Hoạt động
+                                    </a>   
+                                </li>
 
-                            <li class="divider"></li>
-                            <li>
-                                <a class="delete-selected" title="Xóa sản phẩm">
-                                    <i class="material-icons left text-red">delete_forever</i>
-                                    Xóa
-                                </a>                                            
-                            </li>
-                        </ul>
-                    </div>
-                </th>
-                <th class="w-3">                    
-                    
-                </th>
-                <th class="w-30 left-align {if !empty($params.sort) && !empty($params.direction) && $params.sort == name}sorting_{$params.direction}{else}sorting{/if}" data-sort="name">
-                    Sản phẩm
-                </th>
+                                <li>
+                                    <a class="change-status-selected" data-status="0" title="Tạm ngừng hoạt động sản phẩm">
+                                        <i class="material-icons f-s-14">no_encryption</i>
+                                        Không hoạt động
+                                    </a>   
+                                </li>
 
-                <th class="w-15 left-align"> 
-                    Mã
-                </th>
+                                <li class="divider"></li>
+                                <li>
+                                    <a class="delete-selected" title="Xóa sản phẩm">
+                                        <i class="material-icons left text-red">delete_forever</i>
+                                        Xóa
+                                    </a>                                            
+                                </li>
+                            </ul>
+                        </div>
+                    </th>
 
-                <th class="w-15 {if !empty($params.sort) && !empty($params.direction) && $params.sort == price}sorting_{$params.direction}{else}sorting{/if}" data-sort="price"> 
-                    Giá
-                </th>
+                    <th class="w-10 left-align" title="Mã phiếu">
+                        Mã phiếu
+                    </th>                    
 
-                <th class="w-15 {if !empty($params.sort) && !empty($params.direction) && $params.sort == price_discount}sorting_{$params.direction}{else}sorting{/if}" data-sort="price_discount" title="Giá khuyến mãi"> 
-                    Giá KM
-                </th>
-                <th class="w-10">Tồn</th>
-                <th class="w-3">TT</th>
-            </tr>
-        </thead>
-        <tbody>                    
-            {if !empty($products)}
-                {foreach from = $products key = k_product item = product}
-                    <tr data-id="{$product.id}" >
-                        <td class="center">
-                            <input id="row-{$k_product}" type="checkbox" class="filled-in no-text select-record"/>
-                            <label for="row-{$k_product}"></label>                              
-                        </td>
+                    <th class="w-10 left-align" title="Loại phiếu"> 
+                        Loại phiếu
+                    </th>
 
-                        <td class="center">
-                            <a class="img" href="/product/edit/{$product.id}">
-                                <img src="/no-image.png"/>
-                            </a>                            
-                        </td>
+                    <th class="w-10 left-align" title="Kho hàng"> 
+                        Kho hàng
+                    </th>
 
-                        <td>
-                            {if !empty($product.name)}
-                                <a href="/product/edit/{$product.id}" title="Xem thông tin sản phẩm">
-                                    {$product.name}
-                                </a>                                
-                            {/if}
-                        </td>
+                    <th class="w-3" title="Số lượng">
+                        SL
+                    </th>
 
-                        <td >
-                            {if !empty($product.code)}
-                                {$product.code}
-                            {/if}
-                        </td>
+                    <th class="w-10 right-align" title="Tổng tiền">
+                        Tổng tiền
+                    </th>                    
 
-                        <td class="center">
-                            {if !empty((float)$product.price)}
-                                {$product.price|number_format:0:",":","}
-                            {/if}
-                        </td>
-
-                        <td class="center">
-                            {if !empty((float)$product.price_discount)}
-                                {$product.price_discount|number_format:0:",":","}
-                            {/if}
-                        </td>
-
-                        <td class="center">
-                            
-                        </td>
-
-                        <td class="center status-column">
-                            {if !empty($product.status)}
-                                <i class="material-icons f-s-18 text-green">check</i>
-                            {else}
-                                <i class="material-icons f-s-18">no_encryption</i>
-                            {/if}
-                        </td>                              
-                    </tr>
-                {/foreach}
-            {else}
-                <tr >
-                    <td colspan="12" class="center">
-                        <i class="">
-                            Không tìm thấy sản phẩm nào
-                        </i>
-                    </td>                            
+                    <th class="w-5" title="Người tạo"> 
+                        Người tạo
+                    </th>
                 </tr>
-            {/if}
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>                
+                {if !empty($bills)}
+                    {foreach from = $bills key = k_bill item = item}
+
+                        <tr data-id="{if !empty($item.bill.id)}{$item.bill.id}{/if}">
+                            <td>
+                                <input id="row-{$k_bill}" type="checkbox" class="filled-in no-text select-record"/>
+                                <label for="row-{$k_bill}"></label>                              
+                            </td>                         
+
+                            <td>
+                                {if !empty($item.bill.code)}
+                                    <a href="#" title="Xem thông tin phiếu">
+                                        {$item.bill.code}
+                                    </a>                                  
+                                {/if}
+                            </td>
+
+                            <td>
+                                {if $item.bill.type == 'IMPORT'}
+                                    <span class="text-green">Nhập</span>
+                                {/if}
+
+                                {if $item.bill.type == 'EXPORT'}
+                                    <span class="text-red">Xuất</span>
+                                {/if}
+
+                                {if !empty($list_type_receipt[$item.bill.type_receipt])}
+                                    - {$list_type_receipt[$item.bill.type_receipt]}
+                                {/if}                            
+                            </td>
+
+                            <td>
+                                {if !empty($item.bill.shop_name)}
+                                    {$item.bill.shop_name}
+                                {/if}
+                            </td>
+
+                            <td class="center">
+                                {if !empty($item.bill.total_items)}
+                                    {$item.bill.total_items|number_format:0:".":","}
+                                {/if}
+                            </td>
+
+                            <td class="right-align">
+                                {if !empty($item.bill.total_final)}
+                                    {$item.bill.total_final|number_format:0:".":","}
+                                {/if}
+                            </td>
+
+                            <td class="center">
+                                {if !empty($item.bill.created_by_name)}
+                                    {$item.bill.created_by_name}
+                                {/if}
+                            </td>
+                        </tr>
+                        {assign var = product_id value= $product.product_id}
+                    {/foreach}
+                {else}
+                    <tr>
+                        <td colspan="12" class="center">
+                            <i>
+                                Không tìm thấy sản phẩm nào
+                            </i>
+                        </td>                            
+                    </tr>
+                {/if}
+            </tbody>
+        </table>
+    </div>    
 </div>
 
 {if !empty($pagination.pageCount) && $pagination.pageCount > 1}
