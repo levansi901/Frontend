@@ -97,7 +97,7 @@
         </div>
 
         <div id="wrap-list" class="card">
-            {$this->element('../Bill/list')}
+            {$this->element('../Inventory/list')}
         </div>
     </form>
 </div>

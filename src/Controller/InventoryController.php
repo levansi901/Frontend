@@ -23,7 +23,7 @@ class InventoryController extends AppController
 
         // get data
         $http = new Client();
-        $response = $http->get(API_DOMAIN_URL . 'product/inital-data-form-list');  
+        $response = $http->get(API_DOMAIN_URL . 'bill/inital-data-form-list');  
         $result = $response->json;
         $data = !empty($result[DATA]) ? $result[DATA] : [];
 
