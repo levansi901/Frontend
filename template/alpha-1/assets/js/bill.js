@@ -260,14 +260,6 @@ var ss_bill = {
 		input: '#supplier_id',
 		event: function(){
 			var self = this;	
-
-			$(document).on('focus', self.input_suggest, function(e) {
-				$(this).select();
-			});
-
-			$(document).on('change', self.input_suggest, function(e) {
-				$(self.input).val('');
-			});
 			
 			$(document).on('click', '#btn-quick-add-supplier', function(e) {
 				self.loadModal();				
@@ -357,32 +349,17 @@ var ss_bill = {
 				});
 			});
 
-			$(self.input_suggest).autoComplete({
-				minChars: 0,
-			    source: function(keyword, suggest){
-			    	ss_page.callAjax({
-						url: '/supplier/get',
-						data:{
-							keyword: keyword,
-							get_info: 'simple',
-							limit: 10
-						}
-					}).done(function(response) {
-					    suggest(response);
-					});
-			    },
-			    renderItem: function (item, search){
-			        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-			        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-			        var id = typeof(item.id) != 'undefined' ? item.id : '';
-			        var name = typeof(item.name) != 'undefined' ? item.name : '';
-			        return '<div class="autocomplete-suggestion single-suggestion" data-name="' +  name + '" data-id="' + id + '">' + name.replace(re, "<b>$1</b>") + '</div>';
-			    },
-			    onSelect: function(e, term, item){
-			    	$(self.input_suggest).val(item.data('name'));
-			    	$(self.input).val(item.data('id'));
-			    }
-			});
+			var param_supplier_suggest = {
+	        	input_suggest: '#supplier-suggest',
+	        	input_value_id: '#supplier_id',
+	        	url: '/supplier/get/ajax',
+	        	query: {
+	        		limit: 10, 
+	        		get_info: 'simple'
+	        	}
+	        };
+	        
+	        ss_page.autoCompleteBasic(param_supplier_suggest);			
 		},
 		loadModal: function(){
 			var self = this;

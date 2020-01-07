@@ -217,6 +217,61 @@ var ss_page = {
    			filemanager_access_key: typeof(params.filemanager_access_key) != 'undefined' ? params.filemanager_access_key : null
 		});
 	},
+	autoCompleteBasic: function(params = {}, callback){
+		if (typeof(callback) != 'function') {
+	        callback = function () {};
+	    }
+
+	    var input_suggest = typeof(params.input_suggest) != 'undefined' ? params.input_suggest : '';
+	    var input_value_id = typeof(params.input_value_id) != 'undefined' ? params.input_value_id : '';
+	    var url = typeof(params.url) != 'undefined' ? params.url : '';
+	    var label_field = typeof(params.label_field) != 'undefined' ? params.label_field : '';
+	    var query = typeof(params.query) != 'undefined' ? params.query : {};
+
+	    if(input_suggest.length > 0 && url.length > 0){
+
+	    	$(document).on('focus', input_suggest, function(e) {
+				$(this).select();
+			});				    
+
+			$(input_suggest).autoComplete({
+				minChars: 0,
+			    source: function(keyword, suggest){
+			    	var data = $.extend({}, {keyword: keyword}, query);
+			    	ss_page.callAjax({
+						url: url,
+						data: data
+					}).done(function(response) {
+					    suggest(response);
+					});
+			    },
+			    renderItem: function (item, search){
+			        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+			        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+			        var id = typeof(item.id) != 'undefined' ? item.id : '';
+			        var name = typeof(item.name) != 'undefined' ? item.name : '';
+			        
+			        if(label_field.length > 0 && label_field != 'name'){
+			        	name = typeof(item[label_field]) != 'undefined' ? item[label_field] : '';
+			        }
+			        
+			        return '<div class="autocomplete-suggestion single-suggestion" data-name="' +  name + '" data-id="' + id + '">' + name.replace(re, "<b>$1</b>") + '</div>';
+			    },
+			    onSelect: function(e, term, item){
+			    	$(input_suggest).val(item.data('name'));
+			    	if(typeof(input_value_id) != 'undefined' && input_value_id.length > 0){
+			    		$(input_value_id).val(item.data('id'));
+			    	}
+			    }
+			});
+
+			if(typeof(input_value_id) != 'undefined' && input_value_id.length > 0){
+				$(document).on('change', input_suggest, function(e) {								
+					$(input_value_id).val('');	    		
+				});
+			}
+	    }	   
+	},
 	validation: {
 		isEmail: function(email = null){
 			var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;

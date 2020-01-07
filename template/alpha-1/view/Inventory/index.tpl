@@ -69,14 +69,14 @@
                                     </div>                                    
 
                                     <div class="input-field col s12 m4 l3">
-                                        <input id="supplier_name" name="supplier_name" type="text" autocomplete="off">
-                                        <label for="supplier_name">Nhà cung cấp</label>
+                                        <input id="supplier-suggest" type="text" autocomplete="off">
+                                        <label for="supplier-suggest">Nhà cung cấp</label>
                                         <input id="supplier_id" name="supplier_id" type="hidden" autocomplete="off">
                                     </div>
 
                                     <div class="input-field col s12 m4 l3">
-                                        <input id="created_by_name" name="created_by_name" type="text" autocomplete="off">
-                                        <label for="created_by_name">Người tạo</label>
+                                        <input id="created-by-suggest" type="text" autocomplete="off">
+                                        <label for="created-by-suggest">Người tạo</label>
                                         <input id="created_by" name="created_by" type="hidden" autocomplete="off">
                                     </div>
 

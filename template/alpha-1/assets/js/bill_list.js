@@ -1,4 +1,4 @@
-var ss_bill_list = {	
+var ss_bill_list = {
 	table: '#data-table',
 	form: '#form-list-data',
 	init: function(){
@@ -18,8 +18,30 @@ var ss_bill_list = {
 	    	}
 	    });
 
-	},
-	
+        var param_supplier_suggest = {
+        	input_suggest: '#supplier-suggest',
+        	input_value_id: '#supplier_id',
+        	url: '/supplier/get/ajax',
+        	query: {
+        		limit: 10, 
+        		get_info: 'simple'
+        	}
+        };
+
+        ss_page.autoCompleteBasic(param_supplier_suggest);
+
+        var param_user_suggest = {
+        	input_suggest: '#created-by-suggest',
+        	input_value_id: '#created_by',
+        	url: '/user/get/ajax',
+            label_field: 'full_name',
+        	query: {
+        		limit: 10, 
+        		get_info: 'simple'
+        	}
+        };
+        ss_page.autoCompleteBasic(param_user_suggest);
+	}
 }
 
 $(document).ready(function() {

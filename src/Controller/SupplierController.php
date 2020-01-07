@@ -64,7 +64,7 @@ class SupplierController extends AppController
         }
 
         $http = new Client();
-        $response = $http->get(API_DOMAIN_URL . 'supplier/list?'. http_build_query(array_filter($data_post)));    
+        $response = $http->get(API_DOMAIN_URL . 'supplier/list?'. http_build_query(array_filter($data_post, 'strlen')));    
         $result = $response->getJson();
         $data = !empty($result[DATA]) ? $result[DATA] : [];
 

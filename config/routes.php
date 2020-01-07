@@ -143,7 +143,12 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
-        '/supplier/get', ['controller' => 'Supplier', 'action' => 'ajaxGetSupplier']
+        '/supplier/get/ajax', ['controller' => 'Supplier', 'action' => 'ajaxGetSupplier']
+    );
+
+    // user
+    $routes->connect(
+        '/user/get/ajax', ['controller' => 'User', 'action' => 'ajaxGetUser']
     );
 
     $routes->fallbacks(DashedRoute::class);

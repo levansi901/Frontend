@@ -83,7 +83,7 @@ class OrderController extends AppController
 
         // get data
         $http = new Client();
-        $response = $http->get(API_DOMAIN_URL . 'product/list?' . http_build_query(array_filter($params)));  
+        $response = $http->get(API_DOMAIN_URL . 'product/list?' . http_build_query(array_filter($params, 'strlen')));  
         $result = $response->json;
         $products = !empty($result[DATA]) ? $result[DATA] : [];
         $pagination = !empty($result[PAGINATION]) ? $result[PAGINATION] : [];

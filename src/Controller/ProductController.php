@@ -293,7 +293,7 @@ class ProductController extends AppController {
         $data = [];
         if ($this->request->is('post') && !empty($data_post)) {
             $http = new Client();       
-            $url_api = API_DOMAIN_URL . 'product/item/get?' . http_build_query(array_filter($data_post));
+            $url_api = API_DOMAIN_URL . 'product/item/get?' . http_build_query(array_filter($data_post, 'strlen'));
             $response = $http->get($url_api);              
             $result = $response->getJson();
             $data = !empty($result[DATA]) ? $result[DATA] : [];

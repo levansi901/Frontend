@@ -1,12 +1,11 @@
 var ss_product = {
-
 	init: function(params = {}){
 		var self = this;
 		
         self.item_product.event();
         self.product_form.event();
         self.lazada_category.event();
-        self.lazada_brand.event();       
+        self.lazada_brand.event();
 
 		$('select').material_select();
 
@@ -16,7 +15,7 @@ var ss_product = {
         	timepicker: true,
         	dateFormat: 'dd/mm/yyyy',
         	onSelect(formattedDate, date, inst) {
-	        	var input = $(inst.el);	        	
+	        	var input = $(inst.el);
 	        	if(input.data('name') == 'item-time_start_discount'){
 	        		var input_time_end = input.closest('.li-item').find('input[data-name="item-time_end_discount"]');
 	        		var datepicker = input_time_end.datepicker().data('datepicker');
