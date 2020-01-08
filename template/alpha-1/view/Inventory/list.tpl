@@ -45,17 +45,17 @@
                         </div>
                     </th>
 
-                    <th class="w-5 left-align" title="Mã phiếu">
-                        Mã phiếu
-                    </th>                    
-
-                    <th class="w-10 left-align" title="Loại phiếu"> 
+                    <th class="w-5 left-align" title="Loại phiếu"> 
                         Loại phiếu
                     </th>
 
+                    <th class="w-5 left-align" title="Mã phiếu">
+                        Mã phiếu
+                    </th>  
+
                     <th class="w-10 left-align" title="Kho hàng"> 
                         Kho hàng
-                    </th>
+                    </th>                                    
 
                     <th class="w-3" title="Số lượng">
                         SL
@@ -86,14 +86,6 @@
                             </td>                         
 
                             <td>
-                                {if !empty($item.bill.code)}
-                                    <a href="#" title="Xem thông tin phiếu">
-                                        {$item.bill.code}
-                                    </a>                                  
-                                {/if}
-                            </td>
-
-                            <td>
                                 {if $item.bill.type == 'IMPORT'}
                                     <span class="text-green">Nhập</span>
                                 {/if}
@@ -106,14 +98,22 @@
                                     <span class="text-capitalize">
                                         {$list_type_receipt[$item.bill.type_receipt]}
                                     </span>
-                                {/if}                  
+                                {/if}
                             </td>
+
+                            <td>
+                                {if !empty($item.bill.code)}
+                                    <a href="/inventory/detail/{if !empty($item.bill.id)}{$item.bill.id}{/if}" target="_blank" title="Xem thông tin phiếu">
+                                        {$item.bill.code}
+                                    </a>                                  
+                                {/if}
+                            </td>                            
 
                             <td>
                                 {if !empty($item.bill.shop_name)}
                                     {$item.bill.shop_name}
                                 {/if}
-                            </td>
+                            </td>                            
 
                             <td class="center">
                                 {if !empty($item.bill.total_items)}

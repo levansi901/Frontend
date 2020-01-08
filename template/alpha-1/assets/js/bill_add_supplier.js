@@ -47,7 +47,7 @@ var ss_add_supplier = {
 		}
 
 		ss_page.callAjax({
-        	url: '/inventory/save',
+        	url: $(self.form).attr('action'),
         	data: $(self.form).serializeArray()
         }).done(function(response) {
         	

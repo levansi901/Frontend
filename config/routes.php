@@ -106,15 +106,15 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
 
     $routes->connect(
+        '/inventory/detail/:id', ['controller' => 'Inventory', 'action' => 'detailBill'], ['pass' => ['id'], 'id' => '[0-9]+']
+    );
+
+    // $routes->connect(
+    //     '/inventory/edit/:id', ['controller' => 'Inventory', 'action' => 'saveBill'], ['pass' => ['id'], 'id' => '[0-9]+']
+    // );
+
+    $routes->connect(
         '/inventory/save', ['controller' => 'Inventory', 'action' => 'ajaxSaveBill']
-    );
-
-    $routes->connect(
-        '/inventory/save/:id', ['controller' => 'Inventory', 'action' => 'ajaxSaveBill'], ['pass' => ['id'], 'id' => '[0-9]+']
-    );
-
-    $routes->connect(
-        '/inventory/edit/:id', ['controller' => 'Inventory', 'action' => 'saveBill'], ['pass' => ['id'], 'id' => '[0-9]+']
     );
 
     $routes->connect(

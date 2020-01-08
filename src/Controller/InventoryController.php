@@ -196,6 +196,22 @@ class InventoryController extends AppController
         return $this->responseJson($result);
     }
 
+    public function detailBill($id = null){
+        if(empty($id)){
+            return $this->redirect('/404');
+        }
+
+        $http = new Client();
+        $response = $http->get(API_DOMAIN_URL . 'inventory/detail/' . $id);
+        $result = $response->getJson();
+        $data = !empty($result[DATA]) ? $result[DATA] : [];
+        $bill = !empty($data['bill']) ? $data['bill'] : [];
+        $this->set('csrf_token', $this->request->getParam('_csrfToken'));
+        $this->set('title_for_layout', 'Chi tiết phiếu');
+        $this->set('url_reference', '/inventory/bill');
+        $this->render('detail');
+    }
+
     public function deleteBill(){
         $this->layout = false;
         $this->autoRender = false;
@@ -241,6 +257,8 @@ class InventoryController extends AppController
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_for_layout', 'Nhập hàng mới');
     }
+
+
 
 
 

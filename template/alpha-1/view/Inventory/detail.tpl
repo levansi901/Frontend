@@ -6,7 +6,7 @@
 {$this->element('/layout/breadcrumb', ['data'=> $data_breadcrumb])}
 
 <div class="row row-offset">
-    <form id="bill-form" role="form" action="/inventory/save{if !empty($bill.id)}/{$bill.id}{/if}" method="POST" enctype="multipart/form-data">    
+    <form id="bill-form" role="form" action="" method="POST" enctype="multipart/form-data">    
         <div class="col s12 m9 l9">
             <div class="card hide-on-small-only">
                 <div class="card-content p-b-0">
