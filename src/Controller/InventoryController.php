@@ -39,8 +39,6 @@ class InventoryController extends AppController
         $this->set('list_shops', $list_shops);
         $this->set('bills', $bills);
         $this->set('pagination', $pagination);
-        // debug($bills);
-        // exit;
         
         $this->set('limit_pagination', Configure::read('LIMIT_PAGINATION'));
         $this->set('list_type_bill', Configure::read('TYPE_BILL'));
@@ -187,8 +185,7 @@ class InventoryController extends AppController
         }
         $data_post['items'] = $items;
         unset($data_post['data_items']);
-        debug(json_encode($data_post));
-        exit;
+        
         $http = new Client();
         $response = $http->post(API_DOMAIN_URL . 'bill/save', json_encode($data_post), ['type' => 'json']);      
         $result = $response->getJson();
@@ -202,10 +199,23 @@ class InventoryController extends AppController
         }
 
         $http = new Client();
-        $response = $http->get(API_DOMAIN_URL . 'inventory/detail/' . $id);
+        $response = $http->get(API_DOMAIN_URL . 'bill/detail/' . $id);
         $result = $response->getJson();
         $data = !empty($result[DATA]) ? $result[DATA] : [];
+
         $bill = !empty($data['bill']) ? $data['bill'] : [];
+        $contact = !empty($data['contact']) ? $data['contact'] : [];
+        $supplier = !empty($data['supplier']) ? $data['supplier'] : [];
+        $items = !empty($data['items']) ? $data['items'] : [];
+
+        $this->set('bill', $bill);
+        $this->set('contact', $contact);
+        $this->set('supplier', $supplier);
+        $this->set('items', $items);
+
+        $this->set('list_type_bill', Configure::read('TYPE_BILL'));
+        $this->set('list_type_receipt', Configure::read('TYPE_RECEIPT'));
+
         $this->set('csrf_token', $this->request->getParam('_csrfToken'));
         $this->set('title_for_layout', 'Chi tiết phiếu');
         $this->set('url_reference', '/inventory/bill');

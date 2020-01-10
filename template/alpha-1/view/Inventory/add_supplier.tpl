@@ -66,6 +66,7 @@
                     
                 </div>
             </div>
+
             <div class="card">    
                 <div class="card-content p-b-0">
                     <div class="row">

@@ -16,7 +16,7 @@
             <td data-row-total="" class="right-align"></td>
 
             <td class="center no-p">
-                <i class="material-icons f-s-14 center remove-item">close</i>
+                <i class="material-icons lh-29 f-s-14 center remove-item">close</i>
             </td>
         </tr>
     </tbody>

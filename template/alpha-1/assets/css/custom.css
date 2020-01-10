@@ -43,6 +43,11 @@ input::-ms-input-placeholder {
     color: #555555;
 }
 
+hr{
+    border-top: 1px solid #ccd5db !important;
+    border: 0px;
+}
+
 .input-field > label.active ,
 .input-field > .select-wrapper+label{
     color: #9e9e9e;
@@ -238,6 +243,10 @@ table.custom-table td[data-price] input#price{
 
 .lh-20{
     line-height: 20px !important;    
+}
+
+.lh-29{
+    line-height: 29px !important;    
 }
 
 .lh-30{
@@ -831,7 +840,6 @@ label.active > .label-required{
 
 .progress-bar-step .progress-bar-item .progress-bar-item-title {
     text-align: center;
-    color: #637381;
     font-size: 12px;
     line-height: 30px;
 }
@@ -864,7 +872,7 @@ label.active > .label-required{
     display: block;
     width: 20px;
     height: 20px;
-    background: #cecece;
+    background: #ccd5db;
     margin: 0 auto;
     border-radius: 100%;
     line-height: 23px;
@@ -942,9 +950,11 @@ label.active > .label-required{
     opacity: 1;
 }
 
-.card .card-content {
+.card .card-content,
+.card .card-action {
     padding: 15px 10px;
 }
+
 
 input:not([type]).valid, 
 input:not([type]):focus.valid, 
