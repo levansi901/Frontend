@@ -1,4 +1,4 @@
-<div class="card hide-on-small-only">
+<div class="card hide-on-small-only m-b-xxs">
     <div class="card-content p-b-0">
         <div class="progress-bar-step">
             <div class="progress-bar-item">

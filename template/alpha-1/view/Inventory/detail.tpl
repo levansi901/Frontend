@@ -11,12 +11,13 @@
 
             {$this->element('/bill/status_line')}
 
-            <div class="row row-offset">
+            <div class="row row-offset m-b-0">
                 <div class="col s12 m6 l6">
-                    <div class="card">    
+                    <div class="card m-b-xxs">    
                         <div class="card-content">
                             <div class="row card-title no-m">                
                                 <div class="col s12 m12 l12">
+                                    <i class="material-icons">dvr</i>
                                     Thông tin phiếu
                                 </div>
                             </div>
@@ -33,8 +34,8 @@
                                 <div class="col s12 m12 l12 m-t-xs">                            
                                     <span>
                                         Loại phiếu: 
-                                            {if !empty($bill.type) && !empty($bill.type_receipt)}
-                                            <span class="text-capitalize">
+                                        {if !empty($bill.type) && !empty($bill.type_receipt)}
+                                            <span class="text-capitalize teal-text">
                                                 {if $bill.type == 'IMPORT'}
                                                     Nhập
                                                 {/if}
@@ -49,7 +50,13 @@
                                             </span>  
                                         {/if}
                                     </span>
-                                </div>                        
+                                </div>
+
+                                <div class="col s12 m12 l12 m-t-xs">                            
+                                    <span>
+                                        Trạng thái: {if !empty($bill.sender)}{$bill.sender}{/if}
+                                    </span>
+                                </div>
                                 
                                 <div class="col s12 m12 l12 m-t-xs">                            
                                     <span>
@@ -78,7 +85,7 @@
 
                 <div class="col s12 m6 l6">
                     {if !empty($supplier)}
-                        <div class="card">    
+                        <div class="card m-b-xxs">    
                             <div class="card-content">
                                 <div class="row card-title no-m">                
                                     <div class="col s12 m12 l12">
@@ -231,7 +238,7 @@
                         </div>
 
                         <div class="col s12 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
-                            <span>
+                            <span class="tooltipped fake-link" data-position="right" data-tooltip="<p class='m-t-0 m-b-xxs'>Thanh toán 3289328329032</p><p class='m-t-0 m-b-xxs'>Thanh toán 3289328329032</p></span>" data-html="true">
                                 Chiết khấu
                             </span>
                             <span class="right m-r-xxs">
@@ -247,7 +254,7 @@
                             <span>
                                 Chi phí khác
                             </span>
-                            <span class="right m-r-xxs">
+                            <span class="fake-link right m-r-xxs">
                                 {if !empty($item.fee_other)}
                                     {$item.fee_other|number_format:0:".":","}
                                 {else}
