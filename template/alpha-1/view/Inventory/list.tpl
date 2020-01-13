@@ -87,7 +87,7 @@
 
                             <td>
                                 {if $item.bill.type == 'IMPORT'}
-                                    <span class="text-green">Nhập</span>
+                                    <span>Nhập</span>
                                 {/if}
 
                                 {if $item.bill.type == 'EXPORT'}

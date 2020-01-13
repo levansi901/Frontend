@@ -8,8 +8,15 @@
 <div class="row row-offset">
     <form id="bill-form" role="form" action="" method="POST" enctype="multipart/form-data">    
         <div class="col s12 m12 l12">
-
-            {$this->element('/bill/status_line')}
+            <div class="row row-offset m-b-0">
+                <div class="col s12 m6 l6">
+                    
+                </div>
+                <div class="col s12 m6 l6">
+                    {$this->element('/bill/status_line')}
+                </div>
+            </div>
+            
 
             <div class="row row-offset m-b-0">
                 <div class="col s12 m6 l6">
@@ -25,13 +32,25 @@
                             <hr>
 
                             <div class="row no-m">                    
-                                <div class="col s12 m12 l12 m-t-xs">                            
+                                <div class="col s12 m6 l6 m-t-xs">
                                     <span>
-                                        Mã phiếu: {if !empty($bill.code)}<span class="teal-text">{$bill.code}</span>{/if}
+                                        Mã phiếu: 
+                                        {if !empty($bill.code)}
+                                            <span class="teal-text">{$bill.code}</span>
+                                        {/if}
                                     </span>
-                                </div>                        
+                                </div>   
+
+                                <div class="col s12 m6 l6 m-t-xs">
+                                    <span>
+                                        Ngày tạo: 
+                                        {if !empty($bill.created)}
+                                            <i class="f-s-13">{date('H:i - d/m/Y', strtotime($bill.created))}</i>
+                                        {/if}
+                                    </span>
+                                </div>                     
                                 
-                                <div class="col s12 m12 l12 m-t-xs">                            
+                                <div class="col s12 m6 l6 m-t-xs">
                                     <span>
                                         Loại phiếu: 
                                         {if !empty($bill.type) && !empty($bill.type_receipt)}
@@ -52,7 +71,7 @@
                                     </span>
                                 </div>
 
-                                <div class="col s12 m12 l12 m-t-xs">                            
+                                <div class="col s12 m6 l6 m-t-xs">
                                     <span>
                                         Trạng thái: {if !empty($bill.sender)}{$bill.sender}{/if}
                                     </span>
@@ -68,9 +87,7 @@
                                     <span>
                                         Người nhận: {if !empty($bill.receiver)}{$bill.receiver}{/if}
                                     </span>
-                                </div>
-                            
-
+                                </div>                        
                             
                                 <div class="col s12 m12 l12 m-t-xs">                            
                                     <span>
@@ -115,15 +132,15 @@
                                         </span>
                                     </div>
 
-                                    <div class="col s12 m12 l12 m-t-xs hide-on-small-only">
+                                    <div class="col s12 m12 l12 m-t-xs">
                                         <span>
-                                            &nbsp;             
+                                            Công nợ: <span class="text-red">0</span>                             
                                         </span>
                                     </div>
 
                                     <div class="col s12 m12 l12 m-t-xs hide-on-small-only">
                                         <span>
-                                            &nbsp;                            
+                                            &nbsp;             
                                         </span>
                                     </div>
                                 </div>
@@ -140,23 +157,31 @@
                             <table id="bill-table" class="display custom-table">
                                 <thead>
                                     <tr>
-                                        <th class="w-18 left-align">                    
+                                        <th class="w-15 left-align">                    
                                             Mã
                                         </th>
 
-                                        <th class="w-40 left-align">
+                                        <th class="w-30 left-align">
                                             Sản phẩm
+                                        </th>
+
+                                        <th class="w-10 right-align"> 
+                                            Số lượng
                                         </th>
 
                                         <th class="w-15 right-align"> 
                                             Giá
                                         </th>
 
-                                        <th class="w-12 right-align"> 
-                                            Số lượng
+                                        <th class="w-10 right-align"> 
+                                            Chiết khấu
                                         </th>
+
+                                        <th class="w-10 right-align"> 
+                                            Thuế
+                                        </th>                                        
                                         
-                                        <th class="w-13 right-align">Thành tiền</th>
+                                        <th class="w-15 right-align">Thành tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -176,19 +201,31 @@
                                                 </td>
 
                                                 <td class="right-align">
-                                                    {if !empty($item.price)}
-                                                        {$item.price|number_format:0:".":","}
-                                                    {/if}
-                                                </td>
-
-                                                <td class="right-align">
                                                     {if !empty($item.quantity)}
                                                         {$item.quantity|number_format:0:".":","}
                                                     {/if}
                                                 </td>
 
                                                 <td class="right-align">
-                                                    {if !empty($item.total)}
+                                                    {if !empty(floatval($item.price))}
+                                                        {$item.price|number_format:0:".":","}
+                                                    {/if}
+                                                </td>
+
+                                                <td class="right-align">
+                                                    {if !empty(floatval($item.total_discount))}
+                                                        {$item.total_discount|number_format:0:".":","}
+                                                    {/if}
+                                                </td>
+
+                                                <td class="right-align">
+                                                    {if !empty(floatval($item.total_vat))}
+                                                        {$item.total_vat|number_format:0:".":","}
+                                                    {/if}
+                                                </td>
+
+                                                <td class="right-align">
+                                                    {if !empty(floatval($item.total))}
                                                         {$item.total|number_format:0:".":","}
                                                     {/if}
                                                 </td>
@@ -216,10 +253,8 @@
                                 Tổng tiền
                             </span>
                             <span class="right m-r-xxs">
-                                {if !empty($item.total)}
-                                    {$item.total|number_format:0:".":","}
-                                {else}
-                                    0
+                                {if !empty($bill.total)}
+                                    {$bill.total|number_format:0:".":","}
                                 {/if}
                             </span>
                         </div>
@@ -229,34 +264,38 @@
                                 VAT
                             </span>
                             <span class="right m-r-xxs">
-                                {if !empty($item.total_vat)}
-                                    {$item.total_vat|number_format:0:".":","}
-                                {else}
-                                    0
-                                {/if}
-                            </span>
-                        </div>
-
-                        <div class="col s12 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
-                            <span class="tooltipped fake-link" data-position="right" data-tooltip="<p class='m-t-0 m-b-xxs'>Thanh toán 3289328329032</p><p class='m-t-0 m-b-xxs'>Thanh toán 3289328329032</p></span>" data-html="true">
-                                Chiết khấu
-                            </span>
-                            <span class="right m-r-xxs">
-                                {if !empty($item.total_discount)}
-                                    {$item.total_discount|number_format:0:".":","}
-                                {else}
-                                    0
+                                {if !empty($bill.total_vat)}
+                                    {$bill.total_vat|number_format:0:".":","}
                                 {/if}
                             </span>
                         </div>
 
                         <div class="col s12 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
                             <span>
+                                Chiết khấu
+                            </span>
+                            <span class="right m-r-xxs">
+                                {if !empty($bill.total_discount)}
+                                    {$bill.total_discount|number_format:0:".":","}
+                                {else}
+                                    0
+                                {/if}
+                            </span>
+                        </div>
+                        {assign var = html_other_info value = ''}
+                        {if !empty($bill.fee_other_info)}
+                            {foreach from = $bill.fee_other_info item = other_info}
+                                {assign var = html_other_info value = "{$html_other_info} <p class='no-m f-s-11'>{$other_info.name}: {if !empty($other_info.fee)}{$other_info.fee|number_format:0:".":","}{else}0{/if}</p>"}
+                            {/foreach}
+                        {/if}
+
+                        <div class="col s12 m6 l4 offset-l8 offset-m6 no-p m-b-xs">
+                            <span class="{if !empty($html_other_info)}tooltipped fake-link{/if}" data-position="right" data-tooltip="{$html_other_info}" data-html="true">
                                 Chi phí khác
                             </span>
-                            <span class="fake-link right m-r-xxs">
-                                {if !empty($item.fee_other)}
-                                    {$item.fee_other|number_format:0:".":","}
+                            <span class="right m-r-xxs">
+                                {if !empty($bill.fee_other)}
+                                    {$bill.fee_other|number_format:0:".":","}
                                 {else}
                                     0
                                 {/if}
@@ -268,10 +307,8 @@
                                 Tiền cần trả
                             </span>
                             <span class="right m-r-xxs text-red">
-                                {if !empty($item.total_final)}
-                                    {$item.total_final|number_format:0:".":","}
-                                {else}
-                                    0
+                                {if !empty($bill.total_final)}
+                                    {$bill.total_final|number_format:0:".":","}
                                 {/if}
                             </span>
                         </div>
@@ -333,52 +370,6 @@
             </div>
         </div>
 
-        <div class="col s12 m3 l3">
-            
-            <div class="card m-b-xxl">    
-                <div class="card-content">
-                    <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            {$this->Form->select('shop_id', $list_shop , ['name'=>'shop_id', 'empty' => null, 'default' => '' , 'class' => ''])}
-                            <label for="shop_id">Chi nhánh</label>
-                        </div>
-
-                        <div id="wrap-input-supplier" class="input-field col s12 m12 l12">
-                            <input id="supplier-suggest" type="text" autocomplete="off" value="" shortcut="115" placeholder="Tìm nhà cung cấp (F4)" class="f-s-12">
-                            <label for="supplier" class="alway-active">
-                                Nhà cung cấp
-                                <small class="label-required text-red">*</small>
-                            </label>
-                            <i id="btn-quick-add-supplier" class="material-icons teal-text btn-input-field" title="Thêm nhà cung cấp">add</i>
-                            <input id="supplier_id" name="supplier_id" value="" type="hidden" />
-                        </div>
-                        
-                        <div class="input-field col s12 m12 l12">
-                            <input id="sender" name="sender" type="text" autocomplete="off" value="" class="">
-                            <label for="sender">
-                                Người gửi
-                            </label>
-                        </div>
-
-                        <div class="input-field col s12 m12 l12">
-                            <input id="receiver" name="receiver" type="text" autocomplete="off" value="" class="">
-                            <label for="receiver">
-                                Người nhận
-                            </label>
-                        </div>
-
-                        <div class="input-field col s12 m12 l12">
-                            <input id="note" name="note" type="text" length="255" maxlength="255" autocomplete="off" value="" class="">
-                            <label for="note">
-                                Ghi chú
-                            </label>
-                        </div>
-                    </div> 
-                    
-                </div>
-            </div>
-        </div>
-
         <div class="mn-header navbar-fixed">
             <nav class="white nav-action">
                 <div class="row">
@@ -397,15 +388,5 @@
             </nav>
         </div>
 
-        <div class="hide">
-            <input id="type" name="type" type="hidden" value="IMPORT" />
-            <input id="type_receipt" name="type_receipt" type="hidden" value="SUPPLIER" />
-            <input id="data_items" name="data_items" type="hidden" value="" />
-            <input id="fee_other_info" name="fee_other_info" type="hidden" value="" />
-            <input id="fee_other" name="fee_other" type="hidden" value="" />
-            <input id="type_discount" name="type_discount" type="hidden" value="" />
-            <input id="discount" name="discount" type="hidden" value="" />
-            <input id="submit_step" name="submit_step" type="hidden" value="" />
-        </div>
     </form>
 </div>
